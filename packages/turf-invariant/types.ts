@@ -12,7 +12,7 @@ import {
     LineString,
     Polygon,
     GeometryTypes
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import {
     getCoord,
     getCoords,

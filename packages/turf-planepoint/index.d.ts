@@ -1,4 +1,4 @@
-import { Feature, Coord, Polygon } from '@turf/helpers'
+import { Feature, Coord, Polygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#planepoint

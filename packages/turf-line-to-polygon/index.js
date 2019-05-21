@@ -1,6 +1,6 @@
-import turfBBox from '@turf/bbox';
-import { getCoords, getType } from '@turf/invariant';
-import { polygon, multiPolygon, lineString, isObject } from '@turf/helpers';
+import turfBBox from '@spatial/bbox';
+import { getCoords, getType } from '@spatial/invariant';
+import { polygon, multiPolygon, lineString, isObject } from '@spatial/helpers';
 
 /**
  * Converts (Multi)LineString(s) to Polygon(s).
@@ -24,9 +24,9 @@ function lineToPolygon(lines, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var properties = options.properties;
-    var autoComplete = options.autoComplete;
-    var orderCoords = options.orderCoords;
+    const properties = options.properties;
+    let autoComplete = options.autoComplete;
+    let orderCoords = options.orderCoords;
 
     // validation
     if (!lines) throw new Error('lines is required');
@@ -34,14 +34,14 @@ function lineToPolygon(lines, options) {
     // default params
     autoComplete = (autoComplete !== undefined) ? autoComplete : true;
     orderCoords = (orderCoords !== undefined) ? orderCoords : true;
-    var type = getType(lines);
+    const type = getType(lines);
 
     switch (type) {
     case 'FeatureCollection':
     case 'GeometryCollection':
         var coords = [];
         var features = (lines.features) ? lines.features : lines.geometries;
-        features.forEach(function (line) {
+        features.forEach((line) => {
             coords.push(getCoords(lineStringToPolygon(line, {}, autoComplete, orderCoords)));
         });
         return multiPolygon(coords, properties);
@@ -61,8 +61,8 @@ function lineToPolygon(lines, options) {
  */
 function lineStringToPolygon(line, properties, autoComplete, orderCoords) {
     properties = properties || line.properties || {};
-    var coords = getCoords(line);
-    var type = getType(line);
+    let coords = getCoords(line);
+    const type = getType(line);
 
     if (!coords.length) throw new Error('line must contain coordinates');
 
@@ -74,12 +74,12 @@ function lineStringToPolygon(line, properties, autoComplete, orderCoords) {
         var multiCoords = [];
         var largestArea = 0;
 
-        coords.forEach(function (coord) {
+        coords.forEach((coord) => {
             if (autoComplete) coord = autoCompleteCoords(coord);
 
             // Largest LineString to be placed in the first position of the coordinates array
             if (orderCoords) {
-                var area = calculateArea(turfBBox(lineString(coord)));
+                const area = calculateArea(turfBBox(lineString(coord)));
                 if (area > largestArea) {
                     multiCoords.unshift(coord);
                     largestArea = area;
@@ -90,7 +90,7 @@ function lineStringToPolygon(line, properties, autoComplete, orderCoords) {
         });
         return polygon(multiCoords, properties);
     default:
-        throw new Error('geometry type ' + type + ' is not supported');
+        throw new Error(`geometry type ${  type  } is not supported`);
     }
 }
 
@@ -102,12 +102,12 @@ function lineStringToPolygon(line, properties, autoComplete, orderCoords) {
  * @returns {Array<Array<number>>} auto completed coordinates
  */
 function autoCompleteCoords(coords) {
-    var first = coords[0];
-    var x1 = first[0];
-    var y1 = first[1];
-    var last = coords[coords.length - 1];
-    var x2 = last[0];
-    var y2 = last[1];
+    const first = coords[0];
+    const x1 = first[0];
+    const y1 = first[1];
+    const last = coords[coords.length - 1];
+    const x2 = last[0];
+    const y2 = last[1];
     if (x1 !== x2 || y1 !== y2) {
         coords.push(first);
     }
@@ -122,10 +122,10 @@ function autoCompleteCoords(coords) {
  * @returns {number} very quick area calculation
  */
 function calculateArea(bbox) {
-    var west = bbox[0];
-    var south = bbox[1];
-    var east = bbox[2];
-    var north = bbox[3];
+    const west = bbox[0];
+    const south = bbox[1];
+    const east = bbox[2];
+    const north = bbox[3];
     return Math.abs(west - east) * Math.abs(south - north);
 }
 

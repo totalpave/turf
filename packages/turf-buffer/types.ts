@@ -2,7 +2,7 @@ import {
   point, lineString, polygon,
   multiPoint, multiLineString, multiPolygon,
   featureCollection, geometryCollection
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import buffer from './'
 
 // Standard Geometry

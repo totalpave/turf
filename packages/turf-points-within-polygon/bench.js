@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { featureCollection, point, polygon } from '@turf/helpers';
+import { featureCollection, point, polygon } from '@spatial/helpers';
 import pointsWithinPolygon from './';
 
 var poly1 = polygon([[[0, 0], [10, 0], [10, 10], [0, 0]]]);

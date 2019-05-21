@@ -1,5 +1,5 @@
-import { isObject, featureCollection, point } from '@turf/helpers';
-import rhumbDestination from '@turf/rhumb-destination';
+import { isObject, featureCollection, point } from '@spatial/helpers';
+import rhumbDestination from '@spatial/rhumb-destination';
 
 /**
  * Takes a {@link Point} grid and returns a correspondent matrix {Array<Array<number>>}

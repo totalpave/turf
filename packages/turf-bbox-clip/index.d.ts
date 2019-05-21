@@ -1,4 +1,4 @@
-import { BBox, LineString, MultiLineString, Polygon, MultiPolygon, Feature } from '@turf/helpers'
+import { BBox, LineString, MultiLineString, Polygon, MultiPolygon, Feature } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#bboxclip

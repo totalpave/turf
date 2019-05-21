@@ -1,4 +1,4 @@
-import { LineString, Feature } from '@turf/helpers'
+import { LineString, Feature } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#bezierspline

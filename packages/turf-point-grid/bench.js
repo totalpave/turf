@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 import grid from './';
 
 var bbox = [-95, 30, -85, 40];

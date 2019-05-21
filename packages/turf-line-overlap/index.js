@@ -1,10 +1,10 @@
 import rbush from 'geojson-rbush';
-import lineSegment from '@turf/line-segment';
-import nearestPointOnLine from '@turf/nearest-point-on-line';
-import booleanPointOnLine from '@turf/boolean-point-on-line';
-import { getCoords } from '@turf/invariant';
-import { featureEach, segmentEach } from '@turf/meta';
-import { featureCollection, isObject } from '@turf/helpers';
+import lineSegment from '@spatial/line-segment';
+import nearestPointOnLine from '@spatial/nearest-point-on-line';
+import booleanPointOnLine from '@spatial/boolean-point-on-line';
+import { getCoords } from '@spatial/invariant';
+import { featureEach, segmentEach } from '@spatial/meta';
+import { featureCollection, isObject } from '@spatial/helpers';
 import equal from './lib/deep-equal';
 
 /**
@@ -29,27 +29,27 @@ function lineOverlap(line1, line2, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var tolerance = options.tolerance || 0;
+    const tolerance = options.tolerance || 0;
 
     // Containers
-    var features = [];
+    const features = [];
 
     // Create Spatial Index
-    var tree = rbush();
+    const tree = rbush();
     tree.load(lineSegment(line1));
-    var overlapSegment;
+    let overlapSegment;
 
     // Line Intersection
 
     // Iterate over line segments
-    segmentEach(line2, function (segment) {
-        var doesOverlaps = false;
+    segmentEach(line2, (segment) => {
+        let doesOverlaps = false;
 
         // Iterate over each segments which falls within the same bounds
-        featureEach(tree.search(segment), function (match) {
+        featureEach(tree.search(segment), (match) => {
             if (doesOverlaps === false) {
-                var coordsSegment = getCoords(segment).sort();
-                var coordsMatch = getCoords(match).sort();
+                const coordsSegment = getCoords(segment).sort();
+                const coordsMatch = getCoords(match).sort();
 
                 // Segment overlaps feature
                 if (equal(coordsSegment, coordsMatch)) {
@@ -101,11 +101,11 @@ function lineOverlap(line1, line2, options) {
  * @returns {Feature<LineString>} concat linestring
  */
 function concatSegment(line, segment) {
-    var coords = getCoords(segment);
-    var lineCoords = getCoords(line);
-    var start = lineCoords[0];
-    var end = lineCoords[lineCoords.length - 1];
-    var geom = line.geometry.coordinates;
+    const coords = getCoords(segment);
+    const lineCoords = getCoords(line);
+    const start = lineCoords[0];
+    const end = lineCoords[lineCoords.length - 1];
+    const geom = line.geometry.coordinates;
 
     if (equal(coords[0], start)) geom.unshift(coords[1]);
     else if (equal(coords[0], end)) geom.push(coords[1]);

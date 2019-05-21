@@ -1,4 +1,4 @@
-import { AllGeoJSON, Feature, Point, Properties } from '@turf/helpers';
+import { AllGeoJSON, Feature, Point, Properties } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#centerofmass

@@ -1,6 +1,6 @@
-import { coordEach } from '@turf/meta';
-import { isObject, isNumber } from '@turf/helpers';
-import clone from '@turf/clone';
+import { coordEach } from '@spatial/meta';
+import { isObject, isNumber } from '@spatial/helpers';
+import clone from '@spatial/clone';
 
 /**
  * Converts a WGS84 GeoJSON object into Mercator (EPSG:900913) projection
@@ -55,7 +55,7 @@ function convert(geojson, projection, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var mutate = options.mutate;
+    const mutate = options.mutate;
 
     // Validation
     if (!geojson) throw new Error('geojson is required');
@@ -68,8 +68,8 @@ function convert(geojson, projection, options) {
         // Handle possible data mutation
         if (mutate !== true) geojson = clone(geojson);
 
-        coordEach(geojson, function (coord) {
-            var newCoord = (projection === 'mercator') ? convertToMercator(coord) : convertToWgs84(coord);
+        coordEach(geojson, (coord) => {
+            const newCoord = (projection === 'mercator') ? convertToMercator(coord) : convertToWgs84(coord);
             coord[0] = newCoord[0];
             coord[1] = newCoord[1];
         });
@@ -86,15 +86,15 @@ function convert(geojson, projection, options) {
  * @returns {Array<number>} Mercator [x, y] point
  */
 function convertToMercator(lonLat) {
-    var D2R = Math.PI / 180,
+    const D2R = Math.PI / 180,
         // 900913 properties
         A = 6378137.0,
         MAXEXTENT = 20037508.342789244;
 
     // compensate longitudes passing the 180th meridian
     // from https://github.com/proj4js/proj4js/blob/master/lib/common/adjust_lon.js
-    var adjusted = (Math.abs(lonLat[0]) <= 180) ? lonLat[0] : (lonLat[0] - (sign(lonLat[0]) * 360));
-    var xy = [
+    const adjusted = (Math.abs(lonLat[0]) <= 180) ? lonLat[0] : (lonLat[0] - (sign(lonLat[0]) * 360));
+    const xy = [
         A * adjusted * D2R,
         A * Math.log(Math.tan((Math.PI * 0.25) + (0.5 * lonLat[1] * D2R)))
     ];
@@ -118,8 +118,8 @@ function convertToMercator(lonLat) {
  */
 function convertToWgs84(xy) {
     // 900913 properties.
-    var R2D = 180 / Math.PI;
-    var A = 6378137.0;
+    const R2D = 180 / Math.PI;
+    const A = 6378137.0;
 
     return [
         (xy[0] * R2D / A),

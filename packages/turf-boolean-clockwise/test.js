@@ -2,7 +2,7 @@ import glob from 'glob';
 import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
-import { point, lineString } from '@turf/helpers';
+import { point, lineString } from '@spatial/helpers';
 import isClockwise from '.';
 
 test('isClockwise#fixtures', t => {

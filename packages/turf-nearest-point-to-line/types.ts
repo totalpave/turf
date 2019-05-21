@@ -3,7 +3,7 @@ import {
     featureCollection,
     point,
     lineString
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import nearestPointToLine from './'
 
 const points = featureCollection([point([0, 0]), point([0.5, 0.5])]);

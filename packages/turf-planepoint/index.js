@@ -1,4 +1,4 @@
-import { getCoord, getGeom } from '@turf/invariant';
+import { getCoord, getGeom } from '@spatial/invariant';
 
 /**
  * Takes a triangular plane as a {@link Polygon}
@@ -34,29 +34,29 @@ import { getCoord, getGeom } from '@turf/invariant';
  */
 function planepoint(point, triangle) {
     // Normalize input
-    var coord = getCoord(point);
-    var geom = getGeom(triangle);
-    var coords = geom.coordinates;
-    var outer = coords[0];
+    const coord = getCoord(point);
+    const geom = getGeom(triangle);
+    const coords = geom.coordinates;
+    const outer = coords[0];
     if (outer.length < 4) throw new Error('OuterRing of a Polygon must have 4 or more Positions.');
-    var properties = triangle.properties || {};
-    var a = properties.a;
-    var b = properties.b;
-    var c = properties.c;
+    const properties = triangle.properties || {};
+    const a = properties.a;
+    const b = properties.b;
+    const c = properties.c;
 
     // Planepoint
-    var x = coord[0];
-    var y = coord[1];
-    var x1 = outer[0][0];
-    var y1 = outer[0][1];
-    var z1 = (a !== undefined ? a : outer[0][2]);
-    var x2 = outer[1][0];
-    var y2 = outer[1][1];
-    var z2 = (b !== undefined ? b : outer[1][2]);
-    var x3 = outer[2][0];
-    var y3 = outer[2][1];
-    var z3 = (c !== undefined ? c : outer[2][2]);
-    var z = (z3 * (x - x1) * (y - y2) + z1 * (x - x2) * (y - y3) + z2 * (x - x3) * (y - y1) -
+    const x = coord[0];
+    const y = coord[1];
+    const x1 = outer[0][0];
+    const y1 = outer[0][1];
+    const z1 = (a !== undefined ? a : outer[0][2]);
+    const x2 = outer[1][0];
+    const y2 = outer[1][1];
+    const z2 = (b !== undefined ? b : outer[1][2]);
+    const x3 = outer[2][0];
+    const y3 = outer[2][1];
+    const z3 = (c !== undefined ? c : outer[2][2]);
+    const z = (z3 * (x - x1) * (y - y2) + z1 * (x - x2) * (y - y3) + z2 * (x - x3) * (y - y1) -
              z2 * (x - x1) * (y - y3) - z3 * (x - x2) * (y - y1) - z1 * (x - x3) * (y - y2)) /
            ((x - x1) * (y - y2) + (x - x2) * (y - y3) + (x - x3) * (y - y1) -
             (x - x1) * (y - y3) - (x - x2) * (y - y1) - (x - x3) * (y - y2));

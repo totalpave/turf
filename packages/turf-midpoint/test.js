@@ -1,7 +1,7 @@
 import test from 'tape';
 import midpoint from '.';
-import distance from '@turf/distance';
-import { point } from '@turf/helpers';
+import distance from '@spatial/distance';
+import { point } from '@spatial/helpers';
 
 test('midpoint -- horizontal equator', function (t) {
     var pt1 = point([0, 0]);

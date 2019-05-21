@@ -1,14 +1,14 @@
-import bbox from '@turf/bbox';
-import hexGrid from '@turf/hex-grid';
-import pointGrid from '@turf/point-grid';
-import distance from '@turf/distance';
-import centroid from '@turf/centroid';
-import squareGrid from '@turf/square-grid';
-import triangleGrid from '@turf/triangle-grid';
-import clone from '@turf/clone';
-import { featureCollection } from '@turf/helpers';
-import { featureEach } from '@turf/meta';
-import { collectionOf } from '@turf/invariant';
+import bbox from '@spatial/bbox';
+import hexGrid from '@spatial/hex-grid';
+import pointGrid from '@spatial/point-grid';
+import distance from '@spatial/distance';
+import centroid from '@spatial/centroid';
+import squareGrid from '@spatial/square-grid';
+import triangleGrid from '@spatial/triangle-grid';
+import clone from '@spatial/clone';
+import { featureCollection } from '@spatial/helpers';
+import { featureEach } from '@spatial/meta';
+import { collectionOf } from '@spatial/invariant';
 
 /**
  * Takes a set of points and estimates their 'property' values on a grid using the [Inverse Distance Weighting (IDW) method](https://en.wikipedia.org/wiki/Inverse_distance_weighting).
@@ -39,9 +39,9 @@ function interpolate(points, cellSize, options) {
     // Optional parameters
     options = options || {};
     if (typeof options !== 'object') throw new Error('options is invalid');
-    var gridType = options.gridType;
-    var property = options.property;
-    var weight = options.weight;
+    let gridType = options.gridType;
+    let property = options.property;
+    let weight = options.weight;
 
     // validation
     if (!points) throw new Error('points is required');
@@ -54,8 +54,8 @@ function interpolate(points, cellSize, options) {
     gridType = gridType || 'square';
     weight = weight || 1;
 
-    var box = bbox(points);
-    var grid;
+    const box = bbox(points);
+    let grid;
     switch (gridType) {
     case 'point':
     case 'points':
@@ -76,26 +76,26 @@ function interpolate(points, cellSize, options) {
     default:
         throw new Error('invalid gridType');
     }
-    var results = [];
-    featureEach(grid, function (gridFeature) {
-        var zw = 0;
-        var sw = 0;
+    const results = [];
+    featureEach(grid, (gridFeature) => {
+        let zw = 0;
+        let sw = 0;
         // calculate the distance from each input point to the grid points
-        featureEach(points, function (point) {
-            var gridPoint = (gridType === 'point') ? gridFeature : centroid(gridFeature);
-            var d = distance(gridPoint, point, options);
-            var zValue;
+        featureEach(points, (point) => {
+            const gridPoint = (gridType === 'point') ? gridFeature : centroid(gridFeature);
+            const d = distance(gridPoint, point, options);
+            let zValue;
             // property has priority for zValue, fallbacks to 3rd coordinate from geometry
             if (property !== undefined) zValue = point.properties[property];
             if (zValue === undefined) zValue = point.geometry.coordinates[2];
             if (zValue === undefined) throw new Error('zValue is missing');
             if (d === 0) zw = zValue;
-            var w = 1.0 / Math.pow(d, weight);
+            const w = 1.0 / Math.pow(d, weight);
             sw += w;
             zw += w * zValue;
         });
         // write interpolated value for each grid point
-        var newFeature = clone(gridFeature);
+        const newFeature = clone(gridFeature);
         newFeature.properties[property] = zw / sw;
         results.push(newFeature);
     });

@@ -1,4 +1,4 @@
-import {polygon} from '@turf/helpers';
+import {polygon} from '@spatial/helpers';
 import mask from './';
 
 const poly1 = polygon([[[-50, 5], [-40, -10], [-50, -10], [-40, 5], [-50, 5]]]);

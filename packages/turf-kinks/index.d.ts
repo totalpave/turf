@@ -6,7 +6,7 @@ import {
     Point,
     FeatureCollection,
     Feature
-} from '@turf/helpers'
+} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#kinks

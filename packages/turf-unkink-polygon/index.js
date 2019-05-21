@@ -1,5 +1,5 @@
-import { flattenEach, featureEach } from '@turf/meta';
-import { polygon, featureCollection } from '@turf/helpers';
+import { flattenEach, featureEach } from '@spatial/meta';
+import { polygon, featureCollection } from '@spatial/helpers';
 import simplepolygon from './lib/simplepolygon';
 
 /**
@@ -18,10 +18,10 @@ import simplepolygon from './lib/simplepolygon';
  * var addToMap = [poly, result]
  */
 function unkinkPolygon(geojson) {
-    var features = [];
-    flattenEach(geojson, function (feature) {
+    const features = [];
+    flattenEach(geojson, (feature) => {
         if (feature.geometry.type !== 'Polygon') return;
-        featureEach(simplepolygon(feature), function (poly) {
+        featureEach(simplepolygon(feature), (poly) => {
             features.push(polygon(poly.geometry.coordinates, feature.properties));
         });
     });

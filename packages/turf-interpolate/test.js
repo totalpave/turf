@@ -3,10 +3,10 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
+import truncate from '@spatial/truncate';
 import { brightness } from 'chromatism';
-import { round, featureCollection, point } from '@turf/helpers';
-import { featureEach, propEach } from '@turf/meta';
+import { round, featureCollection, point } from '@spatial/helpers';
+import { featureEach, propEach } from '@spatial/meta';
 import interpolate from '.';
 
 const directories = {

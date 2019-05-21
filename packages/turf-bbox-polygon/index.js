@@ -1,4 +1,4 @@
-import { polygon, validateBBox } from '@turf/helpers';
+import { polygon, validateBBox } from '@spatial/helpers';
 
 /**
  * Takes a bbox and returns an equivalent {@link Polygon|polygon}.
@@ -19,17 +19,17 @@ function bboxPolygon(bbox) {
     // Convert BBox positions to Numbers
     // No performance loss for including Number()
     // https://github.com/Turfjs/turf/issues/1119
-    var west = Number(bbox[0]);
-    var south = Number(bbox[1]);
-    var east = Number(bbox[2]);
-    var north = Number(bbox[3]);
+    const west = Number(bbox[0]);
+    const south = Number(bbox[1]);
+    const east = Number(bbox[2]);
+    const north = Number(bbox[3]);
 
-    if (bbox.length === 6) throw new Error('@turf/bbox-polygon does not support BBox with 6 positions');
+    if (bbox.length === 6) throw new Error('@spatial/bbox-polygon does not support BBox with 6 positions');
 
-    var lowLeft = [west, south];
-    var topLeft = [west, north];
-    var topRight = [east, north];
-    var lowRight = [east, south];
+    const lowLeft = [west, south];
+    const topLeft = [west, north];
+    const topRight = [east, north];
+    const lowRight = [east, south];
 
     return polygon([[
         lowLeft,

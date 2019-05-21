@@ -1,5 +1,5 @@
-import bbox from '@turf/bbox';
-import bboxPolygon from '@turf/bbox-polygon';
+import bbox from '@spatial/bbox';
+import bboxPolygon from '@spatial/bbox-polygon';
 
 /**
  * Takes any number of features and returns a rectangular {@link Polygon} that encompasses all vertices.

@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Coord, Point } from '@turf/helpers'
+import { Feature, FeatureCollection, Coord, Point } from '@spatial/helpers'
 
 export interface NearestPoint extends Feature<Point> {
     properties: {

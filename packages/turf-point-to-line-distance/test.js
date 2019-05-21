@@ -3,8 +3,8 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import circle from '@turf/circle';
-import { point, lineString, round } from '@turf/helpers';
+import circle from '@spatial/circle';
+import { point, lineString, round } from '@spatial/helpers';
 import pointToLineDistance from '.';
 
 const directories = {

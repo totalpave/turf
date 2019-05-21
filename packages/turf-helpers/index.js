@@ -88,8 +88,8 @@ export function feature(geometry, properties, options) {
     // Optional Parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
-    var id = options.id;
+    const bbox = options.bbox;
+    const id = options.id;
 
     // Validation
     if (geometry === undefined) throw new Error('geometry is required');
@@ -98,7 +98,7 @@ export function feature(geometry, properties, options) {
     if (id) validateId(id);
 
     // Main
-    var feat = {type: 'Feature'};
+    const feat = {type: 'Feature'};
     if (id) feat.id = id;
     if (bbox) feat.bbox = bbox;
     feat.properties = properties || {};
@@ -128,7 +128,7 @@ export function geometry(type, coordinates, options) {
     // Optional Parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
+    const bbox = options.bbox;
 
     // Validation
     if (!type) throw new Error('type is required');
@@ -137,7 +137,7 @@ export function geometry(type, coordinates, options) {
     if (bbox) validateBBox(bbox);
 
     // Main
-    var geom;
+    let geom;
     switch (type) {
     case 'Point': geom = point(coordinates).geometry; break;
     case 'LineString': geom = lineString(coordinates).geometry; break;
@@ -145,7 +145,7 @@ export function geometry(type, coordinates, options) {
     case 'MultiPoint': geom = multiPoint(coordinates).geometry; break;
     case 'MultiLineString': geom = multiLineString(coordinates).geometry; break;
     case 'MultiPolygon': geom = multiPolygon(coordinates).geometry; break;
-    default: throw new Error(type + ' is invalid');
+    default: throw new Error(`${type  } is invalid`);
     }
     if (bbox) geom.bbox = bbox;
     return geom;
@@ -174,7 +174,7 @@ export function point(coordinates, properties, options) {
 
     return feature({
         type: 'Point',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -201,9 +201,7 @@ export function points(coordinates, properties, options) {
     if (!coordinates) throw new Error('coordinates is required');
     if (!Array.isArray(coordinates)) throw new Error('coordinates must be an Array');
 
-    return featureCollection(coordinates.map(function (coords) {
-        return point(coords, properties);
-    }), options);
+    return featureCollection(coordinates.map(coords => point(coords, properties)), options);
 }
 
 /**
@@ -224,12 +222,12 @@ export function points(coordinates, properties, options) {
 export function polygon(coordinates, properties, options) {
     if (!coordinates) throw new Error('coordinates is required');
 
-    for (var i = 0; i < coordinates.length; i++) {
-        var ring = coordinates[i];
+    for (let i = 0; i < coordinates.length; i++) {
+        const ring = coordinates[i];
         if (ring.length < 4) {
             throw new Error('Each LinearRing of a Polygon must have 4 or more Positions.');
         }
-        for (var j = 0; j < ring[ring.length - 1].length; j++) {
+        for (let j = 0; j < ring[ring.length - 1].length; j++) {
             // Check if first point of Polygon contains two numbers
             if (i === 0 && j === 0 && !isNumber(ring[0][0]) || !isNumber(ring[0][1])) throw new Error('coordinates must contain numbers');
             if (ring[ring.length - 1][j] !== ring[0][j]) {
@@ -240,7 +238,7 @@ export function polygon(coordinates, properties, options) {
 
     return feature({
         type: 'Polygon',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -266,9 +264,7 @@ export function polygons(coordinates, properties, options) {
     if (!coordinates) throw new Error('coordinates is required');
     if (!Array.isArray(coordinates)) throw new Error('coordinates must be an Array');
 
-    return featureCollection(coordinates.map(function (coords) {
-        return polygon(coords, properties);
-    }), options);
+    return featureCollection(coordinates.map(coords => polygon(coords, properties)), options);
 }
 
 /**
@@ -296,7 +292,7 @@ export function lineString(coordinates, properties, options) {
 
     return feature({
         type: 'LineString',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -322,9 +318,7 @@ export function lineStrings(coordinates, properties, options) {
     if (!coordinates) throw new Error('coordinates is required');
     if (!Array.isArray(coordinates)) throw new Error('coordinates must be an Array');
 
-    return featureCollection(coordinates.map(function (coords) {
-        return lineString(coords, properties);
-    }), options);
+    return featureCollection(coordinates.map(coords => lineString(coords, properties)), options);
 }
 
 /**
@@ -353,8 +347,8 @@ export function featureCollection(features, options) {
     // Optional Parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
-    var id = options.id;
+    const bbox = options.bbox;
+    const id = options.id;
 
     // Validation
     if (!features) throw new Error('No features passed');
@@ -363,7 +357,7 @@ export function featureCollection(features, options) {
     if (id) validateId(id);
 
     // Main
-    var fc = {type: 'FeatureCollection'};
+    const fc = {type: 'FeatureCollection'};
     if (id) fc.id = id;
     if (bbox) fc.bbox = bbox;
     fc.features = features;
@@ -392,7 +386,7 @@ export function multiLineString(coordinates, properties, options) {
 
     return feature({
         type: 'MultiLineString',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -418,7 +412,7 @@ export function multiPoint(coordinates, properties, options) {
 
     return feature({
         type: 'MultiPoint',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -445,7 +439,7 @@ export function multiPolygon(coordinates, properties, options) {
 
     return feature({
         type: 'MultiPolygon',
-        coordinates: coordinates
+        coordinates
     }, properties, options);
 }
 
@@ -479,7 +473,7 @@ export function geometryCollection(geometries, properties, options) {
 
     return feature({
         type: 'GeometryCollection',
-        geometries: geometries
+        geometries
     }, properties, options);
 }
 
@@ -499,7 +493,7 @@ export function geometryCollection(geometries, properties, options) {
 export function round(num, precision) {
     if (num === undefined || num === null || isNaN(num)) throw new Error('num is required');
     if (precision && !(precision >= 0)) throw new Error('precision must be a positive number');
-    var multiplier = Math.pow(10, precision || 0);
+    const multiplier = Math.pow(10, precision || 0);
     return Math.round(num * multiplier) / multiplier;
 }
 
@@ -516,8 +510,8 @@ export function radiansToLength(radians, units) {
     if (radians === undefined || radians === null) throw new Error('radians is required');
 
     if (units && typeof units !== 'string') throw new Error('units must be a string');
-    var factor = factors[units || 'kilometers'];
-    if (!factor) throw new Error(units + ' units is invalid');
+    const factor = factors[units || 'kilometers'];
+    if (!factor) throw new Error(`${units  } units is invalid`);
     return radians * factor;
 }
 
@@ -534,8 +528,8 @@ export function lengthToRadians(distance, units) {
     if (distance === undefined || distance === null) throw new Error('distance is required');
 
     if (units && typeof units !== 'string') throw new Error('units must be a string');
-    var factor = factors[units || 'kilometers'];
-    if (!factor) throw new Error(units + ' units is invalid');
+    const factor = factors[units || 'kilometers'];
+    if (!factor) throw new Error(`${units  } units is invalid`);
     return distance / factor;
 }
 
@@ -563,7 +557,7 @@ export function lengthToDegrees(distance, units) {
 export function bearingToAzimuth(bearing) {
     if (bearing === null || bearing === undefined) throw new Error('bearing is required');
 
-    var angle = bearing % 360;
+    let angle = bearing % 360;
     if (angle < 0) angle += 360;
     return angle;
 }
@@ -578,7 +572,7 @@ export function bearingToAzimuth(bearing) {
 export function radiansToDegrees(radians) {
     if (radians === null || radians === undefined) throw new Error('radians is required');
 
-    var degrees = radians % (2 * Math.PI);
+    const degrees = radians % (2 * Math.PI);
     return degrees * 180 / Math.PI;
 }
 
@@ -592,7 +586,7 @@ export function radiansToDegrees(radians) {
 export function degreesToRadians(degrees) {
     if (degrees === null || degrees === undefined) throw new Error('degrees is required');
 
-    var radians = degrees % 360;
+    const radians = degrees % 360;
     return radians * Math.PI / 180;
 }
 
@@ -624,10 +618,10 @@ export function convertArea(area, originalUnit, finalUnit) {
     if (area === null || area === undefined) throw new Error('area is required');
     if (!(area >= 0)) throw new Error('area must be a positive number');
 
-    var startFactor = areaFactors[originalUnit || 'meters'];
+    const startFactor = areaFactors[originalUnit || 'meters'];
     if (!startFactor) throw new Error('invalid original units');
 
-    var finalFactor = areaFactors[finalUnit || 'kilometers'];
+    const finalFactor = areaFactors[finalUnit || 'kilometers'];
     if (!finalFactor) throw new Error('invalid final units');
 
     return (area / startFactor) * finalFactor;
@@ -688,7 +682,7 @@ export function validateBBox(bbox) {
     if (!bbox) throw new Error('bbox is required');
     if (!Array.isArray(bbox)) throw new Error('bbox must be an Array');
     if (bbox.length !== 4 && bbox.length !== 6) throw new Error('bbox must be an Array of 4 or 6 numbers');
-    bbox.forEach(function (num) {
+    bbox.forEach((num) => {
         if (!isNumber(num)) throw new Error('bbox must only contain numbers');
     });
 }

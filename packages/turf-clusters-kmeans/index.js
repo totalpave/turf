@@ -1,6 +1,6 @@
-import clone from '@turf/clone';
-import { collectionOf } from '@turf/invariant';
-import { coordAll, featureEach } from '@turf/meta';
+import clone from '@spatial/clone';
+import { collectionOf } from '@spatial/invariant';
+import { coordAll, featureEach } from '@spatial/meta';
 import skmeans from 'skmeans';
 
 /**
@@ -28,14 +28,14 @@ function clustersKmeans(points, options) {
     // Optional parameters
     options = options || {};
     if (typeof options !== 'object') throw new Error('options is invalid');
-    var numberOfClusters = options.numberOfClusters;
-    var mutate = options.mutate;
+    let numberOfClusters = options.numberOfClusters;
+    const mutate = options.mutate;
 
     // Input validation
     collectionOf(points, 'Point', 'Input must contain Points');
 
     // Default Params
-    var count = points.features.length;
+    const count = points.features.length;
     numberOfClusters = numberOfClusters || Math.round(Math.sqrt(count / 2));
 
     // numberOfClusters can't be greater than the number of points
@@ -46,23 +46,23 @@ function clustersKmeans(points, options) {
     if (mutate === false || mutate === undefined) points = clone(points, true);
 
     // collect points coordinates
-    var data = coordAll(points);
+    const data = coordAll(points);
 
     // create seed to avoid skmeans to drift
-    var initialCentroids = data.slice(0, numberOfClusters);
+    const initialCentroids = data.slice(0, numberOfClusters);
 
     // create skmeans clusters
-    var skmeansResult = skmeans(data, numberOfClusters, initialCentroids);
+    const skmeansResult = skmeans(data, numberOfClusters, initialCentroids);
 
     // store centroids {clusterId: [number, number]}
-    var centroids = {};
-    skmeansResult.centroids.forEach(function (coord, idx) {
+    const centroids = {};
+    skmeansResult.centroids.forEach((coord, idx) => {
         centroids[idx] = coord;
     });
 
     // add associated cluster number
-    featureEach(points, function (point, index) {
-        var clusterId = skmeansResult.idxs[index];
+    featureEach(points, (point, index) => {
+        const clusterId = skmeansResult.idxs[index];
         point.properties.cluster = clusterId;
         point.properties.centroid = centroids[clusterId];
     });

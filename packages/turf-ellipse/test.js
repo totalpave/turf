@@ -3,13 +3,13 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import circle from '@turf/circle';
-import truncate from '@turf/truncate';
+import circle from '@spatial/circle';
+import truncate from '@spatial/truncate';
 import geojsonhint from '@mapbox/geojsonhint';
-import bboxPolygon from '@turf/bbox-polygon';
-import rhumbDestination from '@turf/rhumb-destination';
-// import destination from '@turf/destination';
-import { featureCollection } from '@turf/helpers';
+import bboxPolygon from '@spatial/bbox-polygon';
+import rhumbDestination from '@spatial/rhumb-destination';
+// import destination from '@spatial/destination';
+import { featureCollection } from '@spatial/helpers';
 import ellipse from '.';
 
 test('turf-ellipse', t => {

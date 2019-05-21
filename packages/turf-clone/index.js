@@ -39,9 +39,9 @@ function clone(geojson) {
  * @returns {Feature<any>} cloned Feature
  */
 function cloneFeature(geojson) {
-    var cloned = {type: 'Feature'};
+    const cloned = {type: 'Feature'};
     // Preserve Foreign Members
-    Object.keys(geojson).forEach(function (key) {
+    Object.keys(geojson).forEach((key) => {
         switch (key) {
         case 'type':
         case 'properties':
@@ -65,19 +65,17 @@ function cloneFeature(geojson) {
  * @returns {Object} cloned Properties
  */
 function cloneProperties(properties) {
-    var cloned = {};
+    const cloned = {};
     if (!properties) return cloned;
-    Object.keys(properties).forEach(function (key) {
-        var value = properties[key];
+    Object.keys(properties).forEach((key) => {
+        const value = properties[key];
         if (typeof value === 'object') {
             if (value === null) {
                 // handle null
                 cloned[key] = null;
             } else if (value.length) {
                 // handle Array
-                cloned[key] = value.map(function (item) {
-                    return item;
-                });
+                cloned[key] = value.map(item => item);
             } else {
                 // handle generic Object
                 cloned[key] = cloneProperties(value);
@@ -95,10 +93,10 @@ function cloneProperties(properties) {
  * @returns {FeatureCollection<any>} cloned Feature Collection
  */
 function cloneFeatureCollection(geojson) {
-    var cloned = {type: 'FeatureCollection'};
+    const cloned = {type: 'FeatureCollection'};
 
     // Preserve Foreign Members
-    Object.keys(geojson).forEach(function (key) {
+    Object.keys(geojson).forEach((key) => {
         switch (key) {
         case 'type':
         case 'features':
@@ -108,9 +106,7 @@ function cloneFeatureCollection(geojson) {
         }
     });
     // Add features
-    cloned.features = geojson.features.map(function (feature) {
-        return cloneFeature(feature);
-    });
+    cloned.features = geojson.features.map(feature => cloneFeature(feature));
     return cloned;
 }
 
@@ -122,13 +118,11 @@ function cloneFeatureCollection(geojson) {
  * @returns {Geometry<any>} cloned Geometry
  */
 function cloneGeometry(geometry) {
-    var geom = {type: geometry.type};
+    const geom = {type: geometry.type};
     if (geometry.bbox) geom.bbox = geometry.bbox;
 
     if (geometry.type === 'GeometryCollection') {
-        geom.geometries = geometry.geometries.map(function (geom) {
-            return cloneGeometry(geom);
-        });
+        geom.geometries = geometry.geometries.map(geom => cloneGeometry(geom));
         return geom;
     }
     geom.coordinates = deepSlice(geometry.coordinates);
@@ -144,9 +138,7 @@ function cloneGeometry(geometry) {
  */
 function deepSlice(coords) {
     if (typeof coords[0] !== 'object') { return coords.slice(); }
-    return coords.map(function (coord) {
-        return deepSlice(coord);
-    });
+    return coords.map(coord => deepSlice(coord));
 }
 
 export default clone;

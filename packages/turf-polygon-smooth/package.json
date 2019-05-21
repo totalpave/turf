@@ -1,0 +1,55 @@
+{
+  "name": "@spatial/polygon-smooth",
+  "version": "5.0.1",
+  "description": "turf polygon smooth module",
+  "main": "main.js",
+  "module": "main.es.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "main.js",
+    "main.es.js"
+  ],
+  "scripts": {
+    "pretest": "rollup -c ../../rollup.config.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
+    "docs": "node ../../scripts/generate-readmes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Turfjs/turf.git"
+  },
+  "keywords": [
+    "turf",
+    "geojson",
+    "polygon"
+  ],
+  "author": "Turf Authors",
+  "contributors": [
+    "Rowan Winsemius <@rowanwins>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Turfjs/turf/issues"
+  },
+  "homepage": "https://github.com/Turfjs/turf",
+  "devDependencies": {
+    "esm": "*",
+    "benchmark": "*",
+    "glob": "*",
+    "load-json-file": "*",
+    "rollup": "*",
+    "tape": "*",
+    "write-json-file": "*"
+  },
+  "dependencies": {
+    "@totalpave/helpers": "5.x",
+    "@totalpave/meta": "5.x"
+  },
+  "esm": {
+    "cjs": true
+  }
+}

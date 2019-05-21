@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureEach } from '@turf/meta';
+import { featureEach } from '@spatial/meta';
 import kinks from '.';
 
 const directories = {

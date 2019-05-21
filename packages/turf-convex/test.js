@@ -3,7 +3,7 @@ import glob from 'glob';
 import path from 'path';
 import write from 'write-json-file';
 import load from 'load-json-file';
-import { featureCollection } from '@turf/helpers';
+import { featureCollection } from '@spatial/helpers';
 import convex from '.';
 
 const directories = {

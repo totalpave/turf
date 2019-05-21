@@ -1,5 +1,5 @@
-import { feature, featureCollection } from '@turf/helpers';
-import { featureEach } from '@turf/meta';
+import { feature, featureCollection } from '@spatial/helpers';
+import { featureEach } from '@spatial/meta';
 
 /**
  * Combines a {@link FeatureCollection} of {@link Point}, {@link LineString}, or {@link Polygon} features
@@ -20,13 +20,13 @@ import { featureEach } from '@turf/meta';
  * var addToMap = [combined]
  */
 function combine(fc) {
-    var groups = {
+    const groups = {
         MultiPoint: {coordinates: [], properties: []},
         MultiLineString: {coordinates: [], properties: []},
         MultiPolygon: {coordinates: [], properties: []}
     };
 
-    var multiMapping = Object.keys(groups).reduce(function (memo, item) {
+    const multiMapping = Object.keys(groups).reduce((memo, item) => {
         memo[item.replace('Multi', '')] = item;
         return memo;
     }, {});
@@ -40,7 +40,7 @@ function combine(fc) {
         groups[key].properties.push(feature.properties);
     }
 
-    featureEach(fc, function (feature) {
+    featureEach(fc, (feature) => {
         if (!feature.geometry) return;
         if (groups[feature.geometry.type]) {
             addToGroup(feature, feature.geometry.type, true);
@@ -50,13 +50,11 @@ function combine(fc) {
     });
 
     return featureCollection(Object.keys(groups)
-        .filter(function (key) {
-            return groups[key].coordinates.length;
-        })
+        .filter(key => groups[key].coordinates.length)
         .sort()
-        .map(function (key) {
-            var geometry = { type: key, coordinates: groups[key].coordinates };
-            var properties = { collectedProperties: groups[key].properties };
+        .map((key) => {
+            const geometry = { type: key, coordinates: groups[key].coordinates };
+            const properties = { collectedProperties: groups[key].properties };
             return feature(geometry, properties);
         }));
 }

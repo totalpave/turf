@@ -46,7 +46,7 @@ test('turf -- invalid dependencies', t => {
             if (dependencies[invalidDependency]) t.fail(`${name} ${invalidDependency} should be defined as devDependencies`);
         }
         if (devDependencies['eslint'] || devDependencies['eslint-config-mourner']) t.fail(`${name} eslint is handled at the root level`);
-        if (devDependencies['@turf/helpers']) t.fail(`${name} @turf/helpers should be located in Dependencies instead of DevDependencies`);
+        if (devDependencies['@spatial/helpers']) t.fail(`${name} @spatial/helpers should be located in Dependencies instead of DevDependencies`);
         // if (devDependencies['mkdirp']) t.fail(`${name} tests should not have to create folders`);
     }
     t.skip('remove "mkdirp" from testing');
@@ -56,7 +56,7 @@ test('turf -- invalid dependencies', t => {
 test('turf -- * wildcard devDependencies', t => {
     for (const {name, devDependencies} of modules) {
         for (const dependency of Object.keys(devDependencies)) {
-            if (dependency.includes('@turf')) continue
+            if (dependency.includes('@spatial')) continue
             if (devDependencies[dependency] !== '*') t.fail(`${name} ${dependency} devDependencies must use *`);
         }
     }
@@ -118,7 +118,7 @@ test('turf -- MIT license', t => {
     for (const {name, dir, pckg} of modules) {
         const {license} = pckg;
         if (license !== 'MIT') t.fail(`${name} (license) must be "MIT"`);
-        if (fs.readFileSync(path.join(dir, 'LICENSE'), 'utf8') !== text) t.fail(`${name} (LICENSE) is different from @turf/turf`);
+        if (fs.readFileSync(path.join(dir, 'LICENSE'), 'utf8') !== text) t.fail(`${name} (LICENSE) is different from @spatial/turf`);
     }
     t.end();
 });
@@ -134,7 +134,7 @@ test('turf -- contributors', t => {
 
 test('turf -- scoped package name', t => {
     for (const {name, pckg} of modules) {
-        const expected = name.replace('turf-', '@turf/');
+        const expected = name.replace('turf-', '@spatial/');
         if (pckg.name !== expected) t.fail(`${name} (name) must use ${expected} in package.json`);
     }
     t.end();
@@ -169,11 +169,11 @@ test('turf -- parsing dependencies from index.js', t => {
 
         // Read Dependencies from package.json
         for (const dependencyName of Object.keys(dependencies)) {
-            // Ignore @turf/helpers since it could be used in Typescript definition
+            // Ignore @spatial/helpers since it could be used in Typescript definition
             switch (dependencyName) {
-            case '@turf/helpers':
-            case '@turf/invariant':
-            case '@turf/meta':
+            case '@spatial/helpers':
+            case '@spatial/invariant':
+            case '@spatial/meta':
             case 'jsts':
             case 'rbush':
             case 'topojson-client':
@@ -213,16 +213,16 @@ test('turf -- missing modules', t => {
 
 const deprecated = {
     modules: [
-        '@turf/idw',
-        '@turf/line-distance',
-        '@turf/point-on-line',
-        '@turf/bezier',
-        '@turf/within',
-        '@turf/inside',
-        '@turf/nearest',
-        '@turf/polygon-to-linestring',
-        '@turf/linestring-to-polygon',
-        '@turf/point-on-surface'
+        '@spatial/idw',
+        '@spatial/line-distance',
+        '@spatial/point-on-line',
+        '@spatial/bezier',
+        '@spatial/within',
+        '@spatial/inside',
+        '@spatial/nearest',
+        '@spatial/polygon-to-linestring',
+        '@spatial/linestring-to-polygon',
+        '@spatial/point-on-surface'
     ],
     methods: [
         'radians2degrees',
@@ -248,7 +248,7 @@ test('turf -- check for deprecated modules', t => {
 
 test('turf -- check for deprecated methods', t => {
     for (const {name, index, test} of modules) {
-        // Exclude @turf/helpers from this test
+        // Exclude @spatial/helpers from this test
         if (name === 'turf-helpers') continue
         for (const method of deprecated.methods) {
             if ((test + index).match(method)) throw new Error(`${name} repo has deprecated method ${method}`);
@@ -257,7 +257,7 @@ test('turf -- check for deprecated methods', t => {
     t.end();
 });
 
-// TurfJS v5.0 Typescript definition uses @turf/helpers
+// TurfJS v5.0 Typescript definition uses @spatial/helpers
 test('turf -- update to newer Typescript definitions', t => {
     glob.sync(turfTypescriptPath).forEach(filepath => {
         const typescript = fs.readFileSync(filepath, 'utf8');

@@ -1,4 +1,4 @@
-import { polygon, lineString, multiLineString, multiPolygon } from '@turf/helpers'
+import { polygon, lineString, multiLineString, multiPolygon } from '@spatial/helpers'
 import rewind from './'
 
 const coords = [[121, -29], [138, -29], [138, -18], [121, -18], [121, -29]]

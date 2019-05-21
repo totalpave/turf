@@ -1,4 +1,4 @@
-import { AllGeoJSON, FeatureCollection, Point } from '@turf/helpers'
+import { AllGeoJSON, FeatureCollection, Point } from '@spatial/helpers'
 
 
 /**

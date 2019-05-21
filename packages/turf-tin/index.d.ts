@@ -1,4 +1,4 @@
-import { Point, FeatureCollection, Polygon } from '@turf/helpers'
+import { Point, FeatureCollection, Polygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#tin

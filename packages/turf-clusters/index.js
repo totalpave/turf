@@ -1,5 +1,5 @@
-import { featureEach } from '@turf/meta';
-import { featureCollection } from '@turf/helpers';
+import { featureEach } from '@spatial/meta';
+import { featureCollection } from '@spatial/helpers';
 
 /**
  * Get Cluster
@@ -37,8 +37,8 @@ export function getCluster(geojson, filter) {
     if (filter === undefined || filter === null) throw new Error('filter is required');
 
     // Filter Features
-    var features = [];
-    featureEach(geojson, function (feature) {
+    const features = [];
+    featureEach(geojson, (feature) => {
         if (applyFilter(feature.properties, filter)) features.push(feature);
     });
     return featureCollection(features);
@@ -100,13 +100,13 @@ export function clusterEach(geojson, property, callback) {
     if (property === undefined || property === null) throw new Error('property is required');
 
     // Create clusters based on property values
-    var bins = createBins(geojson, property);
-    var values = Object.keys(bins);
-    for (var index = 0; index < values.length; index++) {
-        var value = values[index];
-        var bin = bins[value];
-        var features = [];
-        for (var i = 0; i < bin.length; i++) {
+    const bins = createBins(geojson, property);
+    const values = Object.keys(bins);
+    for (let index = 0; index < values.length; index++) {
+        const value = values[index];
+        const bin = bins[value];
+        const features = [];
+        for (let i = 0; i < bin.length; i++) {
             features.push(geojson.features[bin[i]]);
         }
         callback(featureCollection(features), value, index);
@@ -178,8 +178,8 @@ export function clusterEach(geojson, property, callback) {
  * }, []);
  */
 export function clusterReduce(geojson, property, callback, initialValue) {
-    var previousValue = initialValue;
-    clusterEach(geojson, property, function (cluster, clusterValue, currentIndex) {
+    let previousValue = initialValue;
+    clusterEach(geojson, property, (cluster, clusterValue, currentIndex) => {
         if (currentIndex === 0 && initialValue === undefined) previousValue = cluster;
         else previousValue = callback(previousValue, cluster, clusterValue, currentIndex);
     });
@@ -204,12 +204,12 @@ export function clusterReduce(geojson, property, callback, initialValue) {
  * //= { '0': [ 0 ], '1': [ 1, 3 ] }
  */
 export function createBins(geojson, property) {
-    var bins = {};
+    const bins = {};
 
-    featureEach(geojson, function (feature, i) {
-        var properties = feature.properties || {};
+    featureEach(geojson, (feature, i) => {
+        const properties = feature.properties || {};
         if (properties.hasOwnProperty(property)) {
-            var value = properties[property];
+            const value = properties[property];
             if (bins.hasOwnProperty(value)) bins[value].push(i);
             else bins[value] = [i];
         }
@@ -227,13 +227,13 @@ export function createBins(geojson, property) {
  */
 export function applyFilter(properties, filter) {
     if (properties === undefined) return false;
-    var filterType = typeof filter;
+    const filterType = typeof filter;
 
     // String & Number
     if (filterType === 'number' || filterType === 'string') return properties.hasOwnProperty(filter);
     // Array
     else if (Array.isArray(filter)) {
-        for (var i = 0; i < filter.length; i++) {
+        for (let i = 0; i < filter.length; i++) {
             if (!applyFilter(properties, filter[i])) return false;
         }
         return true;
@@ -257,9 +257,9 @@ export function applyFilter(properties, filter) {
  * //= false
  */
 export function propertiesContainsFilter(properties, filter) {
-    var keys = Object.keys(filter);
-    for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
+    const keys = Object.keys(filter);
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
         if (properties[key] !== filter[key]) return false;
     }
     return true;
@@ -280,9 +280,9 @@ export function filterProperties(properties, keys) {
     if (!keys) return {};
     if (!keys.length) return {};
 
-    var newProperties = {};
-    for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
+    const newProperties = {};
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
         if (properties.hasOwnProperty(key)) newProperties[key] = properties[key];
     }
     return newProperties;

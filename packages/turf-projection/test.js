@@ -4,10 +4,10 @@ import path from 'path';
 import load from 'load-json-file';
 import proj4 from 'proj4';
 import write from 'write-json-file';
-import clone from '@turf/clone';
-import { point } from '@turf/helpers';
-import truncate from '@turf/truncate';
-import { coordEach } from '@turf/meta';
+import clone from '@spatial/clone';
+import { point } from '@spatial/helpers';
+import truncate from '@spatial/truncate';
+import { coordEach } from '@spatial/meta';
 import { toMercator, toWgs84 } from '.';
 
 const directories = {

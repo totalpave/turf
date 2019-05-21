@@ -1,4 +1,4 @@
-import { point, lineString, Properties } from '@turf/helpers'
+import { point, lineString, Properties } from '@spatial/helpers'
 import rhumbBearing from './'
 
 const point1 = point<Properties>([-75.343, 39.984], {"marker-color": "#F00"})

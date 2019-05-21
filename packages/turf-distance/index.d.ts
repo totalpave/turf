@@ -1,4 +1,4 @@
-import { Units, Coord } from '@turf/helpers'
+import { Units, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#distance

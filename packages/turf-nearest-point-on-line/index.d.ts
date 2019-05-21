@@ -1,4 +1,4 @@
-import { Point, Feature, Units, Coord, LineString, MultiLineString } from '@turf/helpers'
+import { Point, Feature, Units, Coord, LineString, MultiLineString } from '@spatial/helpers'
 
 export interface NearestPointOnLine extends Feature<Point> {
     properties: {

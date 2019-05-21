@@ -1,7 +1,7 @@
-import tin from '@turf/tin';
-import distance from '@turf/distance';
-import { featureEach } from '@turf/meta';
-import { feature, featureCollection, isObject, isNumber } from '@turf/helpers';
+import tin from '@spatial/tin';
+import distance from '@spatial/distance';
+import { featureEach } from '@spatial/meta';
+import { feature, featureCollection, isObject, isNumber } from '@spatial/helpers';
 import dissolve from './lib/turf-dissolve';
 
 /**
@@ -37,28 +37,28 @@ function concave(points, options) {
 
     // validation
     if (!points) throw new Error('points is required');
-    var maxEdge = options.maxEdge || Infinity;
+    const maxEdge = options.maxEdge || Infinity;
     if (!isNumber(maxEdge)) throw new Error('maxEdge is invalid');
 
-    var cleaned = removeDuplicates(points);
+    const cleaned = removeDuplicates(points);
 
-    var tinPolys = tin(cleaned);
+    const tinPolys = tin(cleaned);
     // calculate length of all edges and area of all triangles
     // and remove triangles that fail the max length test
-    tinPolys.features = tinPolys.features.filter(function (triangle) {
-        var pt1 = triangle.geometry.coordinates[0][0];
-        var pt2 = triangle.geometry.coordinates[0][1];
-        var pt3 = triangle.geometry.coordinates[0][2];
-        var dist1 = distance(pt1, pt2, options);
-        var dist2 = distance(pt2, pt3, options);
-        var dist3 = distance(pt1, pt3, options);
+    tinPolys.features = tinPolys.features.filter((triangle) => {
+        const pt1 = triangle.geometry.coordinates[0][0];
+        const pt2 = triangle.geometry.coordinates[0][1];
+        const pt3 = triangle.geometry.coordinates[0][2];
+        const dist1 = distance(pt1, pt2, options);
+        const dist2 = distance(pt2, pt3, options);
+        const dist3 = distance(pt1, pt3, options);
         return (dist1 <= maxEdge && dist2 <= maxEdge && dist3 <= maxEdge);
     });
 
     if (tinPolys.features.length < 1) return null;
 
     // merge the adjacent triangles
-    var dissolved = dissolve(tinPolys, options);
+    const dissolved = dissolve(tinPolys, options);
 
     // geojson-dissolve always returns a MultiPolygon
     if (dissolved.coordinates.length === 1) {
@@ -76,12 +76,12 @@ function concave(points, options) {
  * @returns {FeatureCollection<Point>} cleaned set of points
  */
 function removeDuplicates(points) {
-    var cleaned = [];
-    var existing = {};
+    const cleaned = [];
+    const existing = {};
 
-    featureEach(points, function (pt) {
+    featureEach(points, (pt) => {
         if (!pt.geometry) return;
-        var key = pt.geometry.coordinates.join('-');
+        const key = pt.geometry.coordinates.join('-');
         if (!existing.hasOwnProperty(key)) {
             cleaned.push(pt);
             existing[key] = true;

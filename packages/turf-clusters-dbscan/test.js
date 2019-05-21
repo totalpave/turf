@@ -3,12 +3,12 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import centroid from '@turf/centroid';
+import centroid from '@spatial/centroid';
 import * as chromatism from 'chromatism';
 import concaveman from 'concaveman';
-import { point, polygon, featureCollection } from '@turf/helpers';
-import { clusterReduce, clusterEach } from '@turf/clusters';
-import { coordAll, featureEach } from '@turf/meta';
+import { point, polygon, featureCollection } from '@spatial/helpers';
+import { clusterReduce, clusterEach } from '@spatial/clusters';
+import { coordAll, featureEach } from '@spatial/meta';
 import clustersDbscan from '.';
 
 const directories = {

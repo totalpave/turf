@@ -1,5 +1,5 @@
 import booleanClockwise from './'
-import { lineString } from '@turf/helpers'
+import { lineString } from '@spatial/helpers'
 
 var line = lineString([[0, 0], [1, 1], [1, 0], [0, 0]]);
 

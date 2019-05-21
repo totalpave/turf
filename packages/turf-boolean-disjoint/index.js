@@ -1,7 +1,7 @@
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { flattenEach } from '@turf/meta';
-import lineIntersect from '@turf/line-intersect';
-import polygonToLine from '@turf/polygon-to-line';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import { flattenEach } from '@spatial/meta';
+import lineIntersect from '@spatial/line-intersect';
+import polygonToLine from '@spatial/polygon-to-line';
 
 /**
  * Boolean-disjoint returns (TRUE) if the intersection of the two geometries is an empty set.
@@ -18,9 +18,9 @@ import polygonToLine from '@turf/polygon-to-line';
  * //=true
  */
 function booleanDisjoint(feature1, feature2) {
-    var boolean;
-    flattenEach(feature1, function (flatten1) {
-        flattenEach(feature2, function (flatten2) {
+    let boolean;
+    flattenEach(feature1, (flatten1) => {
+        flattenEach(feature2, (flatten2) => {
             if (boolean === false) return false;
             boolean = disjoint(flatten1.geometry, flatten2.geometry);
         });
@@ -74,7 +74,7 @@ function disjoint(geom1, geom2) {
 
 // http://stackoverflow.com/a/11908158/1979085
 function isPointOnLine(lineString, point) {
-    for (var i = 0; i < lineString.coordinates.length - 1; i++) {
+    for (let i = 0; i < lineString.coordinates.length - 1; i++) {
         if (isPointOnLineSegment(lineString.coordinates[i], lineString.coordinates[i + 1], point.coordinates)) {
             return true;
         }
@@ -83,7 +83,7 @@ function isPointOnLine(lineString, point) {
 }
 
 function isLineOnLine(lineString1, lineString2) {
-    var doLinesIntersect = lineIntersect(lineString1, lineString2);
+    const doLinesIntersect = lineIntersect(lineString1, lineString2);
     if (doLinesIntersect.features.length > 0) {
         return true;
     }
@@ -91,7 +91,7 @@ function isLineOnLine(lineString1, lineString2) {
 }
 
 function isLineInPoly(polygon, lineString) {
-    var doLinesIntersect = lineIntersect(lineString, polygonToLine(polygon));
+    const doLinesIntersect = lineIntersect(lineString, polygonToLine(polygon));
     if (doLinesIntersect.features.length > 0) {
         return true;
     }
@@ -109,12 +109,12 @@ function isLineInPoly(polygon, lineString) {
  * @returns {boolean} true/false
  */
 function isPolyInPoly(feature1, feature2) {
-    for (var i = 0; i < feature1.coordinates[0].length; i++) {
+    for (let i = 0; i < feature1.coordinates[0].length; i++) {
         if (booleanPointInPolygon(feature1.coordinates[0][i], feature2)) {
             return true;
         }
     }
-    for (var i2 = 0; i2 < feature2.coordinates[0].length; i2++) {
+    for (let i2 = 0; i2 < feature2.coordinates[0].length; i2++) {
         if (booleanPointInPolygon(feature2.coordinates[0][i2], feature1)) {
             return true;
         }
@@ -123,11 +123,11 @@ function isPolyInPoly(feature1, feature2) {
 }
 
 function isPointOnLineSegment(LineSegmentStart, LineSegmentEnd, Point) {
-    var dxc = Point[0] - LineSegmentStart[0];
-    var dyc = Point[1] - LineSegmentStart[1];
-    var dxl = LineSegmentEnd[0] - LineSegmentStart[0];
-    var dyl = LineSegmentEnd[1] - LineSegmentStart[1];
-    var cross = dxc * dyl - dyc * dxl;
+    const dxc = Point[0] - LineSegmentStart[0];
+    const dyc = Point[1] - LineSegmentStart[1];
+    const dxl = LineSegmentEnd[0] - LineSegmentStart[0];
+    const dyl = LineSegmentEnd[1] - LineSegmentStart[1];
+    const cross = dxc * dyl - dyc * dxl;
     if (cross !== 0) {
         return false;
     }

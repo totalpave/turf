@@ -1,4 +1,4 @@
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 
 /**
  * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
@@ -21,9 +21,9 @@ import { point } from '@turf/helpers';
  * var addToMap = [poly, kinks]
  */
 function kinks(featureIn) {
-    var coordinates;
-    var feature;
-    var results = {
+    let coordinates;
+    let feature;
+    const results = {
         type: 'FeatureCollection',
         features: []
     };
@@ -44,11 +44,11 @@ function kinks(featureIn) {
         throw new Error('Input must be a LineString, MultiLineString, ' +
             'Polygon, or MultiPolygon Feature or Geometry');
     }
-    coordinates.forEach(function (line1) {
-        coordinates.forEach(function (line2) {
-            for (var i = 0; i < line1.length - 1; i++) {
+    coordinates.forEach((line1) => {
+        coordinates.forEach((line2) => {
+            for (let i = 0; i < line1.length - 1; i++) {
                 // start iteration at i, intersections for k < i have already been checked in previous outer loop iterations
-                for (var k = i; k < line2.length - 1; k++) {
+                for (let k = i; k < line2.length - 1; k++) {
                     if (line1 === line2) {
                         // segments are adjacent and always share a vertex, not a kink
                         if (Math.abs(i - k) === 1) {
@@ -67,7 +67,7 @@ function kinks(featureIn) {
                         }
                     }
 
-                    var intersection = lineIntersects(line1[i][0], line1[i][1], line1[i + 1][0], line1[i + 1][1],
+                    const intersection = lineIntersects(line1[i][0], line1[i][1], line1[i + 1][0], line1[i + 1][1],
                         line2[k][0], line2[k][1], line2[k + 1][0], line2[k + 1][1]);
                     if (intersection) {
                         results.features.push(point([intersection[0], intersection[1]]));
@@ -83,7 +83,7 @@ function kinks(featureIn) {
 // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
 function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
     // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
-    var denominator, a, b, numerator1, numerator2,
+    let denominator, a, b, numerator1, numerator2,
         result = {
             x: null,
             y: null,

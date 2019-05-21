@@ -1,6 +1,6 @@
-import destination from '@turf/destination';
-import circle from '@turf/circle';
-import { lineString, isObject } from '@turf/helpers';
+import destination from '@spatial/destination';
+import circle from '@spatial/circle';
+import { lineString, isObject } from '@spatial/helpers';
 
 /**
  * Creates a circular arc, of a circle of the given radius and center point, between bearing1 and bearing2;
@@ -30,8 +30,8 @@ function lineArc(center, radius, bearing1, bearing2, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var steps = options.steps;
-    var units = options.units;
+    let steps = options.steps;
+    const units = options.units;
 
     // validation
     if (!center) throw new Error('center is required');
@@ -43,20 +43,20 @@ function lineArc(center, radius, bearing1, bearing2, options) {
     // default params
     steps = steps || 64;
 
-    var angle1 = convertAngleTo360(bearing1);
-    var angle2 = convertAngleTo360(bearing2);
-    var properties = center.properties;
+    const angle1 = convertAngleTo360(bearing1);
+    const angle2 = convertAngleTo360(bearing2);
+    const properties = center.properties;
 
     // handle angle parameters
     if (angle1 === angle2) {
         return lineString(circle(center, radius, options).geometry.coordinates[0], properties);
     }
-    var arcStartDegree = angle1;
-    var arcEndDegree = (angle1 < angle2) ? angle2 : angle2 + 360;
+    const arcStartDegree = angle1;
+    const arcEndDegree = (angle1 < angle2) ? angle2 : angle2 + 360;
 
-    var alfa = arcStartDegree;
-    var coordinates = [];
-    var i = 0;
+    let alfa = arcStartDegree;
+    const coordinates = [];
+    let i = 0;
 
     while (alfa < arcEndDegree) {
         coordinates.push(destination(center, radius, alfa, units).geometry.coordinates);
@@ -79,7 +79,7 @@ function lineArc(center, radius, bearing1, bearing2, options) {
  * @returns {number} angle between 0-360 degrees
  */
 function convertAngleTo360(alfa) {
-    var beta = alfa % 360;
+    let beta = alfa % 360;
     if (beta < 0) {
         beta += 360;
     }

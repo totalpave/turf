@@ -1,5 +1,5 @@
-import { geomEach, coordEach } from '@turf/meta';
-import { point, isNumber, isObject } from '@turf/helpers';
+import { geomEach, coordEach } from '@spatial/meta';
+import { point, isNumber, isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link Feature} or {@link FeatureCollection} and returns the mean center. Can be weighted.
@@ -29,22 +29,22 @@ function centerMean(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var properties = options.properties;
-    var weightTerm = options.weight;
+    const properties = options.properties;
+    const weightTerm = options.weight;
 
     // Input validation
     if (!geojson) throw new Error('geojson is required');
 
-    var sumXs = 0;
-    var sumYs = 0;
-    var sumNs = 0;
-    geomEach(geojson, function (geom, featureIndex, properties) {
-        var weight = properties[weightTerm];
+    let sumXs = 0;
+    let sumYs = 0;
+    let sumNs = 0;
+    geomEach(geojson, (geom, featureIndex, properties) => {
+        let weight = properties[weightTerm];
         weight = (weight === undefined || weight === null) ? 1 : weight;
-        if (!isNumber(weight)) throw new Error('weight value must be a number for feature index ' + featureIndex);
+        if (!isNumber(weight)) throw new Error(`weight value must be a number for feature index ${  featureIndex}`);
         weight = Number(weight);
         if (weight > 0) {
-            coordEach(geom, function (coord) {
+            coordEach(geom, (coord) => {
                 sumXs += coord[0] * weight;
                 sumYs += coord[1] * weight;
                 sumNs += weight;

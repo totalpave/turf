@@ -1,4 +1,4 @@
-import { Feature, Coord, Polygon, Units, Properties } from '@turf/helpers'
+import { Feature, Coord, Polygon, Units, Properties } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#ellipse

@@ -3,7 +3,7 @@ import fs from 'fs';
 import test from 'tape';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { feature } from '@turf/helpers';
+import { feature } from '@spatial/helpers';
 import intersect from '.';
 
 const directories = {

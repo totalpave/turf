@@ -3,10 +3,10 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { featureCollection, point } from '@turf/helpers';
-import { getCoord } from '@turf/invariant';
-import { featureEach } from '@turf/meta';
+import truncate from '@spatial/truncate';
+import { featureCollection, point } from '@spatial/helpers';
+import { getCoord } from '@spatial/invariant';
+import { featureEach } from '@spatial/meta';
 import shortestPath from './';
 
 const directories = {

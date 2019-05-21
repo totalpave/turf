@@ -1,4 +1,4 @@
-import { Feature, LineString, Coord } from '@turf/helpers'
+import { Feature, LineString, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#lineslice

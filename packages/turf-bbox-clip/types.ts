@@ -1,4 +1,4 @@
-import {polygon, BBox} from '@turf/helpers'
+import {polygon, BBox} from '@spatial/helpers'
 import bboxClip from './'
 
 const bbox: BBox = [0, 0, 10, 10];

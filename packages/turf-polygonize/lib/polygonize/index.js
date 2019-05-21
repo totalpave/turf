@@ -1,6 +1,6 @@
 import Graph from './Graph';
 import EdgeRing from './EdgeRing';
-import {featureCollection} from '@turf/helpers';
+import {featureCollection} from '@spatial/helpers';
 
 /**
  * Polygonizes {@link LineString|(Multi)LineString(s)} into {@link Polygons}.

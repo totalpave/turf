@@ -1,4 +1,4 @@
-import { AllGeoJSON, Coord } from '@turf/helpers';
+import { AllGeoJSON, Coord } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#transformrotate

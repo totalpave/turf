@@ -1,5 +1,5 @@
-import { getCoords, getType } from '@turf/invariant';
-import { lineString, multiLineString, featureCollection, isObject } from '@turf/helpers';
+import { getCoords, getType } from '@spatial/invariant';
+import { lineString, multiLineString, featureCollection, isObject } from '@spatial/helpers';
 
 /**
  * Converts a {@link Polygon} to {@link LineString|(Multi)LineString} or {@link MultiPolygon} to a {@link FeatureCollection} of {@link LineString|(Multi)LineString}.
@@ -21,11 +21,11 @@ function polygonToLine(polygon, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var properties = options.properties;
+    let properties = options.properties;
 
     // Variables
-    var geom = getType(polygon);
-    var coords = getCoords(polygon);
+    const geom = getType(polygon);
+    const coords = getCoords(polygon);
     properties = properties || polygon.properties || {};
 
     if (!coords.length) throw new Error('polygon must contain coordinates');
@@ -35,12 +35,12 @@ function polygonToLine(polygon, options) {
         return coordsToLine(coords, properties);
     case 'MultiPolygon':
         var lines = [];
-        coords.forEach(function (coord) {
+        coords.forEach((coord) => {
             lines.push(coordsToLine(coord, properties));
         });
         return featureCollection(lines);
     default:
-        throw new Error('geom ' + geom + ' not supported');
+        throw new Error(`geom ${  geom  } not supported`);
     }
 }
 

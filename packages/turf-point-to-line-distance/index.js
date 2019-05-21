@@ -1,13 +1,13 @@
 // (logic of computation inspired by:
 // https://stackoverflow.com/questions/32771458/distance-from-lat-lng-point-to-minor-arc-segment)
 
-import bearing from '@turf/bearing';
-import distance from '@turf/distance';
-import rhumbBearing from '@turf/rhumb-bearing';
-import rhumbDistance from '@turf/rhumb-distance';
-import { toMercator, toWgs84 } from '@turf/projection';
-import { featureOf } from '@turf/invariant';
-import { segmentEach } from '@turf/meta';
+import bearing from '@spatial/bearing';
+import distance from '@spatial/distance';
+import rhumbBearing from '@spatial/rhumb-bearing';
+import rhumbDistance from '@spatial/rhumb-distance';
+import { toMercator, toWgs84 } from '@spatial/projection';
+import { featureOf } from '@spatial/invariant';
+import { segmentEach } from '@spatial/meta';
 import {
     point,
     feature,
@@ -16,7 +16,7 @@ import {
     degreesToRadians,
     convertLength,
     isObject
-} from '@turf/helpers';
+} from '@spatial/helpers';
 
 /**
  * Returns the minimum distance between a {@link Point} and a {@link LineString}, being the distance from a line the
@@ -52,12 +52,12 @@ function pointToLineDistance(pt, line, options) {
     else if (line.type === 'LineString') line = feature(line);
     else featureOf(line, 'LineString', 'line');
 
-    var distance = Infinity;
-    var p = pt.geometry.coordinates;
-    segmentEach(line, function (segment) {
-        var a = segment.geometry.coordinates[0];
-        var b = segment.geometry.coordinates[1];
-        var d = distanceToSegment(p, a, b, options);
+    let distance = Infinity;
+    const p = pt.geometry.coordinates;
+    segmentEach(line, (segment) => {
+        const a = segment.geometry.coordinates[0];
+        const b = segment.geometry.coordinates[1];
+        const d = distanceToSegment(p, a, b, options);
         if (distance > d) distance = d;
     });
     return distance;
@@ -77,11 +77,11 @@ function pointToLineDistance(pt, line, options) {
  * @returns {number} distance
  */
 function distanceToSegment(p, a, b, options) {
-    var mercator = options.mercator;
-    var distanceAP = (mercator !== true) ? distance(a, p, options) : euclideanDistance(a, p, options);
-    var azimuthAP = bearingToAzimuth((mercator !== true) ? bearing(a, p) : rhumbBearing(a, p));
-    var azimuthAB = bearingToAzimuth((mercator !== true) ? bearing(a, b) : rhumbBearing(a, b));
-    var angleA = Math.abs(azimuthAP - azimuthAB);
+    const mercator = options.mercator;
+    const distanceAP = (mercator !== true) ? distance(a, p, options) : euclideanDistance(a, p, options);
+    const azimuthAP = bearingToAzimuth((mercator !== true) ? bearing(a, p) : rhumbBearing(a, p));
+    const azimuthAB = bearingToAzimuth((mercator !== true) ? bearing(a, b) : rhumbBearing(a, b));
+    const angleA = Math.abs(azimuthAP - azimuthAB);
     // if (angleA > 180) angleA = Math.abs(angleA - 360);
     // if the angle PAB is obtuse its projection on the line extending the segment falls outside the segment
     // thus return distance between P and the start point A
@@ -95,9 +95,9 @@ function distanceToSegment(p, a, b, options) {
      */
     if (angleA > 90) return distanceAP;
 
-    var azimuthBA = (azimuthAB + 180) % 360;
-    var azimuthBP = bearingToAzimuth((mercator !== true) ? bearing(b, p) : rhumbBearing(b, p));
-    var angleB = Math.abs(azimuthBP - azimuthBA);
+    const azimuthBA = (azimuthAB + 180) % 360;
+    const azimuthBP = bearingToAzimuth((mercator !== true) ? bearing(b, p) : rhumbBearing(b, p));
+    let angleB = Math.abs(azimuthBP - azimuthBA);
     if (angleB > 180) angleB = Math.abs(angleB - 360);
     // also if the angle ABP is acute the projection of P falls outside the segment, on the other side
     // so return the distance between P and the end point B
@@ -137,20 +137,20 @@ function distanceToSegment(p, a, b, options) {
  * @returns {number} distance
  */
 function mercatorPH(a, b, p, options) {
-    var delta = 0;
+    let delta = 0;
     // translate points if any is crossing the 180th meridian
     if (Math.abs(a[0]) >= 180 || Math.abs(b[0]) >= 180 || Math.abs(p[0]) >= 180) {
         delta = (a[0] > 0 || b[0] > 0 || p[0] > 0) ? -180 : 180;
     }
 
-    var origin = point(p);
-    var A = toMercator([a[0] + delta, a[1]]);
-    var B = toMercator([b[0] + delta, b[1]]);
-    var P = toMercator([p[0] + delta, p[1]]);
-    var h = toWgs84(euclideanIntersection(A, B, P));
+    const origin = point(p);
+    const A = toMercator([a[0] + delta, a[1]]);
+    const B = toMercator([b[0] + delta, b[1]]);
+    const P = toMercator([p[0] + delta, p[1]]);
+    const h = toWgs84(euclideanIntersection(A, B, P));
 
     if (delta !== 0) h[0] -= delta; // translate back to original position
-    var distancePH = rhumbDistance(origin, h, options);
+    const distancePH = rhumbDistance(origin, h, options);
     return distancePH;
 }
 
@@ -170,13 +170,13 @@ function mercatorPH(a, b, p, options) {
  * @returns {Array<number>} projected point
  */
 function euclideanIntersection(a, b, p) {
-    var x1 = a[0], y1 = a[1],
+    const x1 = a[0], y1 = a[1],
         x2 = b[0], y2 = b[1],
         x3 = p[0], y3 = p[1];
-    var px = x2 - x1, py = y2 - y1;
-    var dab = px * px + py * py;
-    var u = ((x3 - x1) * px + (y3 - y1) * py) / dab;
-    var x = x1 + u * px, y = y1 + u * py;
+    const px = x2 - x1, py = y2 - y1;
+    const dab = px * px + py * py;
+    const u = ((x3 - x1) * px + (y3 - y1) * py) / dab;
+    const x = x1 + u * px, y = y1 + u * py;
     return [x, y]; // H
 }
 
@@ -191,21 +191,21 @@ function euclideanIntersection(a, b, p) {
  * @returns {number} squared distance
  */
 function euclideanDistance(from, to, options) {
-    var units = options.units;
+    const units = options.units;
     // translate points if any is crossing the 180th meridian
-    var delta = 0;
+    let delta = 0;
     if (Math.abs(from[0]) >= 180) {
         delta = (from[0] > 0) ? -180 : 180;
     }
     if (Math.abs(to[0]) >= 180) {
         delta = (to[0] > 0) ? -180 : 180;
     }
-    var p1 = toMercator([from[0] + delta, from[1]]);
-    var p2 = toMercator([to[0] + delta, to[1]]);
+    const p1 = toMercator([from[0] + delta, from[1]]);
+    const p2 = toMercator([to[0] + delta, to[1]]);
 
-    var sqr = function (n) { return n * n; };
-    var squareD = sqr(p1[0] - p2[0]) + sqr(p1[1] - p2[1]);
-    var d = Math.sqrt(squareD);
+    const sqr = function (n) { return n * n; };
+    const squareD = sqr(p1[0] - p2[0]) + sqr(p1[1] - p2[1]);
+    const d = Math.sqrt(squareD);
     return convertLength(d, 'meters', units);
 }
 

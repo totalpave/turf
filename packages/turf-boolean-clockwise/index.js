@@ -1,4 +1,4 @@
-import { getCoords } from '@turf/invariant';
+import { getCoords } from '@spatial/invariant';
 
 /**
  * Takes a ring and return true or false whether or not the ring is clockwise or counter-clockwise.
@@ -18,13 +18,13 @@ import { getCoords } from '@turf/invariant';
 function booleanClockwise(line) {
     // validation
     if (!line) throw new Error('line is required');
-    var type = (line.geometry) ? line.geometry.type : line.type;
+    const type = (line.geometry) ? line.geometry.type : line.type;
     if (!Array.isArray(line) && type !== 'LineString') throw new Error('geometry must be a LineString');
 
-    var ring = getCoords(line);
-    var sum = 0;
-    var i = 1;
-    var prev, cur;
+    const ring = getCoords(line);
+    let sum = 0;
+    let i = 1;
+    let prev, cur;
     while (i < ring.length) {
         prev = cur || ring[0];
         cur = ring[i];

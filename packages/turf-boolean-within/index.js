@@ -1,13 +1,13 @@
-import calcBbox from '@turf/bbox';
-import booleanPointOnLine from '@turf/boolean-point-on-line';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { getGeom, getType } from '@turf/invariant';
+import calcBbox from '@spatial/bbox';
+import booleanPointOnLine from '@spatial/boolean-point-on-line';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import { getGeom, getType } from '@spatial/invariant';
 
 /**
  * Boolean-within returns true if the first geometry is completely within the second geometry.
  * The interiors of both geometries must intersect and, the interior and boundary of the primary (geometry a)
  * must not intersect the exterior of the secondary (geometry b).
- * Boolean-within returns the exact opposite result of the `@turf/boolean-contains`.
+ * Boolean-within returns the exact opposite result of the `@spatial/boolean-contains`.
  *
  * @name booleanWithin
  * @param {Geometry|Feature<any>} feature1 GeoJSON Feature or Geometry
@@ -21,10 +21,10 @@ import { getGeom, getType } from '@turf/invariant';
  * //=true
  */
 function booleanWithin(feature1, feature2) {
-    var type1 = getType(feature1);
-    var type2 = getType(feature2);
-    var geom1 = getGeom(feature1);
-    var geom2 = getGeom(feature2);
+    const type1 = getType(feature1);
+    const type2 = getType(feature2);
+    const geom1 = getGeom(feature1);
+    const geom2 = getGeom(feature2);
 
     switch (type1) {
     case 'Point':
@@ -36,7 +36,7 @@ function booleanWithin(feature1, feature2) {
         case 'Polygon':
             return booleanPointInPolygon(geom1, geom2, {ignoreBoundary: true});
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     case 'MultiPoint':
         switch (type2) {
@@ -47,7 +47,7 @@ function booleanWithin(feature1, feature2) {
         case 'Polygon':
             return isMultiPointInPoly(geom1, geom2);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     case 'LineString':
         switch (type2) {
@@ -56,23 +56,23 @@ function booleanWithin(feature1, feature2) {
         case 'Polygon':
             return isLineInPoly(geom1, geom2);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     case 'Polygon':
         switch (type2) {
         case 'Polygon':
             return isPolyInPoly(geom1, geom2);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     default:
-        throw new Error('feature1 ' + type1 + ' geometry not supported');
+        throw new Error(`feature1 ${  type1  } geometry not supported`);
     }
 }
 
 function isPointInMultiPoint(point, multiPoint) {
-    var i;
-    var output = false;
+    let i;
+    let output = false;
     for (i = 0; i < multiPoint.coordinates.length; i++) {
         if (compareCoords(multiPoint.coordinates[i], point.coordinates)) {
             output = true;
@@ -83,9 +83,9 @@ function isPointInMultiPoint(point, multiPoint) {
 }
 
 function isMultiPointInMultiPoint(multiPoint1, multiPoint2) {
-    for (var i = 0; i < multiPoint1.coordinates.length; i++) {
-        var anyMatch = false;
-        for (var i2 = 0; i2 < multiPoint2.coordinates.length; i2++) {
+    for (let i = 0; i < multiPoint1.coordinates.length; i++) {
+        let anyMatch = false;
+        for (let i2 = 0; i2 < multiPoint2.coordinates.length; i2++) {
             if (compareCoords(multiPoint1.coordinates[i], multiPoint2.coordinates[i2])) {
                 anyMatch = true;
             }
@@ -98,9 +98,9 @@ function isMultiPointInMultiPoint(multiPoint1, multiPoint2) {
 }
 
 function isMultiPointOnLine(multiPoint, lineString) {
-    var foundInsidePoint = false;
+    let foundInsidePoint = false;
 
-    for (var i = 0; i < multiPoint.coordinates.length; i++) {
+    for (let i = 0; i < multiPoint.coordinates.length; i++) {
         if (!booleanPointOnLine(multiPoint.coordinates[i], lineString)) {
             return false;
         }
@@ -112,9 +112,9 @@ function isMultiPointOnLine(multiPoint, lineString) {
 }
 
 function isMultiPointInPoly(multiPoint, polygon) {
-    var output = true;
-    var oneInside = false;
-    for (var i = 0; i < multiPoint.coordinates.length; i++) {
+    let output = true;
+    const oneInside = false;
+    for (let i = 0; i < multiPoint.coordinates.length; i++) {
         var isInside = booleanPointInPolygon(multiPoint.coordinates[1], polygon);
         if (!isInside) {
             output = false;
@@ -128,7 +128,7 @@ function isMultiPointInPoly(multiPoint, polygon) {
 }
 
 function isLineOnLine(lineString1, lineString2) {
-    for (var i = 0; i < lineString1.coordinates.length; i++) {
+    for (let i = 0; i < lineString1.coordinates.length; i++) {
         if (!booleanPointOnLine(lineString1.coordinates[i], lineString2)) {
             return false;
         }
@@ -137,14 +137,14 @@ function isLineOnLine(lineString1, lineString2) {
 }
 
 function isLineInPoly(linestring, polygon) {
-    var polyBbox = calcBbox(polygon);
-    var lineBbox = calcBbox(linestring);
+    const polyBbox = calcBbox(polygon);
+    const lineBbox = calcBbox(linestring);
     if (!doBBoxOverlap(polyBbox, lineBbox)) {
         return false;
     }
-    var foundInsidePoint = false;
+    let foundInsidePoint = false;
 
-    for (var i = 0; i < linestring.coordinates.length - 1; i++) {
+    for (let i = 0; i < linestring.coordinates.length - 1; i++) {
         if (!booleanPointInPolygon(linestring.coordinates[i], polygon)) {
             return false;
         }
@@ -152,7 +152,7 @@ function isLineInPoly(linestring, polygon) {
             foundInsidePoint = booleanPointInPolygon(linestring.coordinates[i], polygon, {ignoreBoundary: true});
         }
         if (!foundInsidePoint) {
-            var midpoint = getMidpoint(linestring.coordinates[i], linestring.coordinates[i + 1]);
+            const midpoint = getMidpoint(linestring.coordinates[i], linestring.coordinates[i + 1]);
             foundInsidePoint = booleanPointInPolygon(midpoint, polygon, {ignoreBoundary: true});
 
         }
@@ -170,12 +170,12 @@ function isLineInPoly(linestring, polygon) {
  * @returns {boolean} true/false
  */
 function isPolyInPoly(feature1, feature2) {
-    var poly1Bbox = calcBbox(feature1);
-    var poly2Bbox = calcBbox(feature2);
+    const poly1Bbox = calcBbox(feature1);
+    const poly2Bbox = calcBbox(feature2);
     if (!doBBoxOverlap(poly2Bbox, poly1Bbox)) {
         return false;
     }
-    for (var i = 0; i < feature1.coordinates[0].length; i++) {
+    for (let i = 0; i < feature1.coordinates[0].length; i++) {
         if (!booleanPointInPolygon(feature1.coordinates[0][i], feature2)) {
             return false;
         }

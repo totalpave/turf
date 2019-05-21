@@ -3,11 +3,11 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import along from '@turf/along';
-import distance from '@turf/distance';
-import truncate from '@turf/truncate';
-import length from '@turf/length';
-import { lineString, multiLineString, point, featureCollection, round } from '@turf/helpers';
+import along from '@spatial/along';
+import distance from '@spatial/distance';
+import truncate from '@spatial/truncate';
+import length from '@spatial/length';
+import { lineString, multiLineString, point, featureCollection, round } from '@spatial/helpers';
 import nearestPointOnLine from '.';
 
 const directories = {

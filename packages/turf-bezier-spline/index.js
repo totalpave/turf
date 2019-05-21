@@ -1,5 +1,5 @@
-import { lineString, isObject, isNumber } from '@turf/helpers';
-import { getGeom } from '@turf/invariant';
+import { lineString, isObject, isNumber } from '@spatial/helpers';
+import { getGeom } from '@spatial/invariant';
 import Spline from './lib/spline';
 
 /**
@@ -35,25 +35,23 @@ function bezier(line, options) {
     // Optional params
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var resolution = options.resolution || 10000;
-    var sharpness = options.sharpness || 0.85;
+    const resolution = options.resolution || 10000;
+    const sharpness = options.sharpness || 0.85;
 
     // validation
     if (!line) throw new Error('line is required');
     if (!isNumber(resolution)) throw new Error('resolution must be an number');
     if (!isNumber(sharpness)) throw new Error('sharpness must be an number');
 
-    var coords = [];
-    var spline = new Spline({
-        points: getGeom(line).coordinates.map(function (pt) {
-            return {x: pt[0], y: pt[1]};
-        }),
+    const coords = [];
+    const spline = new Spline({
+        points: getGeom(line).coordinates.map(pt => ({x: pt[0], y: pt[1]})),
         duration: resolution,
-        sharpness: sharpness
+        sharpness
     });
 
-    for (var i = 0; i < spline.duration; i += 10) {
-        var pos = spline.pos(i);
+    for (let i = 0; i < spline.duration; i += 10) {
+        const pos = spline.pos(i);
         if (Math.floor(i / 100) % 2 === 0) {
             coords.push([pos.x, pos.y]);
         }

@@ -3,7 +3,7 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { point, lineString } from '@turf/helpers';
+import { point, lineString } from '@spatial/helpers';
 import lineToPolygon from '.';
 
 const directories = {

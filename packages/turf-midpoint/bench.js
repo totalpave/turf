@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import midpoint from './';
 
 var pt1 = point([0,0]);

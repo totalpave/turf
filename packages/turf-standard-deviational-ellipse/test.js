@@ -3,9 +3,9 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureCollection } from '@turf/helpers';
-import { featureEach } from '@turf/meta';
-import truncate from '@turf/truncate';
+import { featureCollection } from '@spatial/helpers';
+import { featureEach } from '@spatial/meta';
+import truncate from '@spatial/truncate';
 import standardDeviationalEllipse from '.';
 
 test('turf-standard-deviational-ellipse', t => {

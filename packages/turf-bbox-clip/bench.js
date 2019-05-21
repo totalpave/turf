@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import load from 'load-json-file';
-import bbox from '@turf/bbox';
+import bbox from '@spatial/bbox';
 import Benchmark from 'benchmark';
 import bboxClip from './';
 

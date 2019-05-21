@@ -1,8 +1,8 @@
 import { GeoJSONReader, GeoJSONWriter, OverlayOp } from 'turf-jsts';
-import area from '@turf/area';
-import { feature } from '@turf/helpers';
-import { getGeom } from '@turf/invariant';
-import { flattenEach } from '@turf/meta';
+import area from '@spatial/area';
+import { feature } from '@spatial/helpers';
+import { getGeom } from '@spatial/invariant';
+import { flattenEach } from '@spatial/meta';
 
 /**
  * Finds the difference between two {@link Polygon|polygons} by clipping the second polygon from the first.
@@ -39,9 +39,9 @@ import { flattenEach } from '@turf/meta';
  * var addToMap = [polygon1, polygon2, difference];
  */
 function difference(polygon1, polygon2) {
-    var geom1 = getGeom(polygon1);
-    var geom2 = getGeom(polygon2);
-    var properties = polygon1.properties || {};
+    let geom1 = getGeom(polygon1);
+    let geom2 = getGeom(polygon2);
+    const properties = polygon1.properties || {};
 
     // Issue #721 - JSTS can't handle empty polygons
     geom1 = removeEmptyPolygon(geom1);
@@ -50,13 +50,13 @@ function difference(polygon1, polygon2) {
     if (!geom2) return feature(geom1, properties);
 
     // JSTS difference operation
-    var reader = new GeoJSONReader();
-    var a = reader.read(geom1);
-    var b = reader.read(geom2);
-    var differenced = OverlayOp.difference(a, b);
+    const reader = new GeoJSONReader();
+    const a = reader.read(geom1);
+    const b = reader.read(geom2);
+    const differenced = OverlayOp.difference(a, b);
     if (differenced.isEmpty()) return null;
-    var writer = new GeoJSONWriter();
-    var geom = writer.write(differenced);
+    const writer = new GeoJSONWriter();
+    const geom = writer.write(differenced);
 
     return feature(geom, properties);
 }
@@ -75,10 +75,10 @@ function removeEmptyPolygon(geom) {
         return null;
     case 'MultiPolygon':
         var coordinates = [];
-        flattenEach(geom, function (feature) {
+        flattenEach(geom, (feature) => {
             if (area(feature) > 1) coordinates.push(feature.geometry.coordinates);
         });
-        if (coordinates.length) return {type: 'MultiPolygon', coordinates: coordinates};
+        if (coordinates.length) return {type: 'MultiPolygon', coordinates};
     }
 }
 

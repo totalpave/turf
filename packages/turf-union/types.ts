@@ -1,4 +1,4 @@
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 import union from './';
 
 const poly1 = polygon([[[0, 0], [10, 10], [20, 20], [0, 0]]]);

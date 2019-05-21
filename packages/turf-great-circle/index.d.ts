@@ -1,4 +1,4 @@
-import { LineString, Feature, Coord, Properties } from '@turf/helpers'
+import { LineString, Feature, Coord, Properties } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#greatcircle

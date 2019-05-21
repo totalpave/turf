@@ -1,4 +1,4 @@
-import { Feature, LineString } from '@turf/helpers'
+import { Feature, LineString } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#booleanclockwise

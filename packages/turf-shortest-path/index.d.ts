@@ -1,4 +1,4 @@
-import { Polygon, Feature, FeatureCollection, Coord, LineString, Units } from '@turf/helpers'
+import { Polygon, Feature, FeatureCollection, Coord, LineString, Units } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#shortestpath

@@ -3,9 +3,9 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureEach } from '@turf/meta';
-import { point, lineString, multiPoint, featureCollection, round } from '@turf/helpers';
-import { getCoords } from '@turf/invariant';
+import { featureEach } from '@spatial/meta';
+import { point, lineString, multiPoint, featureCollection, round } from '@spatial/helpers';
+import { getCoords } from '@spatial/invariant';
 import lineSplit from '.';
 
 const directories = {

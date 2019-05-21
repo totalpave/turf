@@ -1,4 +1,4 @@
-import { AllGeoJSON, Units } from '@turf/helpers'
+import { AllGeoJSON, Units } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#transform-translate

@@ -1,5 +1,5 @@
 import pointsWithinPolygon from './'
-import { points, polygon } from '@turf/helpers'
+import { points, polygon } from '@spatial/helpers'
 
 const pts = points([
     [-46.6318, -23.5523],

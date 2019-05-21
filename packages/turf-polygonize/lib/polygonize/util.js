@@ -1,5 +1,5 @@
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import {point} from '@turf/helpers';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import {point} from '@spatial/helpers';
 
 /**
  * Returns the direction of the point q relative to the vector p1 -> p2.

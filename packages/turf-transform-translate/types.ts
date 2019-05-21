@@ -1,4 +1,4 @@
-import {point, polygon, featureCollection, Point, Feature, Polygon} from '@turf/helpers';
+import {point, polygon, featureCollection, Point, Feature, Polygon} from '@spatial/helpers';
 import translate from './';
 
 const pt = point([0, 0]);

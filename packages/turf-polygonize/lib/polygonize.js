@@ -1,8 +1,8 @@
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { featureCollection, lineString, multiPoint, point, polygon } from '@turf/helpers';
-import envelope from '@turf/envelope';
-import { coordReduce, flattenEach } from '@turf/meta';
-import { featureOf } from '@turf/invariant';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import { featureCollection, lineString, multiPoint, point, polygon } from '@spatial/helpers';
+import envelope from '@spatial/envelope';
+import { coordReduce, flattenEach } from '@spatial/meta';
+import { featureOf } from '@spatial/invariant';
 
 /**
  * Returns the direction of the point q relative to the vector p1 -> p2.

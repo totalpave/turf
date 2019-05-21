@@ -1,4 +1,4 @@
-import { lineString, geometryCollection, featureCollection } from '@turf/helpers'
+import { lineString, geometryCollection, featureCollection } from '@spatial/helpers'
 import lineChunk from './'
 
 const line = lineString([[0, 0], [1, 1], [2, 2]]);

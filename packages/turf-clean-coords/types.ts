@@ -1,4 +1,4 @@
-import {multiPoint} from '@turf/helpers'
+import {multiPoint} from '@spatial/helpers'
 import cleanCoords from './'
 
 // Fixtures

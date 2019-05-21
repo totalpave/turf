@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 import explode from './';
 
 var poly = polygon([[[0, 0], [0, 10], [10, 10], [10, 0], [0, 0]]]);

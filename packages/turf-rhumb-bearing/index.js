@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Rhumb_line
-import {getCoord} from '@turf/invariant';
-import {radiansToDegrees, degreesToRadians, isObject} from '@turf/helpers';
+import {getCoord} from '@spatial/invariant';
+import {radiansToDegrees, degreesToRadians, isObject} from '@spatial/helpers';
 
 /**
  * Takes two {@link Point|points} and finds the bearing angle between them along a Rhumb line
@@ -27,18 +27,18 @@ function rhumbBearing(start, end, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var final = options.final;
+    const final = options.final;
 
     // validation
     if (!start) throw new Error('start point is required');
     if (!end) throw new Error('end point is required');
 
-    var bear360;
+    let bear360;
 
     if (final) bear360 = calculateRhumbBearing(getCoord(end), getCoord(start));
     else bear360 = calculateRhumbBearing(getCoord(start), getCoord(end));
 
-    var bear180 = (bear360 > 180) ? -(360 - bear360) : bear360;
+    const bear180 = (bear360 > 180) ? -(360 - bear360) : bear360;
 
     return bear180;
 }
@@ -61,16 +61,16 @@ function calculateRhumbBearing(from, to) {
     // Δλ => deltaLambda
     // Δψ => deltaPsi
     // θ => theta
-    var phi1 = degreesToRadians(from[1]);
-    var phi2 = degreesToRadians(to[1]);
-    var deltaLambda = degreesToRadians((to[0] - from[0]));
+    const phi1 = degreesToRadians(from[1]);
+    const phi2 = degreesToRadians(to[1]);
+    let deltaLambda = degreesToRadians((to[0] - from[0]));
     // if deltaLambdaon over 180° take shorter rhumb line across the anti-meridian:
     if (deltaLambda > Math.PI) deltaLambda -= 2 * Math.PI;
     if (deltaLambda < -Math.PI) deltaLambda += 2 * Math.PI;
 
-    var deltaPsi = Math.log(Math.tan(phi2 / 2 + Math.PI / 4) / Math.tan(phi1 / 2 + Math.PI / 4));
+    const deltaPsi = Math.log(Math.tan(phi2 / 2 + Math.PI / 4) / Math.tan(phi1 / 2 + Math.PI / 4));
 
-    var theta = Math.atan2(deltaLambda, deltaPsi);
+    const theta = Math.atan2(deltaLambda, deltaPsi);
 
     return (radiansToDegrees(theta) + 360) % 360;
 }

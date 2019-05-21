@@ -1,4 +1,4 @@
-import { Point, Polygon, Units, FeatureCollection, Grid } from '@turf/helpers';
+import { Point, Polygon, Units, FeatureCollection, Grid } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#interpolate

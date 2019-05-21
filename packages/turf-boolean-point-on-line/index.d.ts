@@ -1,4 +1,4 @@
-import { LineString, Feature, Coord } from '@turf/helpers'
+import { LineString, Feature, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#booleanpointonline

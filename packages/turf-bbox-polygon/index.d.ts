@@ -1,4 +1,4 @@
-import { BBox, Feature, Polygon } from '@turf/helpers';
+import { BBox, Feature, Polygon } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#bboxpolygon

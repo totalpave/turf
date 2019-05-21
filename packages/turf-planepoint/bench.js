@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 import planepoint from './';
 
 const point = [1, 1];

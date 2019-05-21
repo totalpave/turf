@@ -2,7 +2,7 @@ import glob from 'glob';
 import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
-import { lineString, polygon } from '@turf/helpers';
+import { lineString, polygon } from '@spatial/helpers';
 import booleanParallel from '.';
 
 test('turf-boolean-parallel', t => {

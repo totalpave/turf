@@ -3,7 +3,7 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { polygon, lineString, featureCollection, geometryCollection } from '@turf/helpers';
+import { polygon, lineString, featureCollection, geometryCollection } from '@spatial/helpers';
 import rewind from '.';
 
 const directories = {

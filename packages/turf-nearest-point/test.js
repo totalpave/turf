@@ -4,7 +4,7 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import {featureCollection, point, lineString} from '@turf/helpers';
+import {featureCollection, point, lineString} from '@spatial/helpers';
 import nearestPoint from './';
 
 test('turf-nearest-point', t => {

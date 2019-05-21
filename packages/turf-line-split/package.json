@@ -1,5 +1,5 @@
 {
-  "name": "@turf/line-split",
+  "name": "@spatial/line-split",
   "version": "5.1.5",
   "description": "turf line-split module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -38,28 +38,25 @@
     "url": "https://github.com/Turfjs/turf/issues"
   },
   "homepage": "https://github.com/Turfjs/turf",
-  "devDependencies": {
-    "@std/esm": "*",
-    "benchmark": "*",
-    "load-json-file": "*",
-    "rollup": "*",
-    "tape": "*",
-    "write-json-file": "*"
-  },
   "dependencies": {
-    "@turf/bbox": "^5.1.5",
-    "@turf/helpers": "^5.1.5",
-    "@turf/invariant": "^5.1.5",
-    "@turf/line-intersect": "^5.1.5",
-    "@turf/line-segment": "^5.1.5",
-    "@turf/meta": "^5.1.5",
-    "@turf/nearest-point-on-line": "^5.1.5",
-    "@turf/square": "^5.1.5",
-    "@turf/truncate": "^5.1.5",
+    "@spatial/bbox": "file:../turf-bbox",
+    "@spatial/helpers": "file:../turf-helpers",
+    "@spatial/invariant": "file:../turf-invariant",
+    "@spatial/line-intersect": "file:../turf-line-intersect",
+    "@spatial/line-segment": "file:../turf-line-segment",
+    "@spatial/meta": "file:../turf-meta",
+    "@spatial/nearest-point-on-line": "file:../turf-nearest-point-on-line",
+    "@spatial/square": "file:../turf-square",
+    "@spatial/truncate": "file:../turf-truncate",
     "geojson-rbush": "2.1.0"
   },
-  "@std/esm": {
-    "esm": "js",
+  "esm": {
     "cjs": true
+  },
+  "devDependencies": {
+    "rollup": "*",
+    "tape": "*",
+    "esm": "*",
+    "benchmark": "*"
   }
 }

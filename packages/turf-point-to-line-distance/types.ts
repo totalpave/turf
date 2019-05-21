@@ -1,4 +1,4 @@
-import { point, lineString } from '@turf/helpers'
+import { point, lineString } from '@spatial/helpers'
 import pointToLineDistance from './'
 
 const pt = point([0, 0])

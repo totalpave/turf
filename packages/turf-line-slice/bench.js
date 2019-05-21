@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import lineSlice from './';
 
 var route1 = JSON.parse(fs.readFileSync(__dirname + '/test/in/route1.geojson'));

@@ -8,7 +8,7 @@ import {
     Feature,
     FeatureCollection,
     AllGeoJSON
-} from '@turf/helpers'
+} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#flatten

@@ -1,4 +1,4 @@
-import { AllGeoJSON, BBox } from '@turf/helpers'
+import { AllGeoJSON, BBox } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#bbox

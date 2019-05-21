@@ -1,8 +1,8 @@
-import convex from '@turf/convex';
-import centroid from '@turf/centroid';
-import { point } from '@turf/helpers';
-import { getType } from '@turf/invariant';
-import { coordEach } from '@turf/meta';
+import convex from '@spatial/convex';
+import centroid from '@spatial/centroid';
+import { point } from '@spatial/helpers';
+import { getType } from '@spatial/invariant';
+import { coordEach } from '@spatial/meta';
 
 /**
  * Takes any {@link Feature} or a {@link FeatureCollection} and returns its [center of mass](https://en.wikipedia.org/wiki/Center_of_mass) using this formula: [Centroid of Polygon](https://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon).
@@ -25,7 +25,7 @@ function centerOfMass(geojson, properties) {
         return geojson;
     case 'Polygon':
         var coords = [];
-        coordEach(geojson, function (coord) {
+        coordEach(geojson, (coord) => {
             coords.push(coord);
         });
 
@@ -38,12 +38,10 @@ function centerOfMass(geojson, properties) {
         var sArea = 0;
         var i, pi, pj, xi, xj, yi, yj, a;
 
-        var neutralizedPoints = coords.map(function (point) {
-            return [
-                point[0] - translation[0],
-                point[1] - translation[1]
-            ];
-        });
+        var neutralizedPoints = coords.map(point => [
+            point[0] - translation[0],
+            point[1] - translation[1]
+        ]);
 
         for (i = 0; i < coords.length - 1; i++) {
             // pi is the current point
@@ -72,8 +70,8 @@ function centerOfMass(geojson, properties) {
             return centre;
         } else {
             // Compute the signed area, and factorize 1/6A
-            var area = sArea * 0.5;
-            var areaFactor = 1 / (6 * area);
+            const area = sArea * 0.5;
+            const areaFactor = 1 / (6 * area);
 
             // Compute the final coordinates, adding back the values that have been neutralized
             return point([

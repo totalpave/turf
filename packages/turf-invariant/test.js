@@ -1,5 +1,5 @@
 import test from 'tape';
-import { point, lineString, polygon, featureCollection, geometryCollection } from '@turf/helpers';
+import { point, lineString, polygon, featureCollection, geometryCollection } from '@spatial/helpers';
 import * as invariant from './index';
 
 test('invariant -- containsNumber', t => {

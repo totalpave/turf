@@ -4,9 +4,9 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { featureEach } from '@turf/meta';
-import { featureCollection } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { featureEach } from '@spatial/meta';
+import { featureCollection } from '@spatial/helpers';
 import pointOnFeature from '.';
 
 test('turf-point-on-feature', t => {

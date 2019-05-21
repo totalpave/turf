@@ -2,7 +2,7 @@ import path from 'path';
 import glob from 'glob';
 import Benchmark from 'benchmark';
 import load from 'load-json-file';
-import bbox from '@turf/bbox';
+import bbox from '@spatial/bbox';
 import contains from './';
 
 /**

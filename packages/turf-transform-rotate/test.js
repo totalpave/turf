@@ -3,10 +3,10 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import centroid from '@turf/centroid';
-import truncate from '@turf/truncate';
-import { getCoord } from '@turf/invariant';
-import { point, lineString, featureCollection, geometryCollection } from '@turf/helpers';
+import centroid from '@spatial/centroid';
+import truncate from '@spatial/truncate';
+import { getCoord } from '@spatial/invariant';
+import { point, lineString, featureCollection, geometryCollection } from '@spatial/helpers';
 import rotate from '.';
 
 const directories = {

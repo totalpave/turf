@@ -3,8 +3,8 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { point, feature, featureCollection } from '@turf/helpers';
-import turfBBox from '@turf/bbox';
+import { point, feature, featureCollection } from '@spatial/helpers';
+import turfBBox from '@spatial/bbox';
 import bboxClip from './index';
 
 const directories = {

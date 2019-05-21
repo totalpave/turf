@@ -1,5 +1,5 @@
 {
-  "name": "@turf/interpolate",
+  "name": "@spatial/interpolate",
   "version": "5.1.5",
   "description": "turf interpolate module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -37,30 +37,26 @@
   },
   "homepage": "https://github.com/Turfjs/turf",
   "devDependencies": {
-    "@std/esm": "*",
-    "@turf/truncate": "^5.1.5",
-    "benchmark": "*",
-    "chromatism": "*",
-    "load-json-file": "*",
+    "@spatial/truncate": "*",
     "rollup": "*",
     "tape": "*",
-    "write-json-file": "*"
+    "esm": "*",
+    "benchmark": "*"
   },
   "dependencies": {
-    "@turf/bbox": "^5.1.5",
-    "@turf/centroid": "^5.1.5",
-    "@turf/clone": "^5.1.5",
-    "@turf/distance": "^5.1.5",
-    "@turf/helpers": "^5.1.5",
-    "@turf/hex-grid": "^5.1.5",
-    "@turf/invariant": "^5.1.5",
-    "@turf/meta": "^5.1.5",
-    "@turf/point-grid": "^5.1.5",
-    "@turf/square-grid": "^5.1.5",
-    "@turf/triangle-grid": "^5.1.5"
+    "@spatial/bbox": "file:../turf-bbox",
+    "@spatial/centroid": "file:../turf-centroid",
+    "@spatial/clone": "file:../turf-clone",
+    "@spatial/distance": "file:../turf-distance",
+    "@spatial/helpers": "file:../turf-helpers",
+    "@spatial/hex-grid": "file:../turf-hex-grid",
+    "@spatial/invariant": "file:../turf-invariant",
+    "@spatial/meta": "file:../turf-meta",
+    "@spatial/point-grid": "file:../turf-point-grid",
+    "@spatial/square-grid": "file:../turf-square-grid",
+    "@spatial/triangle-grid": "file:../turf-triangle-grid"
   },
-  "@std/esm": {
-    "esm": "js",
+  "esm": {
     "cjs": true
   }
 }

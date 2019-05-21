@@ -1,4 +1,4 @@
-import { FeatureCollection, GeometryObject } from '@turf/helpers'
+import { FeatureCollection, GeometryObject } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#sample

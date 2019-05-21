@@ -11,7 +11,7 @@ import {
     Feature,
     FeatureCollection,
     Units,
-} from '@turf/helpers';
+} from '@spatial/helpers';
 
 interface Options {
     units?: Units;

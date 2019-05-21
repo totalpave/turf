@@ -1,5 +1,5 @@
 {
-  "name": "@turf/convex",
+  "name": "@spatial/convex",
   "version": "5.1.5",
   "description": "turf convex module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -32,22 +32,18 @@
     "url": "https://github.com/Turfjs/turf/issues"
   },
   "homepage": "https://github.com/Turfjs/turf",
-  "devDependencies": {
-    "@std/esm": "*",
-    "benchmark": "*",
-    "glob": "*",
-    "load-json-file": "*",
-    "rollup": "*",
-    "tape": "*",
-    "write-json-file": "*"
-  },
   "dependencies": {
-    "@turf/helpers": "^5.1.5",
-    "@turf/meta": "^5.1.5",
+    "@spatial/helpers": "file:../turf-helpers",
+    "@spatial/meta": "file:../turf-meta",
     "concaveman": "*"
   },
-  "@std/esm": {
-    "esm": "js",
+  "esm": {
     "cjs": true
+  },
+  "devDependencies": {
+    "rollup": "*",
+    "tape": "*",
+    "esm": "*",
+    "benchmark": "*"
   }
 }

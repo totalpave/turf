@@ -1,9 +1,9 @@
 // depend on jsts for now http://bjornharrtell.github.io/jsts/
 import { GeoJSONReader, GeoJSONWriter, OverlayOp } from 'turf-jsts';
-import truncate from '@turf/truncate';
-import { getGeom } from '@turf/invariant';
-import { feature } from '@turf/helpers';
-import cleanCoords from '@turf/clean-coords';
+import truncate from '@spatial/truncate';
+import { getGeom } from '@spatial/invariant';
+import { feature } from '@spatial/helpers';
+import cleanCoords from '@spatial/clean-coords';
 
 /**
  * Takes two {@link Polygon|polygons} and finds their intersection. If they share a border, returns the border; if they don't intersect, returns undefined.
@@ -38,8 +38,8 @@ import cleanCoords from '@turf/clean-coords';
  * var addToMap = [poly1, poly2, intersection];
  */
 function intersect(poly1, poly2) {
-    var geom1 = getGeom(poly1);
-    var geom2 = getGeom(poly2);
+    const geom1 = getGeom(poly1);
+    const geom2 = getGeom(poly2);
 
     // Return null if geometry is too narrow in coordinate precision
     // fixes topology errors with JSTS
@@ -48,16 +48,16 @@ function intersect(poly1, poly2) {
     if (cleanCoords(truncate(geom2, {precision: 4})).coordinates[0].length < 4) return null;
     if (cleanCoords(truncate(geom1, {precision: 4})).coordinates[0].length < 4) return null;
 
-    var reader = new GeoJSONReader();
-    var a = reader.read(truncate(geom1));
-    var b = reader.read(truncate(geom2));
-    var intersection = OverlayOp.intersection(a, b);
+    const reader = new GeoJSONReader();
+    const a = reader.read(truncate(geom1));
+    const b = reader.read(truncate(geom2));
+    const intersection = OverlayOp.intersection(a, b);
 
     // https://github.com/Turfjs/turf/issues/951
     if (intersection.isEmpty()) return null;
 
-    var writer = new GeoJSONWriter();
-    var geom = writer.write(intersection);
+    const writer = new GeoJSONWriter();
+    const geom = writer.write(intersection);
     return feature(geom);
 }
 

@@ -3,8 +3,8 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { polygon, multiPolygon } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { polygon, multiPolygon } from '@spatial/helpers';
 import simplify from '.';
 
 const directories = {

@@ -1,4 +1,4 @@
-import { Coord, Units } from '@turf/helpers';
+import { Coord, Units } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#rhumbdistance

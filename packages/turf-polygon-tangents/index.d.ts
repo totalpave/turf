@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Coord, Point, Polygon, MultiPolygon } from '@turf/helpers'
+import { Feature, FeatureCollection, Coord, Point, Polygon, MultiPolygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#polygontangents

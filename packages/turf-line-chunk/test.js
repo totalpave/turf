@@ -3,9 +3,9 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { featureEach } from '@turf/meta';
-import { lineString, featureCollection } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { featureEach } from '@spatial/meta';
+import { lineString, featureCollection } from '@spatial/helpers';
 import lineChunk from '.';
 
 const directories = {

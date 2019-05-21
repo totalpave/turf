@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { point, featureCollection } from '@turf/helpers';
+import { point, featureCollection } from '@spatial/helpers';
 import sample from './';
 
 var points = featureCollection(

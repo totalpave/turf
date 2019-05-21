@@ -1,4 +1,4 @@
-import { AllGeoJSON } from '@turf/helpers';
+import { AllGeoJSON } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#rewind

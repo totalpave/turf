@@ -1,6 +1,6 @@
 //http://en.wikipedia.org/wiki/Delaunay_triangulation
 //https://github.com/ironwallaby/delaunay
-import { polygon, featureCollection } from '@turf/helpers';
+import { polygon, featureCollection } from '@spatial/helpers';
 
 /**
  * Takes a set of {@link Point|points} and creates a
@@ -37,9 +37,9 @@ import { polygon, featureCollection } from '@turf/helpers';
 function tin(points, z) {
     if (points.type !== 'FeatureCollection') throw new Error('points must be a FeatureCollection');
     //break down points
-    var isPointZ = false;
-    return featureCollection(triangulate(points.features.map(function (p) {
-        var point = {
+    let isPointZ = false;
+    return featureCollection(triangulate(points.features.map((p) => {
+        const point = {
             x: p.geometry.coordinates[0],
             y: p.geometry.coordinates[1]
         };
@@ -50,12 +50,12 @@ function tin(points, z) {
             point.z = p.geometry.coordinates[2];
         }
         return point;
-    })).map(function (triangle) {
+    })).map((triangle) => {
 
-        var a = [triangle.a.x, triangle.a.y];
-        var b = [triangle.b.x, triangle.b.y];
-        var c = [triangle.c.x, triangle.c.y];
-        var properties = {};
+        const a = [triangle.a.x, triangle.a.y];
+        const b = [triangle.b.x, triangle.b.y];
+        const c = [triangle.c.x, triangle.c.y];
+        let properties = {};
 
         // Add z coordinates to triangle points if user passed
         // them in that way otherwise add it as a property.
@@ -81,21 +81,20 @@ function Triangle(a, b, c) {
     this.b = b;
     this.c = c;
 
-    var A = b.x - a.x,
+    const A = b.x - a.x,
         B = b.y - a.y,
         C = c.x - a.x,
         D = c.y - a.y,
         E = A * (a.x + b.x) + B * (a.y + b.y),
         F = C * (a.x + c.x) + D * (a.y + c.y),
-        G = 2 * (A * (c.y - b.y) - B * (c.x - b.x)),
-        dx, dy;
+        G = 2 * (A * (c.y - b.y) - B * (c.x - b.x));
 
     // If the points of the triangle are collinear, then just find the
     // extremes and use the midpoint as the center of the circumcircle.
     this.x = (D * E - B * F) / G;
     this.y = (A * F - C * E) / G;
-    dx = this.x - a.x;
-    dy = this.y - a.y;
+    const dx = this.x - a.x;
+    const dy = this.y - a.y;
     this.r = dx * dx + dy * dy;
 }
 
@@ -104,10 +103,10 @@ function byX(a, b) {
 }
 
 function dedup(edges) {
-    var j = edges.length,
+    let j = edges.length,
         a, b, i, m, n;
 
-    outer:
+    // outer:
     while (j) {
         b = edges[--j];
         a = edges[--j];
@@ -119,7 +118,8 @@ function dedup(edges) {
                 edges.splice(j, 2);
                 edges.splice(i, 2);
                 j -= 2;
-                continue outer;
+                // continue outer;
+                break;
             }
         }
     }
@@ -135,14 +135,15 @@ function triangulate(vertices) {
     // the bounding box around the points.
     vertices.sort(byX);
 
-    var i = vertices.length - 1,
-        xmin = vertices[i].x,
-        xmax = vertices[0].x,
+    let i = vertices.length - 1,
         ymin = vertices[i].y,
-        ymax = ymin,
+        ymax = ymin;
+
+    const xmin = vertices[i].x,
+        xmax = vertices[0].x,
         epsilon = 1e-12;
 
-    var a,
+    let a,
         b,
         c,
         A,
@@ -164,9 +165,11 @@ function triangulate(vertices) {
     // Once found, put it in the "open" list. (The "open" list is for
     // triangles who may still need to be considered; the "closed" list is
     // for triangles which do not.)
-    var dx = xmax - xmin,
+    let dx = xmax - xmin,
         dy = ymax - ymin,
-        dmax = (dx > dy) ? dx : dy,
+        j;
+
+    const dmax = (dx > dy) ? dx : dy,
         xmid = (xmax + xmin) * 0.5,
         ymid = (ymax + ymin) * 0.5,
         open = [
@@ -185,8 +188,7 @@ function triangulate(vertices) {
             }
             )],
         closed = [],
-        edges = [],
-        j;
+        edges = [];
 
     // Incrementally add each vertex to the mesh.
     i = vertices.length;

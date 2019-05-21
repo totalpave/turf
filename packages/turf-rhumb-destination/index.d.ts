@@ -1,4 +1,4 @@
-import { Point, Feature, Units, Coord, Properties } from '@turf/helpers';
+import { Point, Feature, Units, Coord, Properties } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#rhumbdestination

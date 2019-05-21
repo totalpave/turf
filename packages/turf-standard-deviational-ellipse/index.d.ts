@@ -1,4 +1,4 @@
-import { FeatureCollection, Feature, Position, Polygon, Properties, Point } from '@turf/helpers';
+import { FeatureCollection, Feature, Position, Polygon, Properties, Point } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#standarddeviational-ellipse

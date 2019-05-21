@@ -1,5 +1,5 @@
 // http://stackoverflow.com/questions/11935175/sampling-a-random-subset-from-an-array
-import { featureCollection } from '@turf/helpers';
+import { featureCollection } from '@spatial/helpers';
 
 /**
  * Takes a {@link FeatureCollection} and returns a FeatureCollection with given number of {@link Feature|features} at random.
@@ -25,12 +25,14 @@ function sample(featurecollection, num) {
     if (num === null || num === undefined) throw new Error('num is required');
     if (typeof num !== 'number') throw new Error('num must be a number');
 
-    var outFC = featureCollection(getRandomSubarray(featurecollection.features, num));
+    const outFC = featureCollection(getRandomSubarray(featurecollection.features, num));
     return outFC;
 }
 
 function getRandomSubarray(arr, size) {
-    var shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
+    const shuffled = arr.slice(0);
+    let i = arr.length, temp, index;
+    const min = i - size;
     while (i-- > min) {
         index = Math.floor((i + 1) * Math.random());
         temp = shuffled[index];

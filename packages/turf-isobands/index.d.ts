@@ -1,4 +1,4 @@
-import { Point, MultiPolygon, FeatureCollection, Feature, Properties } from '@turf/helpers'
+import { Point, MultiPolygon, FeatureCollection, Feature, Properties } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#isobands

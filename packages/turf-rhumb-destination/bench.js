@@ -1,4 +1,4 @@
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import Benchmark from 'benchmark';
 import destination from './';
 

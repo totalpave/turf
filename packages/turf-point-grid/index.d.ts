@@ -1,4 +1,4 @@
-import { Units, BBox, Polygon, MultiPolygon, Feature, FeatureCollection, Point, Properties } from '@turf/helpers';
+import { Units, BBox, Polygon, MultiPolygon, Feature, FeatureCollection, Point, Properties } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#pointgrid

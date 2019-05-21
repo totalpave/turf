@@ -1,4 +1,4 @@
-import { randomPoint } from '@turf/random';
+import { randomPoint } from '@spatial/random';
 import standardDeviationalEllipse from '.';
 import Benchmark from 'benchmark';
 

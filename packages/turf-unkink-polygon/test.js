@@ -3,9 +3,9 @@ import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureEach } from '@turf/meta';
-import { featureCollection } from '@turf/helpers';
-import kinks from '@turf/kinks';
+import { featureEach } from '@spatial/meta';
+import { featureCollection } from '@spatial/helpers';
+import kinks from '@spatial/kinks';
 import unkinkPolygon from '.';
 
 const directories = {

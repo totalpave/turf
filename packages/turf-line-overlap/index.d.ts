@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, LineString, MultiLineString, Polygon, MultiPolygon } from '@turf/helpers'
+import { Feature, FeatureCollection, LineString, MultiLineString, Polygon, MultiPolygon } from '@spatial/helpers'
 
 type Geoms = LineString | MultiLineString | Polygon | MultiPolygon;
 

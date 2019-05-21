@@ -1,4 +1,4 @@
-import { polygon, multiPolygon } from '@turf/helpers';
+import { polygon, multiPolygon } from '@spatial/helpers';
 import polygonToLine from './';
 
 const poly = polygon([[[125, -30], [145, -30], [145, -20], [125, -20], [125, -30]]]);

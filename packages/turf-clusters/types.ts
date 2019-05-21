@@ -1,5 +1,5 @@
 import * as clusters from './'
-import { featureCollection, point } from '@turf/helpers'
+import { featureCollection, point } from '@spatial/helpers'
 import { getCluster, clusterEach, clusterReduce } from './'
 
 /**

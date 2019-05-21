@@ -3,8 +3,8 @@ import test from 'tape';
 import glob from 'glob';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureEach } from '@turf/meta';
-import { featureCollection, lineString } from '@turf/helpers';
+import { featureEach } from '@spatial/meta';
+import { featureCollection, lineString } from '@spatial/helpers';
 import centroid from '.';
 
 const directories = {

@@ -1,4 +1,4 @@
-import {featureCollection, point, lineString, geometryCollection} from '@turf/helpers'
+import {featureCollection, point, lineString, geometryCollection} from '@spatial/helpers'
 import flip from './'
 
 const pt = point([120.1234567, 40.1234567])

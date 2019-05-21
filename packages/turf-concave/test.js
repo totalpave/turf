@@ -3,9 +3,9 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { point } from '@turf/helpers';
-import { featureCollection } from '@turf/helpers';
-import { featureEach } from '@turf/meta';
+import { point } from '@spatial/helpers';
+import { featureCollection } from '@spatial/helpers';
+import { featureEach } from '@spatial/meta';
 import concave from '.';
 
 const directories = {

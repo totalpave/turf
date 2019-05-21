@@ -1,7 +1,7 @@
-import { degreesToRadians, polygon, isObject, isNumber } from '@turf/helpers';
-import rhumbDestination from '@turf/rhumb-destination';
-import transformRotate from '@turf/transform-rotate';
-import { getCoord } from '@turf/invariant';
+import { degreesToRadians, polygon, isObject, isNumber } from '@spatial/helpers';
+import rhumbDestination from '@spatial/rhumb-destination';
+import transformRotate from '@spatial/transform-rotate';
+import { getCoord } from '@spatial/invariant';
 
 /**
  * Takes a {@link Point} and calculates the ellipse polygon given two semi-axes expressed in variable units and steps for precision.
@@ -28,11 +28,11 @@ import { getCoord } from '@turf/invariant';
 function ellipse(center, xSemiAxis, ySemiAxis, options) {
     // Optional params
     options = options || {};
-    var steps = options.steps || 64;
-    var units = options.units || 'kilometers';
-    var angle = options.angle || 0;
-    var pivot = options.pivot || center;
-    var properties = options.properties || center.properties || {};
+    const steps = options.steps || 64;
+    const units = options.units || 'kilometers';
+    const angle = options.angle || 0;
+    const pivot = options.pivot || center;
+    const properties = options.properties || center.properties || {};
 
     // validation
     if (!center) throw new Error('center is required');
@@ -42,27 +42,27 @@ function ellipse(center, xSemiAxis, ySemiAxis, options) {
     if (!isNumber(steps)) throw new Error('steps must be a number');
     if (!isNumber(angle)) throw new Error('angle must be a number');
 
-    var centerCoords = getCoord(center);
+    const centerCoords = getCoord(center);
     if (units === 'degrees') {
         var angleRad = degreesToRadians(angle);
     } else {
-        xSemiAxis = rhumbDestination(center, xSemiAxis, 90, {units: units});
-        ySemiAxis = rhumbDestination(center, ySemiAxis, 0, {units: units});
+        xSemiAxis = rhumbDestination(center, xSemiAxis, 90, {units});
+        ySemiAxis = rhumbDestination(center, ySemiAxis, 0, {units});
         xSemiAxis = getCoord(xSemiAxis)[0] - centerCoords[0];
         ySemiAxis = getCoord(ySemiAxis)[1] - centerCoords[1];
     }
 
-    var coordinates = [];
-    for (var i = 0; i < steps; i += 1) {
-        var stepAngle = i * -360 / steps;
-        var x = ((xSemiAxis * ySemiAxis) / Math.sqrt(Math.pow(ySemiAxis, 2) + (Math.pow(xSemiAxis, 2) * Math.pow(getTanDeg(stepAngle), 2))));
-        var y = ((xSemiAxis * ySemiAxis) / Math.sqrt(Math.pow(xSemiAxis, 2) + (Math.pow(ySemiAxis, 2) / Math.pow(getTanDeg(stepAngle), 2))));
+    const coordinates = [];
+    for (let i = 0; i < steps; i += 1) {
+        const stepAngle = i * -360 / steps;
+        let x = ((xSemiAxis * ySemiAxis) / Math.sqrt(Math.pow(ySemiAxis, 2) + (Math.pow(xSemiAxis, 2) * Math.pow(getTanDeg(stepAngle), 2))));
+        let y = ((xSemiAxis * ySemiAxis) / Math.sqrt(Math.pow(xSemiAxis, 2) + (Math.pow(ySemiAxis, 2) / Math.pow(getTanDeg(stepAngle), 2))));
 
         if (stepAngle < -90 && stepAngle >= -270) x = -x;
         if (stepAngle < -180 && stepAngle >= -360) y = -y;
         if (units === 'degrees') {
-            var newx = x * Math.cos(angleRad) + y * Math.sin(angleRad);
-            var newy = y * Math.cos(angleRad) - x * Math.sin(angleRad);
+            const newx = x * Math.cos(angleRad) + y * Math.sin(angleRad);
+            const newy = y * Math.cos(angleRad) - x * Math.sin(angleRad);
             x = newx;
             y = newy;
         }
@@ -73,7 +73,7 @@ function ellipse(center, xSemiAxis, ySemiAxis, options) {
     if (units === 'degrees') {
         return polygon([coordinates], properties);
     } else {
-        return transformRotate(polygon([coordinates], properties), angle, { pivot: pivot });
+        return transformRotate(polygon([coordinates], properties), angle, { pivot });
     }
 }
 
@@ -85,7 +85,7 @@ function ellipse(center, xSemiAxis, ySemiAxis, options) {
  * @returns {number} Tan Degrees
  */
 function getTanDeg(deg) {
-    var rad = deg * Math.PI / 180;
+    const rad = deg * Math.PI / 180;
     return Math.tan(rad);
 }
 

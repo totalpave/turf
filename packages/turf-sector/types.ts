@@ -1,4 +1,4 @@
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import sector from './';
 
 const center = point([-75.343, 39.984]);

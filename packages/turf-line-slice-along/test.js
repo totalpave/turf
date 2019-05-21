@@ -1,7 +1,7 @@
 import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
-import along from '@turf/along';
+import along from '@spatial/along';
 import lineSliceAlong from '.';
 
 var line1 = load.sync(path.join(__dirname, 'test', 'fixtures', 'line1.geojson'));

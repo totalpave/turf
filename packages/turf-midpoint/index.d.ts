@@ -1,4 +1,4 @@
-import { Feature, Point, Coord } from '@turf/helpers'
+import { Feature, Point, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#midpoint

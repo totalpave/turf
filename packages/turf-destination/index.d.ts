@@ -1,4 +1,4 @@
-import { Feature, Point, Units, Coord, Properties } from '@turf/helpers'
+import { Feature, Point, Units, Coord, Properties } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#destination

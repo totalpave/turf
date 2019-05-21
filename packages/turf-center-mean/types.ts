@@ -1,4 +1,4 @@
-import {lineString} from '@turf/helpers'
+import {lineString} from '@spatial/helpers'
 import centerMean from './'
 
 const line = lineString([[0, 0], [10, 10]]);

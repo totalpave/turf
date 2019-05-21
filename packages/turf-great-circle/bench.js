@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import greatCircle from './';
 
 const point1 = point([-75, 45]);

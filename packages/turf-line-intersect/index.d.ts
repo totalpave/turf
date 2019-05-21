@@ -6,7 +6,7 @@ import {
     MultiLineString,
     Polygon,
     MultiPolygon
-} from '@turf/helpers'
+} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#lineintersect

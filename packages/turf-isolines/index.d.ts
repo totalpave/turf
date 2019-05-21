@@ -1,4 +1,4 @@
-import { Point, MultiLineString, FeatureCollection, Properties } from '@turf/helpers'
+import { Point, MultiLineString, FeatureCollection, Properties } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#isolines

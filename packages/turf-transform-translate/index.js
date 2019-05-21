@@ -1,8 +1,8 @@
-import { coordEach } from '@turf/meta';
-import { isObject } from '@turf/helpers';
-import { getCoords } from '@turf/invariant';
-import clone from '@turf/clone';
-import rhumbDestination from '@turf/rhumb-destination';
+import { coordEach } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
+import { getCoords } from '@spatial/invariant';
+import clone from '@spatial/clone';
+import rhumbDestination from '@spatial/rhumb-destination';
 
 /**
  * Moves any geojson Feature or Geometry of a specified distance along a Rhumb Line
@@ -29,9 +29,9 @@ function transformTranslate(geojson, distance, direction, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
-    var zTranslation = options.zTranslation;
-    var mutate = options.mutate;
+    const units = options.units;
+    let zTranslation = options.zTranslation;
+    const mutate = options.mutate;
 
     // Input validation
     if (!geojson) throw new Error('geojson is required');
@@ -54,8 +54,8 @@ function transformTranslate(geojson, distance, direction, options) {
     if (mutate === false || mutate === undefined) geojson = clone(geojson);
 
     // Translate each coordinate
-    coordEach(geojson, function (pointCoords) {
-        var newCoords = getCoords(rhumbDestination(pointCoords, distance, direction, {units: units}));
+    coordEach(geojson, (pointCoords) => {
+        const newCoords = getCoords(rhumbDestination(pointCoords, distance, direction, {units}));
         pointCoords[0] = newCoords[0];
         pointCoords[1] = newCoords[1];
         if (zTranslation && pointCoords.length === 3) pointCoords[2] += zTranslation;

@@ -1,4 +1,4 @@
-import { Feature, Polygon, MultiPolygon, FeatureCollection } from '@turf/helpers'
+import { Feature, Polygon, MultiPolygon, FeatureCollection } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#mask

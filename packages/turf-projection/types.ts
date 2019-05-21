@@ -1,6 +1,6 @@
 import * as projection from './'
 import { toMercator, toWgs84 } from './'
-import { point } from '@turf/helpers'
+import { point } from '@spatial/helpers'
 
 // Types test
 const pt = point([3, 51])

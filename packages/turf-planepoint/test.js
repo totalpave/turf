@@ -2,7 +2,7 @@
 // http://stackoverflow.com/a/13916669/461015
 import test from 'tape';
 
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 import planepoint from '.';
 
 

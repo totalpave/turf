@@ -1,8 +1,8 @@
 import path from 'path';
 import test from 'tape';
 import write from 'write-json-file';
-import destination from '@turf/destination';
-import { point, lineString, featureCollection } from '@turf/helpers';
+import destination from '@spatial/destination';
+import { point, lineString, featureCollection } from '@spatial/helpers';
 import bearing from '.';
 
 const out = path.join(__dirname, 'test', 'out') + path.sep;

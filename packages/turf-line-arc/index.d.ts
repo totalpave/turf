@@ -1,4 +1,4 @@
-import { Coord, Feature, LineString, Units } from '@turf/helpers';
+import { Coord, Feature, LineString, Units } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#linearc

@@ -3,13 +3,13 @@ import test from 'tape';
 import glob from 'glob';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { featureEach } from '@turf/meta';
+import { featureEach } from '@spatial/meta';
 import {
     point,
     lineString,
     polygon,
     featureCollection,
- } from '@turf/helpers';
+ } from '@spatial/helpers';
 import centerOfMass from '.';
 
 const directories = {

@@ -1,6 +1,6 @@
-import { coordEach } from '@turf/meta';
-import { isObject } from '@turf/helpers';
-import clone from '@turf/clone';
+import { coordEach } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
+import clone from '@spatial/clone';
 
 /**
  * Takes input features and flips all of their coordinates from `[x, y]` to `[y, x]`.
@@ -22,7 +22,7 @@ function flip(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var mutate = options.mutate;
+    const mutate = options.mutate;
 
     if (!geojson) throw new Error('geojson is required');
     // ensure that we don't modify features in-place and changes to the
@@ -30,9 +30,9 @@ function flip(geojson, options) {
     // properties.
     if (mutate === false || mutate === undefined) geojson = clone(geojson);
 
-    coordEach(geojson, function (coord) {
-        var x = coord[0];
-        var y = coord[1];
+    coordEach(geojson, (coord) => {
+        const x = coord[0];
+        const y = coord[1];
         coord[0] = y;
         coord[1] = x;
     });

@@ -1,4 +1,4 @@
-import { Units, FeatureCollection, Point, Feature } from '@turf/helpers';
+import { Units, FeatureCollection, Point, Feature } from '@spatial/helpers';
 
 export type Dbscan = 'core' | 'edge' | 'noise'
 export interface DbscanProps {

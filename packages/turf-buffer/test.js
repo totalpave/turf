@@ -3,9 +3,9 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { featureEach } from '@turf/meta';
-import { featureCollection, point, polygon, geometryCollection } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { featureEach } from '@spatial/meta';
+import { featureCollection, point, polygon, geometryCollection } from '@spatial/helpers';
 import buffer from '.';
 
 const directories = {

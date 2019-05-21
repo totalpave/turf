@@ -1,4 +1,4 @@
-import { AllGeoJSON, Position} from '@turf/helpers';
+import { AllGeoJSON, Position} from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#toMercator

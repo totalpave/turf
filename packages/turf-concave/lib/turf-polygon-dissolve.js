@@ -1,9 +1,9 @@
-import clone from '@turf/clone';
+import clone from '@spatial/clone';
 import { merge } from 'topojson-client';
-import { getType } from '@turf/invariant';
+import { getType } from '@spatial/invariant';
 import { topology } from 'topojson-server';
-import { flattenEach } from '@turf/meta';
-import { isObject, geometryCollection } from '@turf/helpers';
+import { flattenEach } from '@spatial/meta';
+import { isObject, geometryCollection } from '@spatial/helpers';
 
 /**
  * Dissolves all overlapping (Multi)Polygon

@@ -3,9 +3,9 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import circle from '@turf/circle';
-import truncate from '@turf/truncate';
-import { geometryCollection, featureCollection, point, lineString, round } from '@turf/helpers';
+import circle from '@spatial/circle';
+import truncate from '@spatial/truncate';
+import { geometryCollection, featureCollection, point, lineString, round } from '@spatial/helpers';
 import nearestPointToLine from '.';
 
 const directories = {

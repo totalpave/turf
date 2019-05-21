@@ -6,9 +6,9 @@ import {
   GeometryCollection,
   Properties,
   Coord,
-  Point
-} from '@turf/helpers'
-import { geometryCollection } from '../turf/index';
+  Point,
+  geometryCollection
+} from '@spatial/helpers'
 
 export interface NearestPointToLineProperties {
   dist: number

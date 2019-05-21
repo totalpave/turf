@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Polygon, MultiPolygon, Point } from '@turf/helpers'
+import { Feature, FeatureCollection, Polygon, MultiPolygon, Point } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#pointswithinpolygon

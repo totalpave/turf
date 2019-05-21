@@ -28,7 +28,7 @@ import cleanCoords from './';
  * simple-line x 4,195,499 ops/sec ±2.88% (86 runs sampled)
  * triangle x 2,254,753 ops/sec ±1.10% (88 runs sampled)
  *
- * // mutate=false (using @turf/clone)
+ * // mutate=false (using @spatial/clone)
  * geometry x 202,410 ops/sec ±1.43% (88 runs sampled)
  * multiline x 235,421 ops/sec ±3.48% (86 runs sampled)
  * multipoint x 280,757 ops/sec ±1.59% (87 runs sampled)

@@ -1,5 +1,5 @@
 {
-  "name": "@turf/boolean-disjoint",
+  "name": "@spatial/boolean-disjoint",
   "version": "5.1.5",
   "description": "turf boolean-disjoint module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -38,23 +38,20 @@
     "url": "https://github.com/Turfjs/turf/issues"
   },
   "homepage": "https://github.com/Turfjs/turf",
-  "devDependencies": {
-    "@std/esm": "*",
-    "benchmark": "*",
-    "boolean-shapely": "*",
-    "load-json-file": "*",
-    "rollup": "*",
-    "tape": "*"
-  },
   "dependencies": {
-    "@turf/boolean-point-in-polygon": "^5.1.5",
-    "@turf/helpers": "^5.1.5",
-    "@turf/line-intersect": "^5.1.5",
-    "@turf/meta": "^5.1.5",
-    "@turf/polygon-to-line": "^5.1.5"
+    "@spatial/boolean-point-in-polygon": "file:../turf-boolean-point-in-polygon",
+    "@spatial/helpers": "file:../turf-helpers",
+    "@spatial/line-intersect": "file:../turf-line-intersect",
+    "@spatial/meta": "file:../turf-meta",
+    "@spatial/polygon-to-line": "file:../turf-polygon-to-line"
   },
-  "@std/esm": {
-    "esm": "js",
+  "esm": {
     "cjs": true
+  },
+  "devDependencies": {
+    "rollup": "*",
+    "tape": "*",
+    "esm": "*",
+    "benchmark": "*"
   }
 }

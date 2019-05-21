@@ -1,10 +1,10 @@
 import test from 'tape';
-import { point, featureCollection } from '@turf/helpers';
+import { point, featureCollection } from '@spatial/helpers';
 import {
     getCluster,
     clusterEach,
     clusterReduce,
-    // Below methods are not exposed in @turf/turf
+    // Below methods are not exposed in @spatial/turf
     createBins,
     applyFilter,
     filterProperties,

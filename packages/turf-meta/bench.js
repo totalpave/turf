@@ -1,4 +1,4 @@
-import random from '@turf/random';
+import random from '@spatial/random';
 import Benchmark from 'benchmark';
 import meta from './';
 

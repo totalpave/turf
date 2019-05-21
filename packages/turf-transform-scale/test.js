@@ -3,15 +3,15 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import center from '@turf/center';
-import hexGrid from '@turf/hex-grid';
-import truncate from '@turf/truncate';
-import turfBBox from '@turf/bbox';
-import bboxPolygon from '@turf/bbox-polygon';
-import centroid from '@turf/centroid';
-import { featureEach } from '@turf/meta';
-import { getCoord } from '@turf/invariant';
-import { point, lineString, geometryCollection, featureCollection } from '@turf/helpers';
+import center from '@spatial/center';
+import hexGrid from '@spatial/hex-grid';
+import truncate from '@spatial/truncate';
+import turfBBox from '@spatial/bbox';
+import bboxPolygon from '@spatial/bbox-polygon';
+import centroid from '@spatial/centroid';
+import { featureEach } from '@spatial/meta';
+import { getCoord } from '@spatial/invariant';
+import { point, lineString, geometryCollection, featureCollection } from '@spatial/helpers';
 import scale from '.';
 
 const directories = {

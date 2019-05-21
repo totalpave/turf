@@ -1,6 +1,6 @@
-import distance from '@turf/distance';
-import { segmentReduce } from '@turf/meta';
-import { isObject } from '@turf/helpers';
+import distance from '@spatial/distance';
+import { segmentReduce } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link GeoJSON} and measures its length in the specified units, {@link (Multi)Point}'s distance are ignored.
@@ -27,8 +27,8 @@ function length(geojson, options) {
     if (!geojson) throw new Error('geojson is required');
 
     // Calculate distance from 2-vertex line segements
-    return segmentReduce(geojson, function (previousValue, segment) {
-        var coords = segment.geometry.coordinates;
+    return segmentReduce(geojson, (previousValue, segment) => {
+        const coords = segment.geometry.coordinates;
         return previousValue + distance(coords[0], coords[1], options);
     }, 0);
 }

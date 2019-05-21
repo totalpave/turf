@@ -3,8 +3,8 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import bboxPoly from '@turf/bbox-polygon';
-import truncate from '@turf/truncate';
+import bboxPoly from '@spatial/bbox-polygon';
+import truncate from '@spatial/truncate';
 import triangleGrid from '.';
 
 const directories = {

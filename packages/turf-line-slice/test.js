@@ -3,8 +3,8 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import truncate from '@turf/truncate';
-import { featureCollection } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { featureCollection } from '@spatial/helpers';
 import lineSlice from './';
 
 const directories = {

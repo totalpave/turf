@@ -6,7 +6,7 @@ import {
     FeatureCollection,
     Point,
     LineString
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import flatten from './'
 
 const multiPt = multiPoint([[0, 0], [10, 10]])

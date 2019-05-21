@@ -1,4 +1,4 @@
-import {BBox} from '@turf/helpers'
+import {BBox} from '@spatial/helpers'
 import hexGrid from './'
 
 const bbox: BBox = [

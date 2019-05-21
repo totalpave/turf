@@ -1,4 +1,4 @@
-import * as helpers from '@turf/helpers'
+import * as helpers from '@spatial/helpers'
 import {
     featureCollection,
     point,
@@ -6,7 +6,7 @@ import {
     Feature,
     Point,
     LineString
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import * as meta from './'
 import {
     coordReduce,

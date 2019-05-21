@@ -1,4 +1,4 @@
-import { getCoord, getCoords } from '@turf/invariant';
+import { getCoord, getCoords } from '@spatial/invariant';
 
 // http://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
 // modified from: https://github.com/substack/point-in-polygon/blob/master/index.js
@@ -31,16 +31,16 @@ function booleanPointInPolygon(point, polygon, options) {
     // Optional parameters
     options = options || {};
     if (typeof options !== 'object') throw new Error('options is invalid');
-    var ignoreBoundary = options.ignoreBoundary;
+    const ignoreBoundary = options.ignoreBoundary;
 
     // validation
     if (!point) throw new Error('point is required');
     if (!polygon) throw new Error('polygon is required');
 
-    var pt = getCoord(point);
-    var polys = getCoords(polygon);
-    var type = (polygon.geometry) ? polygon.geometry.type : polygon.type;
-    var bbox = polygon.bbox;
+    const pt = getCoord(point);
+    let polys = getCoords(polygon);
+    const type = (polygon.geometry) ? polygon.geometry.type : polygon.type;
+    const bbox = polygon.bbox;
 
     // Quick elimination if point is not inside bbox
     if (bbox && inBBox(pt, bbox) === false) return false;
@@ -51,8 +51,8 @@ function booleanPointInPolygon(point, polygon, options) {
     for (var i = 0, insidePoly = false; i < polys.length && !insidePoly; i++) {
         // check if it is in the outer ring first
         if (inRing(pt, polys[i][0], ignoreBoundary)) {
-            var inHole = false;
-            var k = 1;
+            let inHole = false;
+            let k = 1;
             // check for the point in any of the holes
             while (k < polys[i].length && !inHole) {
                 if (inRing(pt, polys[i][k], !ignoreBoundary)) {
@@ -76,16 +76,16 @@ function booleanPointInPolygon(point, polygon, options) {
  * @returns {boolean} inRing
  */
 function inRing(pt, ring, ignoreBoundary) {
-    var isInside = false;
+    let isInside = false;
     if (ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]) ring = ring.slice(0, ring.length - 1);
 
-    for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-        var xi = ring[i][0], yi = ring[i][1];
-        var xj = ring[j][0], yj = ring[j][1];
-        var onBoundary = (pt[1] * (xi - xj) + yi * (xj - pt[0]) + yj * (pt[0] - xi) === 0) &&
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0], yi = ring[i][1];
+        const xj = ring[j][0], yj = ring[j][1];
+        const onBoundary = (pt[1] * (xi - xj) + yi * (xj - pt[0]) + yj * (pt[0] - xi) === 0) &&
             ((xi - pt[0]) * (xj - pt[0]) <= 0) && ((yi - pt[1]) * (yj - pt[1]) <= 0);
         if (onBoundary) return !ignoreBoundary;
-        var intersect = ((yi > pt[1]) !== (yj > pt[1])) &&
+        const intersect = ((yi > pt[1]) !== (yj > pt[1])) &&
         (pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi);
         if (intersect) isInside = !isInside;
     }

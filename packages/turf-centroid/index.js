@@ -1,5 +1,5 @@
-import { coordEach } from '@turf/meta';
-import { point } from '@turf/helpers';
+import { coordEach } from '@spatial/meta';
+import { point } from '@spatial/helpers';
 
 /**
  * Takes one or more features and calculates the centroid using the mean of all vertices.
@@ -18,10 +18,10 @@ import { point } from '@turf/helpers';
  * var addToMap = [polygon, centroid]
  */
 function centroid(geojson, properties) {
-    var xSum = 0;
-    var ySum = 0;
-    var len = 0;
-    coordEach(geojson, function (coord) {
+    let xSum = 0;
+    let ySum = 0;
+    let len = 0;
+    coordEach(geojson, (coord) => {
         xSum += coord[0];
         ySum += coord[1];
         len++;

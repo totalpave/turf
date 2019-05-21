@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { point, polygon, lineString, featureCollection } from '@turf/helpers';
+import { point, polygon, lineString, featureCollection } from '@spatial/helpers';
 import combine from './';
 
 // MultiPoint

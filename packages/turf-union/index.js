@@ -27,21 +27,21 @@ import { GeoJSONReader, GeoJSONWriter, UnionOp } from 'turf-jsts';
  * //addToMap
  * var addToMap = [poly1, poly2, union];
  */
-function union() {
-    var reader = new GeoJSONReader();
-    var result = reader.read(JSON.stringify(arguments[0].geometry));
+function union(...args) {
+    const reader = new GeoJSONReader();
+    let result = reader.read(JSON.stringify(args[0].geometry));
 
-    for (var i = 1; i < arguments.length; i++) {
-        result = UnionOp.union(result, reader.read(JSON.stringify(arguments[i].geometry)));
+    for (let i = 1; i < args.length; i++) {
+        result = UnionOp.union(result, reader.read(JSON.stringify(args[i].geometry)));
     }
 
-    var writer = new GeoJSONWriter();
+    const writer = new GeoJSONWriter();
     result = writer.write(result);
 
     return {
         type: 'Feature',
         geometry: result,
-        properties: arguments[0].properties
+        properties: args[0].properties
     };
 }
 

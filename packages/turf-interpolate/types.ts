@@ -1,4 +1,4 @@
-import { point, featureCollection } from '@turf/helpers';
+import { point, featureCollection } from '@spatial/helpers';
 import interpolate from './';
 
 const cellSize = 1;

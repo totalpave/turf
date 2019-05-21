@@ -1,5 +1,5 @@
-import { coordEach } from '@turf/meta';
-import { isObject } from '@turf/helpers';
+import { coordEach } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
 
 /**
  * Takes a GeoJSON Feature or FeatureCollection and truncates the precision of the geometry.
@@ -28,9 +28,9 @@ function truncate(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var precision = options.precision;
-    var coordinates = options.coordinates;
-    var mutate = options.mutate;
+    let precision = options.precision;
+    let coordinates = options.coordinates;
+    const mutate = options.mutate;
 
     // default params
     precision = (precision === undefined || precision === null || isNaN(precision)) ? 6 : precision;
@@ -44,10 +44,10 @@ function truncate(geojson, options) {
     // prevent input mutation
     if (mutate === false || mutate === undefined) geojson = JSON.parse(JSON.stringify(geojson));
 
-    var factor = Math.pow(10, precision);
+    const factor = Math.pow(10, precision);
 
     // Truncate Coordinates
-    coordEach(geojson, function (coords) {
+    coordEach(geojson, (coords) => {
         truncateCoords(coords, factor, coordinates);
     });
     return geojson;
@@ -67,7 +67,7 @@ function truncateCoords(coords, factor, coordinates) {
     if (coords.length > coordinates) coords.splice(coordinates, coords.length);
 
     // Truncate coordinate decimals
-    for (var i = 0; i < coords.length; i++) {
+    for (let i = 0; i < coords.length; i++) {
         coords[i] = Math.round(coords[i] * factor) / factor;
     }
     return coords;

@@ -1,7 +1,7 @@
-import { coordAll, segmentEach } from '@turf/meta';
-import { getType } from '@turf/invariant';
-import lineOverlap from '@turf/line-overlap';
-import lineIntersect from '@turf/line-intersect';
+import { coordAll, segmentEach } from '@spatial/meta';
+import { getType } from '@spatial/invariant';
+import lineOverlap from '@spatial/line-overlap';
+import lineIntersect from '@spatial/line-intersect';
 import GeojsonEquality from 'geojson-equality';
 
 /**
@@ -27,23 +27,23 @@ function booleanOverlap(feature1, feature2) {
     // validation
     if (!feature1) throw new Error('feature1 is required');
     if (!feature2) throw new Error('feature2 is required');
-    var type1 = getType(feature1);
-    var type2 = getType(feature2);
+    const type1 = getType(feature1);
+    const type2 = getType(feature2);
     if (type1 !== type2) throw new Error('features must be of the same type');
     if (type1 === 'Point') throw new Error('Point geometry not supported');
 
     // features must be not equal
-    var equality = new GeojsonEquality({precision: 6});
+    const equality = new GeojsonEquality({precision: 6});
     if (equality.compare(feature1, feature2)) return false;
 
-    var overlap = 0;
+    let overlap = 0;
 
     switch (type1) {
     case 'MultiPoint':
         var coords1 = coordAll(feature1);
         var coords2 = coordAll(feature2);
-        coords1.forEach(function (coord1) {
-            coords2.forEach(function (coord2) {
+        coords1.forEach((coord1) => {
+            coords2.forEach((coord2) => {
                 if (coord1[0] === coord2[0] && coord1[1] === coord2[1]) overlap++;
             });
         });
@@ -51,8 +51,8 @@ function booleanOverlap(feature1, feature2) {
 
     case 'LineString':
     case 'MultiLineString':
-        segmentEach(feature1, function (segment1) {
-            segmentEach(feature2, function (segment2) {
+        segmentEach(feature1, (segment1) => {
+            segmentEach(feature2, (segment2) => {
                 if (lineOverlap(segment1, segment2).features.length) overlap++;
             });
         });
@@ -60,8 +60,8 @@ function booleanOverlap(feature1, feature2) {
 
     case 'Polygon':
     case 'MultiPolygon':
-        segmentEach(feature1, function (segment1) {
-            segmentEach(feature2, function (segment2) {
+        segmentEach(feature1, (segment1) => {
+            segmentEach(feature2, (segment2) => {
                 if (lineIntersect(segment1, segment2).features.length) overlap++;
             });
         });

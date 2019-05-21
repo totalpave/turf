@@ -5,7 +5,7 @@ import {
     featureCollection,
     isObject,
     isNumber
-} from '@turf/helpers';
+} from '@spatial/helpers';
 
 /**
  * Returns a random position within a {@link bounding box}.
@@ -40,11 +40,11 @@ export function randomPoint(count, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
+    const bbox = options.bbox;
     if (count === undefined || count === null) count = 1;
 
-    var features = [];
-    for (var i = 0; i < count; i++) {
+    const features = [];
+    for (let i = 0; i < count; i++) {
         features.push(point(randomPosition(bbox)));
     }
     return featureCollection(features);
@@ -68,17 +68,17 @@ export function randomPolygon(count, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
-    var num_vertices = options.num_vertices;
-    var max_radial_length = options.max_radial_length;
+    const bbox = options.bbox;
+    let num_vertices = options.num_vertices;
+    let max_radial_length = options.max_radial_length;
     if (count === undefined || count === null) count = 1;
 
     // Validation
     if (!isNumber(num_vertices)) num_vertices = 10;
     if (!isNumber(max_radial_length)) max_radial_length = 10;
 
-    var features = [];
-    for (var i = 0; i < count; i++) {
+    const features = [];
+    for (let i = 0; i < count; i++) {
         var vertices = [],
             circle_offsets = Array.apply(null,
                 new Array(num_vertices + 1)).map(Math.random);
@@ -98,7 +98,7 @@ export function randomPolygon(count, options) {
 
     function scaleOffsets(cur) {
         cur = cur * 2 * Math.PI / circle_offsets[circle_offsets.length - 1];
-        var radial_scaler = Math.random();
+        const radial_scaler = Math.random();
         vertices.push([
             radial_scaler * max_radial_length * Math.sin(cur),
             radial_scaler * max_radial_length * Math.cos(cur)
@@ -127,10 +127,10 @@ export function randomLineString(count, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var bbox = options.bbox;
-    var num_vertices = options.num_vertices;
-    var max_length = options.max_length;
-    var max_rotation = options.max_rotation;
+    const bbox = options.bbox;
+    let num_vertices = options.num_vertices;
+    let max_length = options.max_length;
+    let max_rotation = options.max_rotation;
     if (count === undefined || count === null) count = 1;
 
     // Default parameters
@@ -138,19 +138,19 @@ export function randomLineString(count, options) {
     if (!isNumber(max_length)) max_length = 0.0001;
     if (!isNumber(max_rotation)) max_rotation = Math.PI / 8;
 
-    var features = [];
-    for (var i = 0; i < count; i++) {
-        var startingPoint = randomPosition(bbox);
-        var vertices = [startingPoint];
-        for (var j = 0; j < num_vertices - 1; j++) {
-            var priorAngle = (j === 0) ?
+    const features = [];
+    for (let i = 0; i < count; i++) {
+        const startingPoint = randomPosition(bbox);
+        const vertices = [startingPoint];
+        for (let j = 0; j < num_vertices - 1; j++) {
+            const priorAngle = (j === 0) ?
                 Math.random() * 2 * Math.PI :
                 Math.tan(
                     (vertices[j][1] - vertices[j - 1][1]) /
               (vertices[j][0] - vertices[j - 1][0])
                 );
-            var angle = priorAngle + (Math.random() - 0.5) * max_rotation * 2;
-            var distance = Math.random() * max_length;
+            const angle = priorAngle + (Math.random() - 0.5) * max_rotation * 2;
+            const distance = Math.random() * max_length;
             vertices.push([
                 vertices[j][0] + distance * Math.cos(angle),
                 vertices[j][1] + distance * Math.sin(angle)

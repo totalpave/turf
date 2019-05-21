@@ -8,7 +8,7 @@ import {
     MultiPolygon,
     Feature,
     FeatureCollection
-} from '@turf/helpers'
+} from '@spatial/helpers'
 import lineToPolygon from './'
 
 // Fixtures

@@ -1,6 +1,6 @@
 import test from 'tape';
-import { point } from '@turf/helpers';
-import { polygon } from '@turf/helpers';
+import { point } from '@spatial/helpers';
+import { polygon } from '@spatial/helpers';
 import fs from 'fs';
 import booleanPointInPolygon from '.';
 

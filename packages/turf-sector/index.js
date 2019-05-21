@@ -1,8 +1,8 @@
-import circle from '@turf/circle';
-import lineArc from '@turf/line-arc';
-import { coordEach } from '@turf/meta';
-import { polygon, isObject } from '@turf/helpers';
-import { getCoords } from '@turf/invariant';
+import circle from '@spatial/circle';
+import lineArc from '@spatial/line-arc';
+import { coordEach } from '@spatial/meta';
+import { polygon, isObject } from '@spatial/helpers';
+import { getCoords } from '@spatial/invariant';
 
 /**
  * Creates a circular sector of a circle of given radius and center {@link Point},
@@ -43,10 +43,10 @@ function sector(center, radius, bearing1, bearing2, options) {
     if (convertAngleTo360(bearing1) === convertAngleTo360(bearing2)) {
         return circle(center, radius, options);
     }
-    var coords = getCoords(center);
-    var arc = lineArc(center, radius, bearing1, bearing2, options);
-    var sliceCoords = [[coords]];
-    coordEach(arc, function (currentCoords) {
+    const coords = getCoords(center);
+    const arc = lineArc(center, radius, bearing1, bearing2, options);
+    const sliceCoords = [[coords]];
+    coordEach(arc, (currentCoords) => {
         sliceCoords[0].push(currentCoords);
     });
     sliceCoords[0].push(coords);
@@ -63,7 +63,7 @@ function sector(center, radius, bearing1, bearing2, options) {
  * @returns {number} angle between 0-360 degrees
  */
 function convertAngleTo360(alfa) {
-    var beta = alfa % 360;
+    let beta = alfa % 360;
     if (beta < 0) beta += 360;
     return beta;
 }

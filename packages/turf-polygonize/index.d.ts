@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Coord, Polygon, LineString, MultiLineString } from '@turf/helpers'
+import { Feature, FeatureCollection, Coord, Polygon, LineString, MultiLineString } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#polygonize

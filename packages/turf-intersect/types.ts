@@ -1,4 +1,4 @@
-import { polygon } from '@turf/helpers'
+import { polygon } from '@spatial/helpers'
 import intersect from './'
 
 const poly1 = polygon([[[0, 0], [1, 1], [3, 0], [0, 0]]])

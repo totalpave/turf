@@ -1,4 +1,4 @@
-import { MultiPolygon, Polygon, Feature, Coord } from '@turf/helpers'
+import { MultiPolygon, Polygon, Feature, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#booleanpointinpolygon

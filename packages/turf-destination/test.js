@@ -3,9 +3,9 @@ import test from 'tape';
 import glob from 'glob';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { getCoords } from '@turf/invariant';
-import { lineString, featureCollection, round } from '@turf/helpers';
-import truncate from '@turf/truncate';
+import { getCoords } from '@spatial/invariant';
+import { lineString, featureCollection, round } from '@spatial/helpers';
+import truncate from '@spatial/truncate';
 import destination from '.';
 
 const directories = {

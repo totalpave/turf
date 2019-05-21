@@ -3,8 +3,8 @@ import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import distance from '@turf/distance';
-import { point, round } from '@turf/helpers';
+import distance from '@spatial/distance';
+import { point, round } from '@spatial/helpers';
 import rhumbDistance from '.';
 
 const directories = {

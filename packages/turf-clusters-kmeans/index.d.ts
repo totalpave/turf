@@ -1,4 +1,4 @@
-import { Point, Feature, FeatureCollection } from '@turf/helpers';
+import { Point, Feature, FeatureCollection } from '@spatial/helpers';
 
 export interface KmeansProps {
     cluster?: number;

@@ -5,8 +5,8 @@ import {
     polygon,
     featureCollection,
     geometryCollection,
- } from '@turf/helpers';
-import { coordEach } from '@turf/meta';
+ } from '@spatial/helpers';
+import { coordEach } from '@spatial/meta';
 import clone from '.';
 
 

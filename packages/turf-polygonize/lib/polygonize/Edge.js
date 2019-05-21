@@ -1,4 +1,4 @@
-import {lineString} from '@turf/helpers';
+import {lineString} from '@spatial/helpers';
 import {orientationIndex} from './util';
 
 /**

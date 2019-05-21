@@ -1,9 +1,9 @@
-import bbox from '@turf/bbox';
-import area from '@turf/area';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import explode from '@turf/explode';
-import { collectionOf } from '@turf/invariant';
-import { polygon, multiPolygon, featureCollection, isObject } from '@turf/helpers';
+import bbox from '@spatial/bbox';
+import area from '@spatial/area';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import explode from '@spatial/explode';
+import { collectionOf } from '@spatial/invariant';
+import { polygon, multiPolygon, featureCollection, isObject } from '@spatial/helpers';
 import gridToMatrix from './lib/grid-to-matrix';
 import isoBands from './lib/marchingsquares-isobands';
 
@@ -24,9 +24,9 @@ function isobands(pointGrid, breaks, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var zProperty = options.zProperty || 'elevation';
-    var commonProperties = options.commonProperties || {};
-    var breaksProperties = options.breaksProperties || [];
+    const zProperty = options.zProperty || 'elevation';
+    const commonProperties = options.commonProperties || {};
+    const breaksProperties = options.breaksProperties || [];
 
     // Validation
     collectionOf(pointGrid, 'Point', 'Input must contain Points');
@@ -36,22 +36,22 @@ function isobands(pointGrid, breaks, options) {
     if (!Array.isArray(breaksProperties)) throw new Error('breaksProperties is not an Array');
 
     // Isoband methods
-    var matrix = gridToMatrix(pointGrid, {zProperty: zProperty, flip: true});
-    var contours = createContourLines(matrix, breaks, zProperty);
+    const matrix = gridToMatrix(pointGrid, {zProperty, flip: true});
+    let contours = createContourLines(matrix, breaks, zProperty);
     contours = rescaleContours(contours, matrix, pointGrid);
 
-    var multipolygons = contours.map(function (contour, index) {
+    const multipolygons = contours.map((contour, index) => {
         if (breaksProperties[index] && !isObject(breaksProperties[index])) {
             throw new Error('Each mappedProperty is required to be an Object');
         }
         // collect all properties
-        var contourProperties = Object.assign(
+        const contourProperties = Object.assign(
             {},
             commonProperties,
             breaksProperties[index]
         );
         contourProperties[zProperty] = contour[zProperty];
-        var multiP = multiPolygon(contour.groupedRings, contourProperties);
+        const multiP = multiPolygon(contour.groupedRings, contourProperties);
         return multiP;
     });
 
@@ -73,21 +73,21 @@ function isobands(pointGrid, breaks, options) {
  */
 function createContourLines(matrix, breaks, property) {
 
-    var contours = [];
-    for (var i = 1; i < breaks.length; i++) {
-        var lowerBand = +breaks[i - 1]; // make sure the breaks value is a number
-        var upperBand = +breaks[i];
+    const contours = [];
+    for (let i = 1; i < breaks.length; i++) {
+        const lowerBand = +breaks[i - 1]; // make sure the breaks value is a number
+        const upperBand = +breaks[i];
 
-        var isobandsCoords = isoBands(matrix, lowerBand, upperBand - lowerBand);
+        const isobandsCoords = isoBands(matrix, lowerBand, upperBand - lowerBand);
         // as per GeoJson rules for creating a Polygon, make sure the first element
         // in the array of LinearRings represents the exterior ring (i.e. biggest area),
         // and any subsequent elements represent interior rings (i.e. smaller area);
         // this avoids rendering issues of the MultiPolygons on the map
-        var nestedRings = orderByArea(isobandsCoords);
-        var groupedRings = groupNestedRings(nestedRings);
-        var obj = {};
+        const nestedRings = orderByArea(isobandsCoords);
+        const groupedRings = groupNestedRings(nestedRings);
+        const obj = {};
         obj['groupedRings'] = groupedRings;
-        obj[property] = lowerBand + '-' + upperBand;
+        obj[property] = `${lowerBand  }-${  upperBand}`;
         contours.push(obj);
     }
     return contours;
@@ -105,29 +105,29 @@ function createContourLines(matrix, breaks, property) {
 function rescaleContours(contours, matrix, points) {
 
     // get dimensions (on the map) of the original grid
-    var gridBbox = bbox(points); // [ minX, minY, maxX, maxY ]
-    var originalWidth = gridBbox[2] - gridBbox[0];
-    var originalHeigth = gridBbox[3] - gridBbox[1];
+    const gridBbox = bbox(points); // [ minX, minY, maxX, maxY ]
+    const originalWidth = gridBbox[2] - gridBbox[0];
+    const originalHeigth = gridBbox[3] - gridBbox[1];
 
     // get origin, which is the first point of the last row on the rectangular data on the map
-    var x0 = gridBbox[0];
-    var y0 = gridBbox[1];
+    const x0 = gridBbox[0];
+    const y0 = gridBbox[1];
     // get number of cells per side
-    var matrixWidth = matrix[0].length - 1;
-    var matrixHeight = matrix.length - 1;
+    const matrixWidth = matrix[0].length - 1;
+    const matrixHeight = matrix.length - 1;
     // calculate the scaling factor between matrix and rectangular grid on the map
-    var scaleX = originalWidth / matrixWidth;
-    var scaleY = originalHeigth / matrixHeight;
+    const scaleX = originalWidth / matrixWidth;
+    const scaleY = originalHeigth / matrixHeight;
 
-    var resize = function (point) {
+    const resize = function (point) {
         point[0] = point[0] * scaleX + x0;
         point[1] = point[1] * scaleY + y0;
     };
 
     // resize and shift each point/line of the isobands
-    contours.forEach(function (contour) {
-        contour.groupedRings.forEach(function (lineRingSet) {
-            lineRingSet.forEach(function (lineRing) {
+    contours.forEach((contour) => {
+        contour.groupedRings.forEach((lineRingSet) => {
+            lineRingSet.forEach((lineRing) => {
                 lineRing.forEach(resize);
             });
         });
@@ -147,23 +147,21 @@ function rescaleContours(contours, matrix, points) {
  * @returns {Array} array of the input LineString ordered by area
  */
 function orderByArea(ringsCoords) {
-    var ringsWithArea = [];
-    var areas = [];
-    ringsCoords.forEach(function (coords) {
+    const ringsWithArea = [];
+    const areas = [];
+    ringsCoords.forEach((coords) => {
         // var poly = polygon([points]);
-        var ringArea = area(polygon([coords]));
+        const ringArea = area(polygon([coords]));
         // create an array of areas value
         areas.push(ringArea);
         // associate each lineRing with its area
         ringsWithArea.push({ring: coords, area: ringArea});
     });
-    areas.sort(function (a, b) { // bigger --> smaller
-        return b - a;
-    });
+    areas.sort((a, b) => b - a);
     // create a new array of linearRings coordinates ordered by their area
-    var orderedByArea = [];
-    areas.forEach(function (area) {
-        for (var lr = 0; lr < ringsWithArea.length; lr++) {
+    const orderedByArea = [];
+    areas.forEach((area) => {
+        for (let lr = 0; lr < ringsWithArea.length; lr++) {
             if (ringsWithArea[lr].area === area) {
                 orderedByArea.push(ringsWithArea[lr].ring);
                 ringsWithArea.splice(lr, 1);
@@ -185,22 +183,20 @@ function orderByArea(ringsCoords) {
  */
 function groupNestedRings(orderedLinearRings) {
     // create a list of the (coordinates of) LinearRings
-    var lrList = orderedLinearRings.map(function (lr) {
-        return {lrCoordinates: lr, grouped: false};
-    });
-    var groupedLinearRingsCoords = [];
+    const lrList = orderedLinearRings.map(lr => ({lrCoordinates: lr, grouped: false}));
+    const groupedLinearRingsCoords = [];
     while (!allGrouped(lrList)) {
-        for (var i = 0; i < lrList.length; i++) {
+        for (let i = 0; i < lrList.length; i++) {
             if (!lrList[i].grouped) {
                 // create new group starting with the larger not already grouped ring
-                var group = [];
+                const group = [];
                 group.push(lrList[i].lrCoordinates);
                 lrList[i].grouped = true;
-                var outerMostPoly = polygon([lrList[i].lrCoordinates]);
+                const outerMostPoly = polygon([lrList[i].lrCoordinates]);
                 // group all the rings contained by the outermost ring
-                for (var j = i + 1; j < lrList.length; j++) {
+                for (let j = i + 1; j < lrList.length; j++) {
                     if (!lrList[j].grouped) {
-                        var lrPoly = polygon([lrList[j].lrCoordinates]);
+                        const lrPoly = polygon([lrList[j].lrCoordinates]);
                         if (isInside(lrPoly, outerMostPoly)) {
                             group.push(lrList[j].lrCoordinates);
                             lrList[j].grouped = true;
@@ -222,8 +218,8 @@ function groupNestedRings(orderedLinearRings) {
  * @returns {boolean} true if test-Polygon is inside target-Polygon
  */
 function isInside(testPolygon, targetPolygon) {
-    var points = explode(testPolygon);
-    for (var i = 0; i < points.features.length; i++) {
+    const points = explode(testPolygon);
+    for (let i = 0; i < points.features.length; i++) {
         if (!booleanPointInPolygon(points.features[i], targetPolygon)) {
             return false;
         }
@@ -237,7 +233,7 @@ function isInside(testPolygon, targetPolygon) {
  * @returns {boolean} true if all the objects in the list are marked as grouped
  */
 function allGrouped(list) {
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (list[i].grouped === false) {
             return false;
         }

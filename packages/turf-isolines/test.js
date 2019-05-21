@@ -3,12 +3,12 @@ import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import envelope from '@turf/envelope';
-import truncate from '@turf/truncate';
-import pointGrid from '@turf/point-grid';
-import { getCoords } from '@turf/invariant';
-import { randomPolygon } from '@turf/random';
-import { lineString, polygon } from '@turf/helpers';
+import envelope from '@spatial/envelope';
+import truncate from '@spatial/truncate';
+import pointGrid from '@spatial/point-grid';
+import { getCoords } from '@spatial/invariant';
+import { randomPolygon } from '@spatial/random';
+import { lineString, polygon } from '@spatial/helpers';
 import matrixToGrid from './lib/matrix-to-grid';
 import isolines from '.';
 

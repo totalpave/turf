@@ -1,4 +1,4 @@
-import { points } from '@turf/helpers'
+import { points } from '@spatial/helpers'
 import standardDeviatationalEllipse from './'
 
 const pts = points([

@@ -6,7 +6,7 @@ import {
     lineString,
     multiPolygon,
     multiLineString,
-    featureCollection} from '@turf/helpers'
+    featureCollection} from '@spatial/helpers'
 import bbox from '.';
 
 // Fixtures

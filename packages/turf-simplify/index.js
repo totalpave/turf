@@ -1,7 +1,7 @@
-import cleanCoords from '@turf/clean-coords';
-import clone from '@turf/clone';
-import { geomEach } from '@turf/meta';
-import { isObject } from '@turf/helpers';
+import cleanCoords from '@spatial/clean-coords';
+import clone from '@spatial/clone';
+import { geomEach } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
 import simplifyJS from './lib/simplify';
 
 /**
@@ -48,9 +48,9 @@ function simplify(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var tolerance = options.tolerance !== undefined ? options.tolerance : 1;
-    var highQuality = options.highQuality || false;
-    var mutate = options.mutate || false;
+    const tolerance = options.tolerance !== undefined ? options.tolerance : 1;
+    const highQuality = options.highQuality || false;
+    const mutate = options.mutate || false;
 
     if (!geojson) throw new Error('geojson is required');
     if (tolerance && tolerance < 0) throw new Error('invalid tolerance');
@@ -58,7 +58,7 @@ function simplify(geojson, options) {
     // Clone geojson to avoid side effects
     if (mutate !== true) geojson = clone(geojson);
 
-    geomEach(geojson, function (geom) {
+    geomEach(geojson, (geom) => {
         simplifyGeom(geom, tolerance, highQuality);
     });
     return geojson;
@@ -74,7 +74,7 @@ function simplify(geojson, options) {
  * @returns {Geometry} output
  */
 function simplifyGeom(geometry, tolerance, highQuality) {
-    var type = geometry.type;
+    const type = geometry.type;
 
     // "unsimplyfiable" geometry types
     if (type === 'Point' || type === 'MultiPoint') return geometry;
@@ -82,23 +82,19 @@ function simplifyGeom(geometry, tolerance, highQuality) {
     // Remove any extra coordinates
     cleanCoords(geometry, true);
 
-    var coordinates = geometry.coordinates;
+    const coordinates = geometry.coordinates;
     switch (type) {
     case 'LineString':
         geometry['coordinates'] = simplifyLine(coordinates, tolerance, highQuality);
         break;
     case 'MultiLineString':
-        geometry['coordinates'] = coordinates.map(function (lines) {
-            return simplifyLine(lines, tolerance, highQuality);
-        });
+        geometry['coordinates'] = coordinates.map(lines => simplifyLine(lines, tolerance, highQuality));
         break;
     case 'Polygon':
         geometry['coordinates'] = simplifyPolygon(coordinates, tolerance, highQuality);
         break;
     case 'MultiPolygon':
-        geometry['coordinates'] = coordinates.map(function (rings) {
-            return simplifyPolygon(rings, tolerance, highQuality);
-        });
+        geometry['coordinates'] = coordinates.map(rings => simplifyPolygon(rings, tolerance, highQuality));
     }
     return geometry;
 }
@@ -114,11 +110,7 @@ function simplifyGeom(geometry, tolerance, highQuality) {
  * @returns {Array<Array<number>>} simplified coords
  */
 function simplifyLine(coordinates, tolerance, highQuality) {
-    return simplifyJS(coordinates.map(function (coord) {
-        return {x: coord[0], y: coord[1], z: coord[2]};
-    }), tolerance, highQuality).map(function (coords) {
-        return (coords.z) ? [coords.x, coords.y, coords.z] : [coords.x, coords.y];
-    });
+    return simplifyJS(coordinates.map(coord => ({x: coord[0], y: coord[1], z: coord[2]})), tolerance, highQuality).map(coords => (coords.z) ? [coords.x, coords.y, coords.z] : [coords.x, coords.y]);  // eslint-disable-line no-confusing-arrow
 }
 
 
@@ -132,22 +124,16 @@ function simplifyLine(coordinates, tolerance, highQuality) {
  * @returns {Array<Array<Array<number>>>} simplified coords
  */
 function simplifyPolygon(coordinates, tolerance, highQuality) {
-    return coordinates.map(function (ring) {
-        var pts = ring.map(function (coord) {
-            return {x: coord[0], y: coord[1]};
-        });
+    return coordinates.map((ring) => {
+        const pts = ring.map(coord => ({x: coord[0], y: coord[1]}));
         if (pts.length < 4) {
             throw new Error('invalid polygon');
         }
-        var simpleRing = simplifyJS(pts, tolerance, highQuality).map(function (coords) {
-            return [coords.x, coords.y];
-        });
+        let simpleRing = simplifyJS(pts, tolerance, highQuality).map(coords => [coords.x, coords.y]);
         //remove 1 percent of tolerance until enough points to make a triangle
         while (!checkValidity(simpleRing)) {
             tolerance -= tolerance * 0.01;
-            simpleRing = simplifyJS(pts, tolerance, highQuality).map(function (coords) {
-                return [coords.x, coords.y];
-            });
+            simpleRing = simplifyJS(pts, tolerance, highQuality).map(coords => [coords.x, coords.y]);
         }
         if (
             (simpleRing[simpleRing.length - 1][0] !== simpleRing[0][0]) ||

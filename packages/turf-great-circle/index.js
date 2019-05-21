@@ -1,4 +1,4 @@
-import { getCoord } from '@turf/invariant';
+import { getCoord } from '@spatial/invariant';
 import { GreatCircle } from './lib/arc';
 
 /**
@@ -26,9 +26,9 @@ function greatCircle(start, end, options) {
     // Optional parameters
     options = options || {};
     if (typeof options !== 'object') throw new Error('options is invalid');
-    var properties = options.properties;
-    var npoints = options.npoints;
-    var offset = options.offset;
+    let properties = options.properties;
+    let npoints = options.npoints;
+    let offset = options.offset;
 
     start = getCoord(start);
     end = getCoord(end);
@@ -36,7 +36,7 @@ function greatCircle(start, end, options) {
     npoints = npoints || 100;
     offset = offset || 10;
 
-    var generator = new GreatCircle({x: start[0], y: start[1]}, {x: end[0], y: end[1]}, properties);
+    const generator = new GreatCircle({x: start[0], y: start[1]}, {x: end[0], y: end[1]}, properties);
 
     /* eslint-disable */
     var line = generator.Arc(npoints, {offset: offset});

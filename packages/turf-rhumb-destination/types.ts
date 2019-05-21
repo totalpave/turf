@@ -1,4 +1,4 @@
-import { point, Point, Feature } from '@turf/helpers'
+import { point, Point, Feature } from '@spatial/helpers'
 import rhumbDestination from './'
 
 const pt = point([-75.343, 39.984], {foo: 'bar'})

@@ -1,5 +1,5 @@
-import destination from '@turf/destination';
-import { polygon } from '@turf/helpers';
+import destination from '@spatial/destination';
+import { polygon } from '@spatial/helpers';
 
 /**
  * Takes a {@link Point} and calculates the circle polygon given a radius in degrees, radians, miles, or kilometers; and steps for precision.
@@ -24,8 +24,8 @@ import { polygon } from '@turf/helpers';
 function circle(center, radius, options) {
     // Optional params
     options = options || {};
-    var steps = options.steps || 64;
-    var properties = options.properties;
+    let steps = options.steps || 64;
+    let properties = options.properties;
 
     // validation
     if (!center) throw new Error('center is required');
@@ -37,8 +37,8 @@ function circle(center, radius, options) {
     steps = steps || 64;
     properties = properties || center.properties || {};
 
-    var coordinates = [];
-    for (var i = 0; i < steps; i++) {
+    const coordinates = [];
+    for (let i = 0; i < steps; i++) {
         coordinates.push(destination(center, radius, i * -360 / steps, options).geometry.coordinates);
     }
     coordinates.push(coordinates[0]);

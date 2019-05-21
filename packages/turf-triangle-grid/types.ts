@@ -1,4 +1,4 @@
-import { BBox, Polygon, FeatureCollection } from '@turf/helpers'
+import { BBox, Polygon, FeatureCollection } from '@spatial/helpers'
 import triangleGrid from './'
 
 const bbox: BBox = [

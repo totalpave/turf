@@ -1,6 +1,6 @@
-import { lineString, featureCollection } from '@turf/helpers';
-import { getCoords } from '@turf/invariant';
-import { flattenEach } from '@turf/meta';
+import { lineString, featureCollection } from '@spatial/helpers';
+import { getCoords } from '@spatial/invariant';
+import { flattenEach } from '@spatial/meta';
 
 /**
  * Creates a {@link FeatureCollection} of 2-vertex {@link LineString} segments from a {@link LineString|(Multi)LineString} or {@link Polygon|(Multi)Polygon}.
@@ -18,8 +18,8 @@ import { flattenEach } from '@turf/meta';
 function lineSegment(geojson) {
     if (!geojson) throw new Error('geojson is required');
 
-    var results = [];
-    flattenEach(geojson, function (feature) {
+    const results = [];
+    flattenEach(geojson, (feature) => {
         lineSegmentFeature(feature, results);
     });
     return featureCollection(results);
@@ -34,8 +34,8 @@ function lineSegment(geojson) {
  * @returns {void}
  */
 function lineSegmentFeature(geojson, results) {
-    var coords = [];
-    var geometry = geojson.geometry;
+    let coords = [];
+    const geometry = geojson.geometry;
     switch (geometry.type) {
     case 'Polygon':
         coords = getCoords(geometry);
@@ -43,9 +43,9 @@ function lineSegmentFeature(geojson, results) {
     case 'LineString':
         coords = [getCoords(geometry)];
     }
-    coords.forEach(function (coord) {
-        var segments = createSegments(coord, geojson.properties);
-        segments.forEach(function (segment) {
+    coords.forEach((coord) => {
+        const segments = createSegments(coord, geojson.properties);
+        segments.forEach((segment) => {
             segment.id = results.length;
             results.push(segment);
         });
@@ -61,9 +61,9 @@ function lineSegmentFeature(geojson, results) {
  * @returns {Array<Feature<LineString>>} line segments
  */
 function createSegments(coords, properties) {
-    var segments = [];
-    coords.reduce(function (previousCoords, currentCoords) {
-        var segment = lineString([previousCoords, currentCoords], properties);
+    const segments = [];
+    coords.reduce((previousCoords, currentCoords) => {
+        const segment = lineString([previousCoords, currentCoords], properties);
         segment.bbox = bbox(previousCoords, currentCoords);
         segments.push(segment);
         return currentCoords;
@@ -72,7 +72,7 @@ function createSegments(coords, properties) {
 }
 
 /**
- * Create BBox between two coordinates (faster than @turf/bbox)
+ * Create BBox between two coordinates (faster than @spatial/bbox)
  *
  * @private
  * @param {Array<number>} coords1 Point coordinate
@@ -80,14 +80,14 @@ function createSegments(coords, properties) {
  * @returns {BBox} [west, south, east, north]
  */
 function bbox(coords1, coords2) {
-    var x1 = coords1[0];
-    var y1 = coords1[1];
-    var x2 = coords2[0];
-    var y2 = coords2[1];
-    var west = (x1 < x2) ? x1 : x2;
-    var south = (y1 < y2) ? y1 : y2;
-    var east = (x1 > x2) ? x1 : x2;
-    var north = (y1 > y2) ? y1 : y2;
+    const x1 = coords1[0];
+    const y1 = coords1[1];
+    const x2 = coords2[0];
+    const y2 = coords2[1];
+    const west = (x1 < x2) ? x1 : x2;
+    const south = (y1 < y2) ? y1 : y2;
+    const east = (x1 > x2) ? x1 : x2;
+    const north = (y1 > y2) ? y1 : y2;
     return [west, south, east, north];
 }
 

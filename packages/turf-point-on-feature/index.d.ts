@@ -1,4 +1,4 @@
-import { Feature, Point, AllGeoJSON } from '@turf/helpers';
+import { Feature, Point, AllGeoJSON } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#pointonfeature

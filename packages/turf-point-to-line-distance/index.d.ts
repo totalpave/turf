@@ -1,4 +1,4 @@
-import { Feature, LineString, Units, Coord } from '@turf/helpers'
+import { Feature, LineString, Units, Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#pointtolinedistance

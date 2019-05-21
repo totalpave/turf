@@ -1,4 +1,4 @@
-import { Units, Feature, LineString, MultiLineString } from '@turf/helpers';
+import { Units, Feature, LineString, MultiLineString } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#lineoffset

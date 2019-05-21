@@ -1,4 +1,4 @@
-import { Feature, GeometryObject } from '@turf/helpers'
+import { Feature, GeometryObject } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#booleandisjoint

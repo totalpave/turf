@@ -1,8 +1,8 @@
-import clone from '@turf/clone';
-import distance from '@turf/distance';
-import { coordAll } from '@turf/meta';
-import { convertLength } from '@turf/helpers';
-import { collectionOf } from '@turf/invariant';
+import clone from '@spatial/clone';
+import distance from '@spatial/distance';
+import { coordAll } from '@spatial/meta';
+import { convertLength } from '@spatial/helpers';
+import { collectionOf } from '@spatial/invariant';
 import clustering from 'density-clustering';
 
 /**
@@ -31,8 +31,8 @@ function clustersDbscan(points, maxDistance, options) {
     // Optional parameters
     options = options || {};
     if (typeof options !== 'object') throw new Error('options is invalid');
-    var minPoints = options.minPoints;
-    var units = options.units;
+    let minPoints = options.minPoints;
+    const units = options.units;
 
     // Input validation
     collectionOf(points, 'Point', 'Input must contain Points');
@@ -47,16 +47,16 @@ function clustersDbscan(points, maxDistance, options) {
     minPoints = minPoints || 3;
 
     // create clustered ids
-    var dbscan = new clustering.DBSCAN();
-    var clusteredIds = dbscan.run(coordAll(points), convertLength(maxDistance, units), minPoints, distance);
+    const dbscan = new clustering.DBSCAN();
+    const clusteredIds = dbscan.run(coordAll(points), convertLength(maxDistance, units), minPoints, distance);
 
     // Tag points to Clusters ID
-    var clusterId = -1;
-    clusteredIds.forEach(function (clusterIds) {
+    let clusterId = -1;
+    clusteredIds.forEach((clusterIds) => {
         clusterId++;
         // assign cluster ids to input points
-        clusterIds.forEach(function (idx) {
-            var clusterPoint = points.features[idx];
+        clusterIds.forEach((idx) => {
+            const clusterPoint = points.features[idx];
             if (!clusterPoint.properties) clusterPoint.properties = {};
             clusterPoint.properties.cluster = clusterId;
             clusterPoint.properties.dbscan = 'core';
@@ -65,8 +65,8 @@ function clustersDbscan(points, maxDistance, options) {
 
     // handle noise points, if any
     // edges points are tagged by DBSCAN as both 'noise' and 'cluster' as they can "reach" less than 'minPoints' number of points
-    dbscan.noise.forEach(function (noiseId) {
-        var noisePoint = points.features[noiseId];
+    dbscan.noise.forEach((noiseId) => {
+        const noisePoint = points.features[noiseId];
         if (!noisePoint.properties) noisePoint.properties = {};
         if (noisePoint.properties.cluster) noisePoint.properties.dbscan = 'edge';
         else noisePoint.properties.dbscan = 'noise';

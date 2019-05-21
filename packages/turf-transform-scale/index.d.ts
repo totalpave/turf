@@ -1,4 +1,4 @@
-import { Corners, Coord, AllGeoJSON } from '@turf/helpers'
+import { Corners, Coord, AllGeoJSON } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#transformscale

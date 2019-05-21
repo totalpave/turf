@@ -1,4 +1,4 @@
-import { geomReduce } from '@turf/meta';
+import { geomReduce } from '@spatial/meta';
 
 /**
  * Takes one or more features and returns their area in square meters.
@@ -16,12 +16,10 @@ import { geomReduce } from '@turf/meta';
  * polygon.properties.area = area
  */
 function area(geojson) {
-    return geomReduce(geojson, function (value, geom) {
-        return value + calculateArea(geom);
-    }, 0);
+    return geomReduce(geojson, (value, geom) => value + calculateArea(geom), 0);
 }
 
-var RADIUS = 6378137;
+const RADIUS = 6378137;
 // var FLATTENING_DENOM = 298.257223563;
 // var FLATTENING = 1 / FLATTENING_DENOM;
 // var POLAR_RADIUS = RADIUS * (1 - FLATTENING);
@@ -34,7 +32,7 @@ var RADIUS = 6378137;
  * @returns {number} area
  */
 function calculateArea(geojson) {
-    var area = 0, i;
+    let area = 0, i;
     switch (geojson.type) {
     case 'Polygon':
         return polygonArea(geojson.coordinates);
@@ -57,10 +55,10 @@ function calculateArea(geojson) {
 }
 
 function polygonArea(coords) {
-    var area = 0;
+    let area = 0;
     if (coords && coords.length > 0) {
         area += Math.abs(ringArea(coords[0]));
-        for (var i = 1; i < coords.length; i++) {
+        for (let i = 1; i < coords.length; i++) {
             area -= Math.abs(ringArea(coords[i]));
         }
     }
@@ -80,15 +78,15 @@ function polygonArea(coords) {
  * @returns {number} The approximate signed geodesic area of the polygon in square meters.
  */
 function ringArea(coords) {
-    var p1;
-    var p2;
-    var p3;
-    var lowerIndex;
-    var middleIndex;
-    var upperIndex;
-    var i;
-    var area = 0;
-    var coordsLength = coords.length;
+    let p1;
+    let p2;
+    let p3;
+    let lowerIndex;
+    let middleIndex;
+    let upperIndex;
+    let i;
+    let area = 0;
+    const coordsLength = coords.length;
 
     if (coordsLength > 2) {
         for (i = 0; i < coordsLength; i++) {

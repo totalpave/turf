@@ -1,4 +1,4 @@
-import { Units, AllGeoJSON } from '@turf/helpers'
+import { Units, AllGeoJSON } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#length

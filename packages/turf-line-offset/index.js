@@ -1,6 +1,6 @@
-import { flattenEach } from '@turf/meta';
-import { getCoords, getType } from '@turf/invariant';
-import { isObject, lineString, multiLineString, lengthToDegrees } from '@turf/helpers';
+import { flattenEach } from '@spatial/meta';
+import { getCoords, getType } from '@spatial/invariant';
+import { isObject, lineString, multiLineString, lengthToDegrees } from '@spatial/helpers';
 import intersection from './lib/intersection';
 
 /**
@@ -25,26 +25,26 @@ function lineOffset(geojson, distance, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
+    const units = options.units;
 
     // Valdiation
     if (!geojson) throw new Error('geojson is required');
     if (distance === undefined || distance === null || isNaN(distance)) throw new Error('distance is required');
 
-    var type = getType(geojson);
-    var properties = geojson.properties;
+    const type = getType(geojson);
+    const properties = geojson.properties;
 
     switch (type) {
     case 'LineString':
         return lineOffsetFeature(geojson, distance, units);
     case 'MultiLineString':
         var coords = [];
-        flattenEach(geojson, function (feature) {
+        flattenEach(geojson, (feature) => {
             coords.push(lineOffsetFeature(feature, distance, units).geometry.coordinates);
         });
         return multiLineString(coords, properties);
     default:
-        throw new Error('geometry ' + type + ' is not supported');
+        throw new Error(`geometry ${  type  } is not supported`);
     }
 }
 
@@ -58,17 +58,17 @@ function lineOffset(geojson, distance, options) {
  * @returns {Feature<LineString>} Line offset from the input line
  */
 function lineOffsetFeature(line, distance, units) {
-    var segments = [];
-    var offsetDegrees = lengthToDegrees(distance, units);
-    var coords = getCoords(line);
-    var finalCoords = [];
-    coords.forEach(function (currentCoords, index) {
+    const segments = [];
+    const offsetDegrees = lengthToDegrees(distance, units);
+    const coords = getCoords(line);
+    const finalCoords = [];
+    coords.forEach((currentCoords, index) => {
         if (index !== coords.length - 1) {
-            var segment = processSegment(currentCoords, coords[index + 1], offsetDegrees);
+            const segment = processSegment(currentCoords, coords[index + 1], offsetDegrees);
             segments.push(segment);
             if (index > 0) {
-                var seg2Coords = segments[index - 1];
-                var intersects = intersection(segment, seg2Coords);
+                const seg2Coords = segments[index - 1];
+                const intersects = intersection(segment, seg2Coords);
 
                 // Handling for line segments that aren't straight
                 if (intersects !== false) {
@@ -103,12 +103,12 @@ function lineOffsetFeature(line, distance, units) {
  * @returns {Array<Array<number>>} offset points
  */
 function processSegment(point1, point2, offset) {
-    var L = Math.sqrt((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1]));
+    const L = Math.sqrt((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1]));
 
-    var out1x = point1[0] + offset * (point2[1] - point1[1]) / L;
-    var out2x = point2[0] + offset * (point2[1] - point1[1]) / L;
-    var out1y = point1[1] + offset * (point1[0] - point2[0]) / L;
-    var out2y = point2[1] + offset * (point1[0] - point2[0]) / L;
+    const out1x = point1[0] + offset * (point2[1] - point1[1]) / L;
+    const out2x = point2[0] + offset * (point2[1] - point1[1]) / L;
+    const out1y = point1[1] + offset * (point1[0] - point2[0]) / L;
+    const out2y = point2[1] + offset * (point1[0] - point2[0]) / L;
     return [[out1x, out1y], [out2x, out2y]];
 }
 

@@ -1,4 +1,4 @@
-import * as helpers from '@turf/helpers'
+import * as helpers from '@spatial/helpers'
 import booleanWithin from './'
 
 const pt = helpers.point([0, 0])

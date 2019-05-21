@@ -1,4 +1,4 @@
-import { Feature, Polygon } from '@turf/helpers'
+import { Feature, Polygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#intersect

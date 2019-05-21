@@ -1,4 +1,4 @@
-import { BBox } from '@turf/helpers'
+import { BBox } from '@spatial/helpers'
 import squareGrid from './'
 
 const bbox: BBox = [-95, 30, -85, 40]

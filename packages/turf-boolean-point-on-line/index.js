@@ -1,5 +1,5 @@
-import { getCoords, getCoord } from '@turf/invariant';
-import { isObject } from '@turf/helpers';
+import { getCoords, getCoord } from '@spatial/invariant';
+import { isObject } from '@spatial/helpers';
 
 /**
  * Returns true if a point is on a line. Accepts a optional parameter to ignore the start and end vertices of the linestring.
@@ -19,7 +19,7 @@ import { isObject } from '@turf/helpers';
 function booleanPointOnLine(pt, line, options) {
     // Optional parameters
     options = options || {};
-    var ignoreEndVertices = options.ignoreEndVertices;
+    const ignoreEndVertices = options.ignoreEndVertices;
     if (!isObject(options)) throw new Error('invalid options');
 
     // Validate input
@@ -27,12 +27,12 @@ function booleanPointOnLine(pt, line, options) {
     if (!line) throw new Error('line is required');
 
     // Normalize inputs
-    var ptCoords = getCoord(pt);
-    var lineCoords = getCoords(line);
+    const ptCoords = getCoord(pt);
+    const lineCoords = getCoords(line);
 
     // Main
-    for (var i = 0; i < lineCoords.length - 1; i++) {
-        var ignoreBoundary = false;
+    for (let i = 0; i < lineCoords.length - 1; i++) {
+        let ignoreBoundary = false;
         if (ignoreEndVertices) {
             if (i === 0) ignoreBoundary = 'start';
             if (i === lineCoords.length - 2) ignoreBoundary = 'end';
@@ -53,17 +53,17 @@ function booleanPointOnLine(pt, line, options) {
  * @returns {boolean} true/false
  */
 function isPointOnLineSegment(lineSegmentStart, lineSegmentEnd, pt, excludeBoundary) {
-    var x = pt[0];
-    var y = pt[1];
-    var x1 = lineSegmentStart[0];
-    var y1 = lineSegmentStart[1];
-    var x2 = lineSegmentEnd[0];
-    var y2 = lineSegmentEnd[1];
-    var dxc = pt[0] - x1;
-    var dyc = pt[1] - y1;
-    var dxl = x2 - x1;
-    var dyl = y2 - y1;
-    var cross = dxc * dyl - dyc * dxl;
+    const x = pt[0];
+    const y = pt[1];
+    const x1 = lineSegmentStart[0];
+    const y1 = lineSegmentStart[1];
+    const x2 = lineSegmentEnd[0];
+    const y2 = lineSegmentEnd[1];
+    const dxc = pt[0] - x1;
+    const dyc = pt[1] - y1;
+    const dxl = x2 - x1;
+    const dyl = y2 - y1;
+    const cross = dxc * dyl - dyc * dxl;
     if (cross !== 0) {
         return false;
     }

@@ -1,4 +1,4 @@
-import { BBox, polygon, Polygon} from '@turf/helpers';
+import { BBox, polygon, Polygon} from '@spatial/helpers';
 import pointGrid from './';
 
 const cellSide = 50;

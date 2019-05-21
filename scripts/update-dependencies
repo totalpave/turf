@@ -32,18 +32,18 @@ function updateDependencies(pckg) {
                 break;
             case 'jsts':
             case 'jsts-es':
-            case '@turf/point-on-surface':
-            case '@turf/line-distance':
-            case '@turf/inside':
-            case '@turf/point-on-line':
-            case '@turf/nearest':
+            case '@spatial/point-on-surface':
+            case '@spatial/line-distance':
+            case '@spatial/inside':
+            case '@spatial/point-on-line':
+            case '@spatial/nearest':
                 throw new Error(`${pckg.name} module has invalid dependency ${name}`);
             default:
                 dependencies[name] = version;
             }
         });
     // All modules will have helpers to handle the internal TypeScript definitions
-    if (pckg.name !== '@turf/helpers') dependencies['@turf/helpers'] = '^5.0.4';
+    if (pckg.name !== '@spatial/helpers') dependencies['@spatial/helpers'] = '^5.0.4';
     return dependencies;
 }
 
@@ -51,15 +51,16 @@ function updateDevDependencies(pckg) {
     const devDependencies = {};
     const dev = new Map(entries(pckg.devDependencies));
     dev.delete('uglify-js');
-    dev.delete('@turf/helpers');
+    dev.delete('@spatial/helpers');
     dev.delete('rollup-plugin-node-resolve');
     dev.delete('rollup-plugin-uglify');
     dev.delete('rollup-plugin-commonjs');
     dev.delete('rollup-plugin-buble');
+    dev.delete('@std/esm');
     dev
         .set('rollup', '*')
         .set('tape', '*')
-        .set('@std/esm', '*')
+        .set('esm', '3.2.5')
         .set('benchmark', '*').forEach((version, name) => {
             devDependencies[name] = '*';
         });

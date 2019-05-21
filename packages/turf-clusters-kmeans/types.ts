@@ -1,4 +1,4 @@
-import { featureCollection, point } from '@turf/helpers'
+import { featureCollection, point } from '@spatial/helpers'
 import clustersKmeans from './'
 
 // Fixtures

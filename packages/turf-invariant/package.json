@@ -1,5 +1,5 @@
 {
-  "name": "@turf/invariant",
+  "name": "@spatial/invariant",
   "version": "5.1.5",
   "description": "turf invariant module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -37,17 +37,16 @@
     "url": "https://github.com/Turfjs/turf/issues"
   },
   "homepage": "https://github.com/Turfjs/turf",
-  "devDependencies": {
-    "@std/esm": "*",
-    "benchmark": "*",
-    "rollup": "*",
-    "tape": "*"
-  },
   "dependencies": {
-    "@turf/helpers": "^5.1.5"
+    "@spatial/helpers": "file:../turf-helpers"
   },
-  "@std/esm": {
-    "esm": "js",
+  "esm": {
     "cjs": true
+  },
+  "devDependencies": {
+    "rollup": "*",
+    "tape": "*",
+    "esm": "*",
+    "benchmark": "*"
   }
 }

@@ -2,14 +2,14 @@ import fs from 'fs';
 import test from 'tape';
 import path from 'path';
 import load from 'load-json-file';
-import truncate from '@turf/truncate';
+import truncate from '@spatial/truncate';
 import {
     point,
     multiPoint,
     lineString,
     multiPolygon,
     polygon,
- } from '@turf/helpers';
+ } from '@spatial/helpers';
 import write from 'write-json-file';
 import cleanCoords from '.';
 

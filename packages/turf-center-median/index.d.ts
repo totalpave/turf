@@ -1,4 +1,4 @@
-import { Feature, Point, Position, FeatureCollection } from '@turf/helpers'
+import { Feature, Point, Position, FeatureCollection } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#centermedian

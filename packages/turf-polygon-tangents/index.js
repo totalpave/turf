@@ -1,5 +1,5 @@
-import { getCoords, getType } from '@turf/invariant';
-import { point, featureCollection } from '@turf/helpers';
+import { getCoords, getType } from '@spatial/invariant';
+import { point, featureCollection } from '@spatial/helpers';
 
 /**
  * Finds the tangents of a {@link Polygon|(Multi)Polygon} from a {@link Point}.
@@ -18,15 +18,15 @@ import { point, featureCollection } from '@turf/helpers';
  * var addToMap = [tangents, point, polygon];
  */
 function polygonTangents(pt, polygon) {
-    var pointCoords = getCoords(pt);
-    var polyCoords = getCoords(polygon);
+    const pointCoords = getCoords(pt);
+    const polyCoords = getCoords(polygon);
 
-    var rtan;
-    var ltan;
-    var enext;
-    var eprev;
+    let rtan;
+    let ltan;
+    let enext;
+    let eprev;
 
-    var type = getType(polygon);
+    const type = getType(polygon);
     switch (type) {
     case 'Polygon':
         rtan = polyCoords[0][0];
@@ -40,8 +40,8 @@ function polygonTangents(pt, polygon) {
         rtan = polyCoords[0][0][0];
         ltan = polyCoords[0][0][0];
         eprev = isLeft(polyCoords[0][0][0], polyCoords[0][0][polyCoords[0][0].length - 1], pointCoords);
-        polyCoords.forEach(function (ring) {
-            var out = processPolygon(ring[0], pointCoords, eprev, enext, rtan, ltan);
+        polyCoords.forEach((ring) => {
+            const out = processPolygon(ring[0], pointCoords, eprev, enext, rtan, ltan);
             rtan = out[0];
             ltan = out[1];
         });
@@ -51,9 +51,9 @@ function polygonTangents(pt, polygon) {
 }
 
 function processPolygon(polygonCoords, ptCoords, eprev, enext, rtan, ltan) {
-    for (var i = 0; i < polygonCoords.length; i++) {
-        var currentCoords = polygonCoords[i];
-        var nextCoordPair = polygonCoords[i + 1];
+    for (let i = 0; i < polygonCoords.length; i++) {
+        const currentCoords = polygonCoords[i];
+        let nextCoordPair = polygonCoords[i + 1];
         if (i === polygonCoords.length - 1) {
             nextCoordPair = polygonCoords[0];
         }

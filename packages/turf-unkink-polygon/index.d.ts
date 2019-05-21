@@ -1,4 +1,4 @@
-import { Polygon, MultiPolygon, Feature, FeatureCollection } from '@turf/helpers';
+import { Polygon, MultiPolygon, Feature, FeatureCollection } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#unkink-polygon

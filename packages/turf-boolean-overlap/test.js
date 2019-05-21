@@ -3,7 +3,7 @@ import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
 import shapely from 'boolean-shapely';
-import { point, lineString, polygon } from '@turf/helpers';
+import { point, lineString, polygon } from '@spatial/helpers';
 import overlap from '.';
 
 test('turf-boolean-overlap', t => {

@@ -1,4 +1,4 @@
-import { Feature, Polygon, MultiPolygon } from '@turf/helpers'
+import { Feature, Polygon, MultiPolygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#union

@@ -1,4 +1,4 @@
-import { Units, BBox, Polygon, Feature, MultiPolygon, Properties, FeatureCollection } from '@turf/helpers'
+import { Units, BBox, Polygon, Feature, MultiPolygon, Properties, FeatureCollection } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#squaretriangle

@@ -1,4 +1,4 @@
-import { lineString, multiLineString, polygon, multiPolygon } from '@turf/helpers'
+import { lineString, multiLineString, polygon, multiPolygon } from '@spatial/helpers'
 import lineOverlap from './'
 
 const line = lineString([[0, 0], [10, 10]]);

@@ -1,4 +1,4 @@
-import {point, lineString, Feature, Point, LineString} from '@turf/helpers'
+import {point, lineString, Feature, Point, LineString} from '@spatial/helpers'
 import clone from './'
 
 const pt = point([0, 20])

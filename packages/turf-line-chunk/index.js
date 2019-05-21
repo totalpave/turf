@@ -1,7 +1,7 @@
-import length from '@turf/length';
-import lineSliceAlong from '@turf/line-slice-along';
-import { flattenEach } from '@turf/meta';
-import { featureCollection, isObject } from '@turf/helpers';
+import length from '@spatial/length';
+import lineSliceAlong from '@spatial/line-slice-along';
+import { flattenEach } from '@spatial/meta';
+import { featureCollection, isObject } from '@spatial/helpers';
 
 /**
  * Divides a {@link LineString} into chunks of a specified length.
@@ -26,22 +26,22 @@ function lineChunk(geojson, segmentLength, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
-    var reverse = options.reverse;
+    const units = options.units;
+    const reverse = options.reverse;
 
     // Validation
     if (!geojson) throw new Error('geojson is required');
     if (segmentLength <= 0) throw new Error('segmentLength must be greater than 0');
 
     // Container
-    var results = [];
+    const results = [];
 
     // Flatten each feature to simple LineString
-    flattenEach(geojson, function (feature) {
+    flattenEach(geojson, (feature) => {
         // reverses coordinates to start the first chunked segment at the end
         if (reverse) feature.geometry.coordinates = feature.geometry.coordinates.reverse();
 
-        sliceLineSegments(feature, segmentLength, units, function (segment) {
+        sliceLineSegments(feature, segmentLength, units, (segment) => {
             results.push(segment);
         });
     });
@@ -59,20 +59,20 @@ function lineChunk(geojson, segmentLength, options) {
  * @returns {void}
  */
 function sliceLineSegments(line, segmentLength, units, callback) {
-    var lineLength = length(line, {units: units});
+    const lineLength = length(line, {units});
 
     // If the line is shorter than the segment length then the orginal line is returned.
     if (lineLength <= segmentLength) return callback(line);
 
-    var numberOfSegments = lineLength / segmentLength;
+    let numberOfSegments = lineLength / segmentLength;
 
     // If numberOfSegments is integer, no need to plus 1
     if (!Number.isInteger(numberOfSegments)) {
         numberOfSegments = Math.floor(numberOfSegments) + 1;
     }
 
-    for (var i = 0; i < numberOfSegments; i++) {
-        var outline = lineSliceAlong(line, segmentLength * i, segmentLength * (i + 1), {units: units});
+    for (let i = 0; i < numberOfSegments; i++) {
+        const outline = lineSliceAlong(line, segmentLength * i, segmentLength * (i + 1), {units});
         callback(outline, i);
     }
 }

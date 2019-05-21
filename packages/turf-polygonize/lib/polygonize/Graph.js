@@ -1,8 +1,8 @@
 import Node from './Node';
 import Edge from './Edge';
 import EdgeRing from './EdgeRing';
-import {flattenEach, coordReduce} from '@turf/meta';
-import {featureOf} from '@turf/invariant';
+import {flattenEach, coordReduce} from '@spatial/meta';
+import {featureOf} from '@spatial/invariant';
 
 /**
  * Validates the geoJson.

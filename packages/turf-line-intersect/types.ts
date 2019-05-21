@@ -1,4 +1,4 @@
-import { lineString } from '@turf/helpers'
+import { lineString } from '@spatial/helpers'
 import lineIntersect from './'
 
 const line1 = lineString([[0, 0], [1, 1]]);

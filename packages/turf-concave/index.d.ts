@@ -1,4 +1,4 @@
-import { Point, Feature, FeatureCollection, MultiPolygon, Polygon, Units} from '@turf/helpers'
+import { Point, Feature, FeatureCollection, MultiPolygon, Polygon, Units} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#concave

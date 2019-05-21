@@ -3,9 +3,9 @@ import path from 'path';
 import test from 'tape';
 import write from 'write-json-file';
 import load from 'load-json-file';
-import truncate from '@turf/truncate';
-import { getCoords } from '@turf/invariant';
-import { featureCollection, lineString, point } from '@turf/helpers';
+import truncate from '@spatial/truncate';
+import { getCoords } from '@spatial/invariant';
+import { featureCollection, lineString, point } from '@spatial/helpers';
 import rhumbDestination from '.';
 
 const directories = {

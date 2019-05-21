@@ -12,7 +12,7 @@ import {
     points,
     lineStrings,
     polygons
-} from '@turf/helpers';
+} from '@spatial/helpers';
 import * as meta from './';
 
 const pt = point([0, 0], {a: 1});

@@ -1,4 +1,4 @@
-import { lineString, polygon, featureCollection, LineString, Feature, Polygon } from '@turf/helpers';
+import { lineString, polygon, featureCollection, LineString, Feature, Polygon } from '@spatial/helpers';
 import scale from './';
 
 const line = lineString([[0, 0],[10, 29]]);

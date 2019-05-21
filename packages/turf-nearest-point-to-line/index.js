@@ -1,7 +1,7 @@
-import { isObject } from '@turf/helpers';
-import { getType } from '@turf/invariant';
-import pointToLineDistance from '@turf/point-to-line-distance';
-import { featureEach, geomEach } from '@turf/meta';
+import { isObject } from '@spatial/helpers';
+import { getType } from '@spatial/invariant';
+import pointToLineDistance from '@spatial/point-to-line-distance';
+import { featureEach, geomEach } from '@spatial/meta';
 
 /**
  * Returns the closest {@link Point|point}, of a {@link FeatureCollection|collection} of points, to a {@link LineString|line}.
@@ -28,8 +28,8 @@ import { featureEach, geomEach } from '@turf/meta';
 function nearestPointToLine(points, line, options) {
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
-    var properties = options.properties || {};
+    const units = options.units;
+    const properties = options.properties || {};
 
     // validation
     if (!points) throw new Error('points is required');
@@ -39,11 +39,11 @@ function nearestPointToLine(points, line, options) {
     if (!line) throw new Error('line is required');
     if (getType(line) !== 'LineString') throw new Error('line must be a LineString');
 
-    var dist = Infinity;
-    var pt = null;
+    let dist = Infinity;
+    let pt = null;
 
-    featureEach(points, function (point) {
-        var d = pointToLineDistance(point, line, { units: units });
+    featureEach(points, (point) => {
+        const d = pointToLineDistance(point, line, { units });
         if (d < dist) {
             dist = d;
             pt = point;
@@ -55,7 +55,7 @@ function nearestPointToLine(points, line, options) {
      * 2. inherent Point properties
      * 3. dist custom properties created by NearestPointToLine
      */
-    if (pt) pt.properties = Object.assign({dist: dist}, pt.properties, properties);
+    if (pt) pt.properties = Object.assign({dist}, pt.properties, properties);
     return pt;
 }
 
@@ -67,18 +67,16 @@ function nearestPointToLine(points, line, options) {
  * @returns {FeatureCollection<Point>} points
  */
 function normalize(points) {
-    var features = [];
-    var type = points.geometry ? points.geometry.type : points.type;
+    const features = [];
+    const type = points.geometry ? points.geometry.type : points.type;
     switch (type) {
     case 'GeometryCollection':
-        geomEach(points, function (geom) {
+        geomEach(points, (geom) => {
             if (geom.type === 'Point') features.push({type: 'Feature', properties: {}, geometry: geom});
         });
-        return {type: 'FeatureCollection', features: features};
+        return {type: 'FeatureCollection', features};
     case 'FeatureCollection':
-        points.features = points.features.filter(function (feature) {
-            return feature.geometry.type === 'Point';
-        });
+        points.features = points.features.filter(feature => feature.geometry.type === 'Point');
         return points;
     default:
         throw new Error('points must be a Point Collection');

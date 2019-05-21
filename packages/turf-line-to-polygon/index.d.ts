@@ -7,7 +7,7 @@ import {
     MultiPolygon,
     GeometryCollection,
     Properties
-} from '@turf/helpers';
+} from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#linestringtopolygon

@@ -1,8 +1,8 @@
-import explode from '@turf/explode';
-import centroid from '@turf/center';
-import nearestPoint from '@turf/nearest-point';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { featureCollection, feature, point } from '@turf/helpers';
+import explode from '@spatial/explode';
+import centroid from '@spatial/center';
+import nearestPoint from '@spatial/nearest-point';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import { featureCollection, feature, point } from '@spatial/helpers';
 
 /**
  * Takes a Feature or FeatureCollection and returns a {@link Point} guaranteed to be on the surface of the feature.
@@ -32,25 +32,25 @@ import { featureCollection, feature, point } from '@turf/helpers';
  */
 function pointOnFeature(geojson) {
     // normalize
-    var fc = normalize(geojson);
+    const fc = normalize(geojson);
 
     // get centroid
-    var cent = centroid(fc);
+    const cent = centroid(fc);
 
     // check to see if centroid is on surface
-    var onSurface = false;
-    var i = 0;
+    let onSurface = false;
+    let i = 0;
     while (!onSurface && i < fc.features.length) {
-        var geom = fc.features[i].geometry;
+        const geom = fc.features[i].geometry;
         var x, y, x1, y1, x2, y2, k;
-        var onLine = false;
+        let onLine = false;
         if (geom.type === 'Point') {
             if (cent.geometry.coordinates[0] === geom.coordinates[0] &&
                 cent.geometry.coordinates[1] === geom.coordinates[1]) {
                 onSurface = true;
             }
         } else if (geom.type === 'MultiPoint') {
-            var onMultiPoint = false;
+            let onMultiPoint = false;
             k = 0;
             while (!onMultiPoint && k < geom.coordinates.length) {
                 if (cent.geometry.coordinates[0] === geom.coordinates[k][0] &&
@@ -76,11 +76,11 @@ function pointOnFeature(geojson) {
                 k++;
             }
         } else if (geom.type === 'MultiLineString') {
-            var j = 0;
+            let j = 0;
             while (j < geom.coordinates.length) {
                 onLine = false;
                 k = 0;
-                var line = geom.coordinates[j];
+                const line = geom.coordinates[j];
                 while (!onLine && k < line.length - 1) {
                     x = cent.geometry.coordinates[0];
                     y = cent.geometry.coordinates[1];
@@ -106,7 +106,7 @@ function pointOnFeature(geojson) {
     if (onSurface) {
         return cent;
     } else {
-        var vertices = featureCollection([]);
+        const vertices = featureCollection([]);
         for (i = 0; i < fc.features.length; i++) {
             vertices.features = vertices.features.concat(explode(fc.features[i]).features);
         }
@@ -134,9 +134,9 @@ function normalize(geojson) {
 }
 
 function pointOnSegment(x, y, x1, y1, x2, y2) {
-    var ab = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-    var ap = Math.sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
-    var pb = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
+    const ab = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    const ap = Math.sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
+    const pb = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
     return ab === ap + pb;
 }
 

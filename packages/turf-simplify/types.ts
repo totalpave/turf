@@ -1,4 +1,4 @@
-import {polygon, Feature, Polygon} from '@turf/helpers'
+import {polygon, Feature, Polygon} from '@spatial/helpers'
 import simplify from './'
 
 const poly = polygon([[[0, 0], [10, 10], [20, 20], [0, 0]]]);

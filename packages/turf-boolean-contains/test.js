@@ -2,7 +2,7 @@ import glob from 'glob';
 import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
-import { point } from '@turf/helpers';
+import { point } from '@spatial/helpers';
 import booleanJSTS from 'boolean-jsts';
 import shapely from 'boolean-shapely';
 import contains from '.';

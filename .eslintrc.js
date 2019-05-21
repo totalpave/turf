@@ -12,6 +12,9 @@ module.exports = {
     'valid-jsdoc': [2, {
       prefer: {'return': 'returns'},
       requireReturn: false
-    }]
+    }],
+    'prefer-spread': [0],
+    'prefer-const': [0],
+    'no-var': [0]
   }
 };

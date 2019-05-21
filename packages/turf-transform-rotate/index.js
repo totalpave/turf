@@ -1,11 +1,11 @@
-import centroid from '@turf/centroid';
-import rhumbBearing from '@turf/rhumb-bearing';
-import rhumbDistance from '@turf/rhumb-distance';
-import rhumbDestination from '@turf/rhumb-destination';
-import clone from '@turf/clone';
-import { coordEach } from '@turf/meta';
-import { getCoords } from '@turf/invariant';
-import { isObject } from '@turf/helpers';
+import centroid from '@spatial/centroid';
+import rhumbBearing from '@spatial/rhumb-bearing';
+import rhumbDistance from '@spatial/rhumb-distance';
+import rhumbDestination from '@spatial/rhumb-destination';
+import clone from '@spatial/clone';
+import { coordEach } from '@spatial/meta';
+import { getCoords } from '@spatial/invariant';
+import { isObject } from '@spatial/helpers';
 
 /**
  * Rotates any geojson Feature or Geometry of a specified angle, around its `centroid` or a given `pivot` point;
@@ -31,8 +31,8 @@ function transformRotate(geojson, angle, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var pivot = options.pivot;
-    var mutate = options.mutate;
+    let pivot = options.pivot;
+    const mutate = options.mutate;
 
     // Input validation
     if (!geojson) throw new Error('geojson is required');
@@ -48,11 +48,11 @@ function transformRotate(geojson, angle, options) {
     if (mutate === false || mutate === undefined) geojson = clone(geojson);
 
     // Rotate each coordinate
-    coordEach(geojson, function (pointCoords) {
-        var initialAngle = rhumbBearing(pivot, pointCoords);
-        var finalAngle = initialAngle + angle;
-        var distance = rhumbDistance(pivot, pointCoords);
-        var newCoords = getCoords(rhumbDestination(pivot, distance, finalAngle));
+    coordEach(geojson, (pointCoords) => {
+        const initialAngle = rhumbBearing(pivot, pointCoords);
+        const finalAngle = initialAngle + angle;
+        const distance = rhumbDistance(pivot, pointCoords);
+        const newCoords = getCoords(rhumbDestination(pivot, distance, finalAngle));
         pointCoords[0] = newCoords[0];
         pointCoords[1] = newCoords[1];
     });

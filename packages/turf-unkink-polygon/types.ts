@@ -1,4 +1,4 @@
-import { polygon, multiPolygon } from '@turf/helpers';
+import { polygon, multiPolygon } from '@spatial/helpers';
 import unkink from './';
 
 const poly = polygon([[[20, 30], [10, 10], [20, 20], [20, 30]]]);

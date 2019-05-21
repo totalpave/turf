@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import helpers from '@turf/helpers';
+import helpers from '@spatial/helpers';
 import invariant from './';
 
 const point = helpers.point([-75, 40]);

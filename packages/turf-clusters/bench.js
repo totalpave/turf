@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { featureCollection, point } from '@turf/helpers';
+import { featureCollection, point } from '@spatial/helpers';
 import {
     getCluster,
     clusterEach,

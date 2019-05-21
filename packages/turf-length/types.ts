@@ -1,4 +1,4 @@
-import { lineString } from '@turf/helpers'
+import { lineString } from '@spatial/helpers'
 import length from './'
 
 var line = lineString([[115, -32], [131, -22], [143, -25], [150, -34]]);

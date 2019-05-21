@@ -1,5 +1,5 @@
 {
-  "name": "@turf/point-to-line-distance",
+  "name": "@spatial/point-to-line-distance",
   "version": "5.1.5",
   "description": "turf point-to-line-distance module",
   "main": "main.js",
@@ -13,9 +13,9 @@
   ],
   "scripts": {
     "pretest": "rollup -c ../../rollup.config.js",
-    "test": "node -r @std/esm test.js",
-    "posttest": "node -r @std/esm ../../scripts/validate-es5-dependencies.js",
-    "bench": "node -r @std/esm bench.js",
+    "test": "node -r esm test.js",
+    "posttest": "node -r esm ../../scripts/validate-es5-dependencies.js",
+    "bench": "node -r esm bench.js",
     "docs": "node ../../scripts/generate-readmes"
   },
   "repository": {
@@ -36,27 +36,23 @@
     "url": "https://github.com/Turfjs/turf/issues"
   },
   "homepage": "https://github.com/Turfjs/turf",
+  "dependencies": {
+    "@spatial/bearing": "file:../turf-bearing",
+    "@spatial/distance": "file:../turf-distance",
+    "@spatial/helpers": "file:../turf-helpers",
+    "@spatial/invariant": "file:../turf-invariant",
+    "@spatial/meta": "file:../turf-meta",
+    "@spatial/projection": "file:../turf-projection",
+    "@spatial/rhumb-bearing": "file:../turf-rhumb-bearing",
+    "@spatial/rhumb-distance": "file:../turf-rhumb-distance"
+  },
+  "esm": {
+    "cjs": true
+  },
   "devDependencies": {
-    "@std/esm": "*",
-    "@turf/circle": "^5.1.5",
-    "benchmark": "*",
-    "load-json-file": "*",
     "rollup": "*",
     "tape": "*",
-    "write-json-file": "*"
-  },
-  "dependencies": {
-    "@turf/bearing": "^5.1.5",
-    "@turf/distance": "^5.1.5",
-    "@turf/helpers": "^5.1.5",
-    "@turf/invariant": "^5.1.5",
-    "@turf/meta": "^5.1.5",
-    "@turf/projection": "^5.1.5",
-    "@turf/rhumb-bearing": "^5.1.5",
-    "@turf/rhumb-distance": "^5.1.5"
-  },
-  "@std/esm": {
-    "esm": "js",
-    "cjs": true
+    "esm": "*",
+    "benchmark": "*"
   }
 }

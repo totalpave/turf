@@ -1,4 +1,4 @@
-import { Feature, AllGeoJSON, Polygon } from '@turf/helpers'
+import { Feature, AllGeoJSON, Polygon } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#convex

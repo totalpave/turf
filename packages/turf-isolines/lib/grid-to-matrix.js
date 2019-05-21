@@ -1,6 +1,6 @@
-import { getCoords, collectionOf } from '@turf/invariant';
-import { featureEach } from '@turf/meta';
-import { isObject } from '@turf/helpers';
+import { getCoords, collectionOf } from '@spatial/invariant';
+import { featureEach } from '@spatial/meta';
+import { isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link Point} grid and returns a correspondent matrix {Array<Array<number>>}

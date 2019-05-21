@@ -1,4 +1,4 @@
-import { Feature, Polygon, Units, Coord } from '@turf/helpers';
+import { Feature, Polygon, Units, Coord } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#sector

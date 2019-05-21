@@ -1,7 +1,7 @@
 //http://en.wikipedia.org/wiki/Haversine_formula
 //http://www.movable-type.co.uk/scripts/latlong.html
-import { getCoord } from '@turf/invariant';
-import { point, lengthToRadians, degreesToRadians, radiansToDegrees, isObject } from '@turf/helpers';
+import { getCoord } from '@spatial/invariant';
+import { point, lengthToRadians, degreesToRadians, radiansToDegrees, isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link Point} and calculates the location of a destination point given a distance in degrees, radians, miles, or kilometers; and bearing in degrees. This uses the [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula) to account for global curvature.
@@ -31,23 +31,23 @@ function destination(origin, distance, bearing, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
-    var properties = options.properties;
+    const units = options.units;
+    const properties = options.properties;
 
     // Handle input
-    var coordinates1 = getCoord(origin);
-    var longitude1 = degreesToRadians(coordinates1[0]);
-    var latitude1 = degreesToRadians(coordinates1[1]);
-    var bearing_rad = degreesToRadians(bearing);
-    var radians = lengthToRadians(distance, units);
+    const coordinates1 = getCoord(origin);
+    const longitude1 = degreesToRadians(coordinates1[0]);
+    const latitude1 = degreesToRadians(coordinates1[1]);
+    const bearing_rad = degreesToRadians(bearing);
+    const radians = lengthToRadians(distance, units);
 
     // Main
-    var latitude2 = Math.asin(Math.sin(latitude1) * Math.cos(radians) +
+    const latitude2 = Math.asin(Math.sin(latitude1) * Math.cos(radians) +
         Math.cos(latitude1) * Math.sin(radians) * Math.cos(bearing_rad));
-    var longitude2 = longitude1 + Math.atan2(Math.sin(bearing_rad) * Math.sin(radians) * Math.cos(latitude1),
+    const longitude2 = longitude1 + Math.atan2(Math.sin(bearing_rad) * Math.sin(radians) * Math.cos(latitude1),
         Math.cos(radians) - Math.sin(latitude1) * Math.sin(latitude2));
-    var lng = radiansToDegrees(longitude2);
-    var lat = radiansToDegrees(latitude2);
+    const lng = radiansToDegrees(longitude2);
+    const lat = radiansToDegrees(latitude2);
 
     return point([lng, lat], properties);
 }

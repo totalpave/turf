@@ -1,4 +1,4 @@
-import distance from '@turf/distance';
+import distance from '@spatial/distance';
 
 /**
  * Takes a bounding box and calculates the minimum square bounding box that
@@ -15,15 +15,15 @@ import distance from '@turf/distance';
  * var addToMap = [turf.bboxPolygon(bbox), turf.bboxPolygon(squared)]
  */
 function square(bbox) {
-    var west = bbox[0];
-    var south = bbox[1];
-    var east = bbox[2];
-    var north = bbox[3];
+    const west = bbox[0];
+    const south = bbox[1];
+    const east = bbox[2];
+    const north = bbox[3];
 
-    var horizontalDistance = distance(bbox.slice(0, 2), [east, south]);
-    var verticalDistance = distance(bbox.slice(0, 2), [west, north]);
+    const horizontalDistance = distance(bbox.slice(0, 2), [east, south]);
+    const verticalDistance = distance(bbox.slice(0, 2), [west, north]);
     if (horizontalDistance >= verticalDistance) {
-        var verticalMidpoint = (south + north) / 2;
+        const verticalMidpoint = (south + north) / 2;
         return [
             west,
             verticalMidpoint - ((east - west) / 2),
@@ -31,7 +31,7 @@ function square(bbox) {
             verticalMidpoint + ((east - west) / 2)
         ];
     } else {
-        var horizontalMidpoint = (west + east) / 2;
+        const horizontalMidpoint = (west + east) / 2;
         return [
             horizontalMidpoint - ((north - south) / 2),
             south,

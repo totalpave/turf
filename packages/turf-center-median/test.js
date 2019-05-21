@@ -3,11 +3,11 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import center from '@turf/center';
-import truncate from '@turf/truncate';
-import centerMean from '@turf/center-mean';
-import centerOfMass from '@turf/center-of-mass';
-import { featureCollection, round } from '@turf/helpers';
+import center from '@spatial/center';
+import truncate from '@spatial/truncate';
+import centerMean from '@spatial/center-mean';
+import centerOfMass from '@spatial/center-of-mass';
+import { featureCollection, round } from '@spatial/helpers';
 import centerMedian from '.';
 
 test('turf-center-median', t => {

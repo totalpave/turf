@@ -1,4 +1,4 @@
-import { BBox, FeatureCollection, Feature, Point, LineString, Polygon, Position } from '@turf/helpers';
+import { BBox, FeatureCollection, Feature, Point, LineString, Polygon, Position } from '@spatial/helpers';
 
 /**
  * http://turfjs.org/docs/#randomposition

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { featureCollection, point, polygon } from '@turf/helpers';
+import { featureCollection, point, polygon } from '@spatial/helpers';
 import collect from '.';
 
 test('turf collect module', t => {

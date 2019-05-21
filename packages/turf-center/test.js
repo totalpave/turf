@@ -4,10 +4,10 @@ import glob from 'glob';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import bboxPolygon from '@turf/bbox-polygon';
-import bbox from '@turf/bbox';
-import { featureEach, coordEach } from '@turf/meta';
-import { lineString, featureCollection } from '@turf/helpers';
+import bboxPolygon from '@spatial/bbox-polygon';
+import bbox from '@spatial/bbox';
+import { featureEach, coordEach } from '@spatial/meta';
+import { lineString, featureCollection } from '@spatial/helpers';
 import center from '.';
 
 test('turf-center', t => {

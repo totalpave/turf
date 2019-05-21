@@ -1,5 +1,5 @@
 import nearestPointOnLine from './'
-import { point, lineString, multiLineString } from '@turf/helpers'
+import { point, lineString, multiLineString } from '@spatial/helpers'
 
 const units = 'miles'
 const pt = point([1.5, 1.5])

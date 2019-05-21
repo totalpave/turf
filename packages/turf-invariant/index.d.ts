@@ -8,7 +8,7 @@ import {
     Types,
     AllGeoJSON,
     Geometries
-} from '@turf/helpers'
+} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#getcoords

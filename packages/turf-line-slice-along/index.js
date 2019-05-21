@@ -1,7 +1,7 @@
-import bearing from '@turf/bearing';
-import distance from '@turf/distance';
-import destination from '@turf/destination';
-import { lineString, isObject } from '@turf/helpers';
+import bearing from '@spatial/bearing';
+import distance from '@spatial/distance';
+import destination from '@spatial/destination';
+import { lineString, isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link LineString|line}, a specified distance along the line to a start {@link Point},
@@ -31,17 +31,17 @@ function lineSliceAlong(line, startDist, stopDist, options) {
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
 
-    var coords;
-    var slice = [];
+    let coords;
+    const slice = [];
 
     // Validation
     if (line.type === 'Feature') coords = line.geometry.coordinates;
     else if (line.type === 'LineString') coords = line.coordinates;
     else throw new Error('input must be a LineString Feature or Geometry');
 
-    var travelled = 0;
-    var overshot, direction, interpolated;
-    for (var i = 0; i < coords.length; i++) {
+    let travelled = 0;
+    let overshot, direction, interpolated;
+    for (let i = 0; i < coords.length; i++) {
         if (startDist >= travelled && i === coords.length - 1) break;
         else if (travelled > startDist && slice.length === 0) {
             overshot = startDist - travelled;

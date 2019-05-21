@@ -1,7 +1,7 @@
-import distance from '@turf/distance';
-import intersect from '@turf/intersect';
-import {getType} from '@turf/invariant';
-import {polygon, featureCollection, isObject, isNumber} from '@turf/helpers';
+import distance from '@spatial/distance';
+import intersect from '@spatial/intersect';
+import {getType} from '@spatial/invariant';
+import {polygon, featureCollection, isObject, isNumber} from '@spatial/helpers';
 
 /**
  * Takes a bounding box and a cell depth and returns a set of triangular {@link Polygon|polygons} in a grid.
@@ -29,11 +29,11 @@ function triangleGrid(bbox, cellSide, options) {
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
     // var units = options.units;
-    var properties = options.properties;
-    var mask = options.mask;
+    const properties = options.properties;
+    const mask = options.mask;
 
     // Containers
-    var results = [];
+    const results = [];
 
     // Input Validation
     if (cellSide === null || cellSide === undefined) throw new Error('cellSide is required');
@@ -44,19 +44,19 @@ function triangleGrid(bbox, cellSide, options) {
     if (mask && ['Polygon', 'MultiPolygon'].indexOf(getType(mask)) === -1) throw new Error('options.mask must be a (Multi)Polygon');
 
     // Main
-    var xFraction = cellSide / (distance([bbox[0], bbox[1]], [bbox[2], bbox[1]], options));
-    var cellWidth = xFraction * (bbox[2] - bbox[0]);
-    var yFraction = cellSide / (distance([bbox[0], bbox[1]], [bbox[0], bbox[3]], options));
-    var cellHeight = yFraction * (bbox[3] - bbox[1]);
+    const xFraction = cellSide / (distance([bbox[0], bbox[1]], [bbox[2], bbox[1]], options));
+    const cellWidth = xFraction * (bbox[2] - bbox[0]);
+    const yFraction = cellSide / (distance([bbox[0], bbox[1]], [bbox[0], bbox[3]], options));
+    const cellHeight = yFraction * (bbox[3] - bbox[1]);
 
-    var xi = 0;
-    var currentX = bbox[0];
+    let xi = 0;
+    let currentX = bbox[0];
     while (currentX <= bbox[2]) {
-        var yi = 0;
-        var currentY = bbox[1];
+        let yi = 0;
+        let currentY = bbox[1];
         while (currentY <= bbox[3]) {
-            var cellTriangle1 = null;
-            var cellTriangle2 = null;
+            let cellTriangle1 = null;
+            let cellTriangle2 = null;
 
             if (xi % 2 === 0 && yi % 2 === 0) {
                 cellTriangle1 = polygon([[

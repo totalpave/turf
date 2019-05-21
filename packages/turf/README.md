@@ -1,4 +1,4 @@
-# @turf/turf
+# @spatial/turf
 
 # turf
 
@@ -21,11 +21,11 @@ PRs and issues.
 Install this module individually:
 
 ```sh
-$ npm install @turf/turf
+$ npm install @spatial/turf
 ```
 
 Or install the Turf module that includes it as a function:
 
 ```sh
-$ npm install @turf/turf
+$ npm install @spatial/turf
 ```

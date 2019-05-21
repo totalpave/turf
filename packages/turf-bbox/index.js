@@ -1,4 +1,4 @@
-import { coordEach } from '@turf/meta';
+import { coordEach } from '@spatial/meta';
 
 /**
  * Takes a set of features, calculates the bbox of all input features, and returns a bounding box.
@@ -15,8 +15,8 @@ import { coordEach } from '@turf/meta';
  * var addToMap = [line, bboxPolygon]
  */
 function bbox(geojson) {
-    var BBox = [Infinity, Infinity, -Infinity, -Infinity];
-    coordEach(geojson, function (coord) {
+    const BBox = [Infinity, Infinity, -Infinity, -Infinity];
+    coordEach(geojson, (coord) => {
         if (BBox[0] > coord[0]) BBox[0] = coord[0];
         if (BBox[1] > coord[1]) BBox[1] = coord[1];
         if (BBox[2] < coord[0]) BBox[2] = coord[0];

@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Rhumb_line
-import { earthRadius, point, convertLength, degreesToRadians, isObject } from '@turf/helpers';
-import { getCoord } from '@turf/invariant';
+import { earthRadius, point, convertLength, degreesToRadians, isObject } from '@spatial/helpers';
+import { getCoord } from '@spatial/invariant';
 
 /**
  * Returns the destination {@link Point} having travelled the given distance along a Rhumb line from the
@@ -30,8 +30,8 @@ function rhumbDestination(origin, distance, bearing, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var units = options.units;
-    var properties = options.properties;
+    const units = options.units;
+    const properties = options.properties;
 
     // validation
     if (!origin) throw new Error('origin is required');
@@ -39,9 +39,9 @@ function rhumbDestination(origin, distance, bearing, options) {
     if (bearing === undefined || bearing === null) throw new Error('bearing is required');
     if (!(distance >= 0)) throw new Error('distance must be greater than 0');
 
-    var distanceInMeters = convertLength(distance, units, 'meters');
-    var coords = getCoord(origin);
-    var destination = calculateRhumbDestination(coords, distanceInMeters, bearing);
+    const distanceInMeters = convertLength(distance, units, 'meters');
+    const coords = getCoord(origin);
+    const destination = calculateRhumbDestination(coords, distanceInMeters, bearing);
 
     // compensate the crossing of the 180th meridian (https://macwright.org/2016/09/26/the-180th-meridian.html)
     // solution from https://github.com/mapbox/mapbox-gl-js/issues/3250#issuecomment-294887678
@@ -71,22 +71,22 @@ function calculateRhumbDestination(origin, distance, bearing, radius) {
 
     radius = (radius === undefined) ? earthRadius : Number(radius);
 
-    var delta = distance / radius; // angular distance in radians
-    var lambda1 = origin[0] * Math.PI / 180; // to radians, but without normalize to 𝜋
-    var phi1 = degreesToRadians(origin[1]);
-    var theta = degreesToRadians(bearing);
+    const delta = distance / radius; // angular distance in radians
+    const lambda1 = origin[0] * Math.PI / 180; // to radians, but without normalize to 𝜋
+    const phi1 = degreesToRadians(origin[1]);
+    const theta = degreesToRadians(bearing);
 
-    var DeltaPhi = delta * Math.cos(theta);
-    var phi2 = phi1 + DeltaPhi;
+    const DeltaPhi = delta * Math.cos(theta);
+    let phi2 = phi1 + DeltaPhi;
 
     // check for some daft bugger going past the pole, normalise latitude if so
     if (Math.abs(phi2) > Math.PI / 2) phi2 = phi2 > 0 ? Math.PI - phi2 : -Math.PI - phi2;
 
-    var DeltaPsi = Math.log(Math.tan(phi2 / 2 + Math.PI / 4) / Math.tan(phi1 / 2 + Math.PI / 4));
-    var q = Math.abs(DeltaPsi) > 10e-12 ? DeltaPhi / DeltaPsi : Math.cos(phi1); // E-W course becomes ill-conditioned with 0/0
+    const DeltaPsi = Math.log(Math.tan(phi2 / 2 + Math.PI / 4) / Math.tan(phi1 / 2 + Math.PI / 4));
+    const q = Math.abs(DeltaPsi) > 10e-12 ? DeltaPhi / DeltaPsi : Math.cos(phi1); // E-W course becomes ill-conditioned with 0/0
 
-    var DeltaLambda = delta * Math.sin(theta) / q;
-    var lambda2 = lambda1 + DeltaLambda;
+    const DeltaLambda = delta * Math.sin(theta) / q;
+    const lambda2 = lambda1 + DeltaLambda;
 
     return [((lambda2 * 180 / Math.PI) + 540) % 360 - 180, phi2 * 180 / Math.PI]; // normalise to −180..+180°
 }

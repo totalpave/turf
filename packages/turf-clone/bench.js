@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { point, lineString, polygon, featureCollection } from '@turf/helpers';
+import { point, lineString, polygon, featureCollection } from '@spatial/helpers';
 import clone from './';
 
 const fixtures = [

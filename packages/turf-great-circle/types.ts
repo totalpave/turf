@@ -1,4 +1,4 @@
-import { point } from '@turf/helpers'
+import { point } from '@spatial/helpers'
 import greatCircle from './'
 
 const pt1 = point([0, 0])

@@ -1,5 +1,5 @@
 import earcut from 'earcut';
-import { polygon } from '@turf/helpers';
+import { polygon } from '@spatial/helpers';
 
 /**
  * Tesselates a {@link Feature<Polygon>} into a {@link FeatureCollection<Polygon>} of triangles
@@ -20,12 +20,12 @@ function tesselate(poly) {
         throw new Error('input must be a Polygon or MultiPolygon');
     }
 
-    var fc = {type: 'FeatureCollection', features: []};
+    const fc = {type: 'FeatureCollection', features: []};
 
     if (poly.geometry.type === 'Polygon') {
         fc.features = processPolygon(poly.geometry.coordinates);
     } else {
-        poly.geometry.coordinates.forEach(function (coordinates) {
+        poly.geometry.coordinates.forEach((coordinates) => {
             fc.features = fc.features.concat(processPolygon(coordinates));
         });
     }
@@ -34,20 +34,20 @@ function tesselate(poly) {
 }
 
 function processPolygon(coordinates) {
-    var data = flattenCoords(coordinates);
-    var dim = 2;
-    var result = earcut(data.vertices, data.holes, dim);
+    const data = flattenCoords(coordinates);
+    const dim = 2;
+    const result = earcut(data.vertices, data.holes, dim);
 
-    var features = [];
-    var vertices = [];
+    const features = [];
+    const vertices = [];
 
-    result.forEach(function (vert, i) {
-        var index = result[i];
+    result.forEach((vert, i) => {
+        const index = result[i];
         vertices.push([data.vertices[index * dim], data.vertices[index * dim + 1]]);
     });
 
-    for (var i = 0; i < vertices.length; i += 3) {
-        var coords = vertices.slice(i, i + 3);
+    for (let i = 0; i < vertices.length; i += 3) {
+        const coords = vertices.slice(i, i + 3);
         coords.push(vertices[i]);
         features.push(polygon([coords]));
     }
@@ -56,13 +56,13 @@ function processPolygon(coordinates) {
 }
 
 function flattenCoords(data) {
-    var dim = data[0][0].length,
-        result = {vertices: [], holes: [], dimensions: dim},
-        holeIndex = 0;
+    const dim = data[0][0].length,
+        result = {vertices: [], holes: [], dimensions: dim};
+    let holeIndex = 0;
 
-    for (var i = 0; i < data.length; i++) {
-        for (var j = 0; j < data[i].length; j++) {
-            for (var d = 0; d < dim; d++) result.vertices.push(data[i][j][d]);
+    for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+            for (let d = 0; d < dim; d++) result.vertices.push(data[i][j][d]);
         }
         if (i > 0) {
             holeIndex += data[i - 1].length;

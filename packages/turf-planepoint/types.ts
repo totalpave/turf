@@ -1,4 +1,4 @@
-import { point, polygon } from '@turf/helpers';
+import { point, polygon } from '@spatial/helpers';
 import planepoint from './';
 
 const pt = point([1, 1]);

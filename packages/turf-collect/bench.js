@@ -1,5 +1,5 @@
 import Benchmark from 'benchmark';
-import { polygon, featureCollection, point } from '@turf/helpers';
+import { polygon, featureCollection, point } from '@spatial/helpers';
 import collect from './';
 
 var poly1 = polygon([[[0, 0], [10, 0], [0, 10], [0, 10], [0, 0]]]);

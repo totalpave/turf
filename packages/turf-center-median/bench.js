@@ -1,6 +1,6 @@
 import Benchmark from 'benchmark';
 import centerMedian from '.';
-import { randomPoint } from '@turf/random';
+import { randomPoint } from '@spatial/random';
 
 /**
  * Benchmark Results

@@ -1,4 +1,4 @@
-import { FeatureCollection, GeometryObject, Feature } from '@turf/helpers'
+import { FeatureCollection, GeometryObject, Feature } from '@spatial/helpers'
 /**
  * http://turfjs.org/docs/#getcluster
  */

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Benchmark from 'benchmark';
-import { point, polygon } from '@turf/helpers';
+import { point, polygon } from '@spatial/helpers';
 import booleanPointInPolygon from './';
 
 var poly = polygon([[[0, 0], [0, 100], [100, 100], [100, 0], [0, 0]]]);

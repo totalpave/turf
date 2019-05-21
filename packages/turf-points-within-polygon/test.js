@@ -1,7 +1,7 @@
 import test from 'tape';
-import { point, points } from '@turf/helpers';
-import { polygon } from '@turf/helpers';
-import { featureCollection } from '@turf/helpers';
+import { point, points } from '@spatial/helpers';
+import { polygon } from '@spatial/helpers';
+import { featureCollection } from '@spatial/helpers';
 import pointsWithinPolygon from '.';
 
 test('turf-points-within-polygon', t => {

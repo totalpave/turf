@@ -1,7 +1,7 @@
-import bbox from '@turf/bbox';
-import { coordEach } from '@turf/meta';
-import { collectionOf } from '@turf/invariant';
-import { multiLineString, featureCollection, isObject } from '@turf/helpers';
+import bbox from '@spatial/bbox';
+import { coordEach } from '@spatial/meta';
+import { collectionOf } from '@spatial/invariant';
+import { multiLineString, featureCollection, isObject } from '@spatial/helpers';
 import isoContours from './lib/marchingsquares-isocontours';
 import gridToMatrix from './lib/grid-to-matrix';
 
@@ -38,9 +38,9 @@ function isolines(pointGrid, breaks, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var zProperty = options.zProperty || 'elevation';
-    var commonProperties = options.commonProperties || {};
-    var breaksProperties = options.breaksProperties || [];
+    const zProperty = options.zProperty || 'elevation';
+    const commonProperties = options.commonProperties || {};
+    const breaksProperties = options.breaksProperties || [];
 
     // Input validation
     collectionOf(pointGrid, 'Point', 'Input must contain Points');
@@ -50,9 +50,9 @@ function isolines(pointGrid, breaks, options) {
     if (!Array.isArray(breaksProperties)) throw new Error('breaksProperties must be an Array');
 
     // Isoline methods
-    var matrix = gridToMatrix(pointGrid, {zProperty: zProperty, flip: true});
-    var createdIsoLines = createIsoLines(matrix, breaks, zProperty, commonProperties, breaksProperties);
-    var scaledIsolines = rescaleIsolines(createdIsoLines, matrix, pointGrid);
+    const matrix = gridToMatrix(pointGrid, {zProperty, flip: true});
+    const createdIsoLines = createIsoLines(matrix, breaks, zProperty, commonProperties, breaksProperties);
+    const scaledIsolines = rescaleIsolines(createdIsoLines, matrix, pointGrid);
 
     return featureCollection(scaledIsolines);
 }
@@ -73,17 +73,17 @@ function isolines(pointGrid, breaks, options) {
  * @returns {Array<MultiLineString>} isolines
  */
 function createIsoLines(matrix, breaks, zProperty, commonProperties, breaksProperties) {
-    var results = [];
-    for (var i = 1; i < breaks.length; i++) {
-        var threshold = +breaks[i]; // make sure it's a number
+    const results = [];
+    for (let i = 1; i < breaks.length; i++) {
+        const threshold = +breaks[i]; // make sure it's a number
 
-        var properties = Object.assign(
+        const properties = Object.assign(
             {},
             commonProperties,
             breaksProperties[i]
         );
         properties[zProperty] = threshold;
-        var isoline = multiLineString(isoContours(matrix, threshold), properties);
+        const isoline = multiLineString(isoContours(matrix, threshold), properties);
 
         results.push(isoline);
     }
@@ -102,29 +102,29 @@ function createIsoLines(matrix, breaks, zProperty, commonProperties, breaksPrope
 function rescaleIsolines(createdIsoLines, matrix, points) {
 
     // get dimensions (on the map) of the original grid
-    var gridBbox = bbox(points); // [ minX, minY, maxX, maxY ]
-    var originalWidth = gridBbox[2] - gridBbox[0];
-    var originalHeigth = gridBbox[3] - gridBbox[1];
+    const gridBbox = bbox(points); // [ minX, minY, maxX, maxY ]
+    const originalWidth = gridBbox[2] - gridBbox[0];
+    const originalHeigth = gridBbox[3] - gridBbox[1];
 
     // get origin, which is the first point of the last row on the rectangular data on the map
-    var x0 = gridBbox[0];
-    var y0 = gridBbox[1];
+    const x0 = gridBbox[0];
+    const y0 = gridBbox[1];
 
     // get number of cells per side
-    var matrixWidth = matrix[0].length - 1;
-    var matrixHeight = matrix.length - 1;
+    const matrixWidth = matrix[0].length - 1;
+    const matrixHeight = matrix.length - 1;
 
     // calculate the scaling factor between matrix and rectangular grid on the map
-    var scaleX = originalWidth / matrixWidth;
-    var scaleY = originalHeigth / matrixHeight;
+    const scaleX = originalWidth / matrixWidth;
+    const scaleY = originalHeigth / matrixHeight;
 
-    var resize = function (point) {
+    const resize = function (point) {
         point[0] = point[0] * scaleX + x0;
         point[1] = point[1] * scaleY + y0;
     };
 
     // resize and shift each point/line of the createdIsoLines
-    createdIsoLines.forEach(function (isoline) {
+    createdIsoLines.forEach((isoline) => {
         coordEach(isoline, resize);
     });
     return createdIsoLines;

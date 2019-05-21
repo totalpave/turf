@@ -1,8 +1,8 @@
-import { point } from '@turf/helpers';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import lineIntersect from '@turf/line-intersect';
-import polygonToLine from '@turf/polygon-to-line';
-import { getGeom, getType } from '@turf/invariant';
+import { point } from '@spatial/helpers';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
+import lineIntersect from '@spatial/line-intersect';
+import polygonToLine from '@spatial/polygon-to-line';
+import { getGeom, getType } from '@spatial/invariant';
 
 /**
  * Boolean-Crosses returns True if the intersection results in a geometry whose dimension is one less than
@@ -23,10 +23,10 @@ import { getGeom, getType } from '@turf/invariant';
  * //=true
  */
 function booleanCrosses(feature1, feature2) {
-    var type1 = getType(feature1);
-    var type2 = getType(feature2);
-    var geom1 = getGeom(feature1);
-    var geom2 = getGeom(feature2);
+    const type1 = getType(feature1);
+    const type2 = getType(feature2);
+    const geom1 = getGeom(feature1);
+    const geom2 = getGeom(feature2);
 
     switch (type1) {
     case 'MultiPoint':
@@ -36,7 +36,7 @@ function booleanCrosses(feature1, feature2) {
         case 'Polygon':
             return doesMultiPointCrossPoly(geom1, geom2);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     case 'LineString':
         switch (type2) {
@@ -47,7 +47,7 @@ function booleanCrosses(feature1, feature2) {
         case 'Polygon':
             return doLineStringAndPolygonCross(geom1, geom2);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     case 'Polygon':
         switch (type2) {
@@ -56,21 +56,21 @@ function booleanCrosses(feature1, feature2) {
         case 'LineString': // An inverse operation
             return doLineStringAndPolygonCross(geom2, geom1);
         default:
-            throw new Error('feature2 ' + type2 + ' geometry not supported');
+            throw new Error(`feature2 ${  type2  } geometry not supported`);
         }
     default:
-        throw new Error('feature1 ' + type1 + ' geometry not supported');
+        throw new Error(`feature1 ${  type1  } geometry not supported`);
     }
 }
 
 function doMultiPointAndLineStringCross(multiPoint, lineString) {
-    var foundIntPoint = false;
-    var foundExtPoint = false;
-    var pointLength = multiPoint.coordinates.length;
-    var i = 0;
+    let foundIntPoint = false;
+    let foundExtPoint = false;
+    const pointLength = multiPoint.coordinates.length;
+    let i = 0;
     while (i < pointLength && !foundIntPoint && !foundExtPoint) {
-        for (var i2 = 0; i2 < lineString.coordinates.length - 1; i2++) {
-            var incEndVertices = true;
+        for (let i2 = 0; i2 < lineString.coordinates.length - 1; i2++) {
+            let incEndVertices = true;
             if (i2 === 0 || i2 === lineString.coordinates.length - 2) {
                 incEndVertices = false;
             }
@@ -86,11 +86,11 @@ function doMultiPointAndLineStringCross(multiPoint, lineString) {
 }
 
 function doLineStringsCross(lineString1, lineString2) {
-    var doLinesIntersect = lineIntersect(lineString1, lineString2);
+    const doLinesIntersect = lineIntersect(lineString1, lineString2);
     if (doLinesIntersect.features.length > 0) {
-        for (var i = 0; i < lineString1.coordinates.length - 1; i++) {
-            for (var i2 = 0; i2 < lineString2.coordinates.length - 1; i2++) {
-                var incEndVertices = true;
+        for (let i = 0; i < lineString1.coordinates.length - 1; i++) {
+            for (let i2 = 0; i2 < lineString2.coordinates.length - 1; i2++) {
+                let incEndVertices = true;
                 if (i2 === 0 || i2 === lineString2.coordinates.length - 2) {
                     incEndVertices = false;
                 }
@@ -104,7 +104,7 @@ function doLineStringsCross(lineString1, lineString2) {
 }
 
 function doLineStringAndPolygonCross(lineString, polygon) {
-    var doLinesIntersect = lineIntersect(lineString, polygonToLine(polygon));
+    const doLinesIntersect = lineIntersect(lineString, polygonToLine(polygon));
     if (doLinesIntersect.features.length > 0) {
         return true;
     }
@@ -112,10 +112,10 @@ function doLineStringAndPolygonCross(lineString, polygon) {
 }
 
 function doesMultiPointCrossPoly(multiPoint, polygon) {
-    var foundIntPoint = false;
-    var foundExtPoint = false;
-    var pointLength = multiPoint.coordinates[0].length;
-    var i = 0;
+    let foundIntPoint = false;
+    let foundExtPoint = false;
+    const pointLength = multiPoint.coordinates[0].length;
+    let i = 0;
     while (i < pointLength && foundIntPoint && foundExtPoint) {
         if (booleanPointInPolygon(point(multiPoint.coordinates[0][i]), polygon)) {
             foundIntPoint = true;
@@ -141,11 +141,11 @@ function doesMultiPointCrossPoly(multiPoint, polygon) {
  * @returns {boolean} true/false
  */
 function isPointOnLineSegment(lineSegmentStart, lineSegmentEnd, pt, incEnd) {
-    var dxc = pt[0] - lineSegmentStart[0];
-    var dyc = pt[1] - lineSegmentStart[1];
-    var dxl = lineSegmentEnd[0] - lineSegmentStart[0];
-    var dyl = lineSegmentEnd[1] - lineSegmentStart[1];
-    var cross = dxc * dyl - dyc * dxl;
+    const dxc = pt[0] - lineSegmentStart[0];
+    const dyc = pt[1] - lineSegmentStart[1];
+    const dxl = lineSegmentEnd[0] - lineSegmentStart[0];
+    const dyl = lineSegmentEnd[1] - lineSegmentStart[1];
+    const cross = dxc * dyl - dyc * dxl;
     if (cross !== 0) {
         return false;
     }

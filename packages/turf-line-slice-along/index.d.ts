@@ -1,4 +1,4 @@
-import { Units, LineString, Feature} from '@turf/helpers'
+import { Units, LineString, Feature} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/

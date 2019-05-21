@@ -5,7 +5,7 @@ import {
     Units,
     Feature,
     FeatureCollection,
-} from '@turf/helpers'
+} from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#linechunk

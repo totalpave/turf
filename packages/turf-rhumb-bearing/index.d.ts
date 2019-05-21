@@ -1,4 +1,4 @@
-import { Coord } from '@turf/helpers'
+import { Coord } from '@spatial/helpers'
 
 /**
  * http://turfjs.org/docs/#rhumbbearing

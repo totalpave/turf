@@ -1,7 +1,7 @@
 import {orientationIndex, envelopeIsEqual, envelopeContains, coordinatesEqual} from './util';
-import {multiPoint, polygon, point} from '@turf/helpers';
-import envelope from '@turf/envelope';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import {multiPoint, polygon, point} from '@spatial/helpers';
+import envelope from '@spatial/envelope';
+import booleanPointInPolygon from '@spatial/boolean-point-in-polygon';
 
 /**
  * Ring of edges which form a polygon.

@@ -1,7 +1,7 @@
 import path from 'path';
 import test from 'tape';
 import load from 'load-json-file';
-import { featureCollection } from '@turf/helpers';
+import { featureCollection } from '@spatial/helpers';
 import along from '.';
 
 const line = load.sync(path.join(__dirname, 'test', 'fixtures', 'dc-line.geojson'));

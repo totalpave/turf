@@ -1,4 +1,4 @@
-import { point, featureCollection, polygon } from '@turf/helpers'
+import { point, featureCollection, polygon } from '@spatial/helpers'
 import shortestPath from './'
 
 const start = point([-5, -6]);

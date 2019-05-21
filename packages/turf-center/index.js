@@ -1,5 +1,5 @@
-import bbox from '@turf/bbox';
-import { point, isObject } from '@turf/helpers';
+import bbox from '@spatial/bbox';
+import { point, isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link Feature} or {@link FeatureCollection} and returns the absolute center point of all features.
@@ -27,14 +27,14 @@ function center(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var properties = options.properties;
+    const properties = options.properties;
 
     // Input validation
     if (!geojson) throw new Error('geojson is required');
 
-    var ext = bbox(geojson);
-    var x = (ext[0] + ext[2]) / 2;
-    var y = (ext[1] + ext[3]) / 2;
+    const ext = bbox(geojson);
+    const x = (ext[0] + ext[2]) / 2;
+    const y = (ext[1] + ext[3]) / 2;
     return point([x, y], properties);
 }
 

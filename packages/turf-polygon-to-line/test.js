@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import load from 'load-json-file';
 import write from 'write-json-file';
-import { point } from '@turf/helpers';
-import { polygon } from '@turf/helpers';
+import { point } from '@spatial/helpers';
+import { polygon } from '@spatial/helpers';
 import polygonToLine from '.';
 
 const directories = {

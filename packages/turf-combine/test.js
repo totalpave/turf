@@ -1,11 +1,11 @@
 import test from 'tape';
-import { point } from '@turf/helpers';
-import { multiPoint as multipoint } from '@turf/helpers';
-import { lineString as linestring } from '@turf/helpers';
-import { multiLineString as multilinestring } from '@turf/helpers';
-import { polygon } from '@turf/helpers';
-import { multiPolygon as multipolygon } from '@turf/helpers';
-import { featureCollection as featurecollection } from '@turf/helpers';
+import { point } from '@spatial/helpers';
+import { multiPoint as multipoint } from '@spatial/helpers';
+import { lineString as linestring } from '@spatial/helpers';
+import { multiLineString as multilinestring } from '@spatial/helpers';
+import { polygon } from '@spatial/helpers';
+import { multiPolygon as multipolygon } from '@spatial/helpers';
+import { featureCollection as featurecollection } from '@spatial/helpers';
 import combine from '.';
 
 test('combine -- points', t => {

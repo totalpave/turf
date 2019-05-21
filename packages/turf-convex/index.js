@@ -1,6 +1,6 @@
 import concaveman from 'concaveman';
-import { coordEach } from '@turf/meta';
-import { polygon, isObject } from '@turf/helpers';
+import { coordEach } from '@spatial/meta';
+import { polygon, isObject } from '@spatial/helpers';
 
 /**
  * Takes a {@link Feature} or a {@link FeatureCollection} and returns a convex hull {@link Polygon}.
@@ -33,16 +33,16 @@ function convex(geojson, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var concavity = options.concavity || Infinity;
-    var points = [];
+    const concavity = options.concavity || Infinity;
+    const points = [];
 
     // Convert all points to flat 2D coordinate Array
-    coordEach(geojson, function (coord) {
+    coordEach(geojson, (coord) => {
         points.push([coord[0], coord[1]]);
     });
     if (!points.length) return null;
 
-    var convexHull = concaveman(points, concavity);
+    const convexHull = concaveman(points, concavity);
 
     // Convex hull should have at least 3 different vertices in order to create a valid polygon
     if (convexHull.length > 3) {

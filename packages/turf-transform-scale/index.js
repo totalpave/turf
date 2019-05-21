@@ -1,13 +1,13 @@
-import clone from '@turf/clone';
-import center from '@turf/center';
-import centroid from '@turf/centroid';
-import turfBBox from '@turf/bbox';
-import rhumbBearing from '@turf/rhumb-bearing';
-import rhumbDistance from '@turf/rhumb-distance';
-import rhumbDestination from '@turf/rhumb-destination';
-import { coordEach, featureEach } from '@turf/meta';
-import { point, isObject } from '@turf/helpers';
-import { getCoord, getCoords, getType} from '@turf/invariant';
+import clone from '@spatial/clone';
+import center from '@spatial/center';
+import centroid from '@spatial/centroid';
+import turfBBox from '@spatial/bbox';
+import rhumbBearing from '@spatial/rhumb-bearing';
+import rhumbDistance from '@spatial/rhumb-distance';
+import rhumbDestination from '@spatial/rhumb-destination';
+import { coordEach, featureEach } from '@spatial/meta';
+import { point, isObject } from '@spatial/helpers';
+import { getCoord, getCoords, getType} from '@spatial/invariant';
 
 /**
  * Scale a GeoJSON from a given point by a factor of scaling (ex: factor=2 would make the GeoJSON 200% larger).
@@ -32,20 +32,20 @@ function transformScale(geojson, factor, options) {
     // Optional parameters
     options = options || {};
     if (!isObject(options)) throw new Error('options is invalid');
-    var origin = options.origin;
-    var mutate = options.mutate;
+    const origin = options.origin;
+    const mutate = options.mutate;
 
     // Input validation
     if (!geojson) throw new Error('geojson required');
     if (typeof factor !== 'number' || factor === 0) throw new Error('invalid factor');
-    var originIsPoint = Array.isArray(origin) || typeof origin === 'object';
+    const originIsPoint = Array.isArray(origin) || typeof origin === 'object';
 
     // Clone geojson to avoid side effects
     if (mutate !== true) geojson = clone(geojson);
 
     // Scale each Feature separately
     if (geojson.type === 'FeatureCollection' && !originIsPoint) {
-        featureEach(geojson, function (feature, index) {
+        featureEach(geojson, (feature, index) => {
             geojson.features[index] = scale(feature, factor, origin);
         });
         return geojson;
@@ -65,18 +65,18 @@ function transformScale(geojson, factor, options) {
  */
 function scale(feature, factor, origin) {
     // Default params
-    var isPoint = getType(feature) === 'Point';
+    const isPoint = getType(feature) === 'Point';
     origin = defineOrigin(feature, origin);
 
     // Shortcut no-scaling
     if (factor === 1 || isPoint) return feature;
 
     // Scale each coordinate
-    coordEach(feature, function (coord) {
-        var originalDistance = rhumbDistance(origin, coord);
-        var bearing = rhumbBearing(origin, coord);
-        var newDistance = originalDistance * factor;
-        var newCoord = getCoords(rhumbDestination(origin, newDistance, bearing));
+    coordEach(feature, (coord) => {
+        const originalDistance = rhumbDistance(origin, coord);
+        const bearing = rhumbBearing(origin, coord);
+        const newDistance = originalDistance * factor;
+        const newCoord = getCoords(rhumbDestination(origin, newDistance, bearing));
         coord[0] = newCoord[0];
         coord[1] = newCoord[1];
         if (coord.length === 3) coord[2] *= factor;
@@ -101,11 +101,11 @@ function defineOrigin(geojson, origin) {
     if (Array.isArray(origin) || typeof origin === 'object') return getCoord(origin);
 
     // Define BBox
-    var bbox = (geojson.bbox) ? geojson.bbox : turfBBox(geojson);
-    var west = bbox[0];
-    var south = bbox[1];
-    var east = bbox[2];
-    var north = bbox[3];
+    const bbox = (geojson.bbox) ? geojson.bbox : turfBBox(geojson);
+    const west = bbox[0];
+    const south = bbox[1];
+    const east = bbox[2];
+    const north = bbox[3];
 
     switch (origin) {
     case 'sw':
